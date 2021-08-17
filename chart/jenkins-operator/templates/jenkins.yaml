@@ -1,0 +1,55 @@
+{{ if .Values.jenkins.enabled }}
+apiVersion: {{ .Values.apiVersion }}
+kind: Jenkins
+metadata:
+  name: {{ .Values.jenkins.name }}
+  namespace: {{ .Values.jenkins.namespace }}
+  {{- with .Values.jenkins.labels }}
+  labels: {{ toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  podSpec:
+  {{- if .Values.jenkins.podSpec.containers }}
+    containers:
+    {{- range .Values.jenkins.podSpec.containers }}
+      - name: {{ .name }}
+        image: {{ .image }}
+        imagePullPolicy: {{ .imagePullPolicy }}
+        {{- with .imagePullSecrets }}
+        imagePullSecrets: {{ toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .livenessProbe }}
+        livenessProbe: {{ toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .readinessProbe }}
+        readinessProbe: {{ toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .resources }}
+        resources: {{ toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .env }}
+        env: {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .volumeMounts }}
+        volumeMounts: {{- toYaml . | nindent 8 }}
+        {{- end }}
+    {{- end }}
+  {{- end }}
+  {{- with .Values.jenkins.plugins }}
+  plugins: {{ toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.jenkins.pluginsCache }}
+  pluginsCache: {{ toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.jenkins.homePVC }}
+  homePVC: {{ toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.jenkins.roles }}
+  roles: {{ toYaml . | nindent 4 }}
+  {{- end }}
+  disableCSRFProtection: {{ .Values.jenkins.disableCSRFProtection }}
+  {{- with .Values.jenkins.services }}
+  services: {{ toYaml . | nindent 4 }}
+  {{- end }}
+  authorizationStrategy: {{ .Values.jenkins.authorizationStrategy }}
+{{- end }}

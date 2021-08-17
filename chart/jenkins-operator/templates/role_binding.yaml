@@ -1,0 +1,12 @@
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: manager-rolebinding
+subjects:
+- kind: ServiceAccount
+  name: op-svc-jenkins-service-account
+roleRef:
+  kind: Role
+  name: manager-role
+  apiGroup: rbac.authorization.k8s.io

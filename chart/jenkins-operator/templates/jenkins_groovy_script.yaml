@@ -1,0 +1,32 @@
+{{- if .Values.jenkinsGroovyScriptsEnabled }}
+{{- $apiVersion := .Values.apiVersion }}
+{{- range $jenkinsGroovyScript := .Values.jenkinsGroovyScripts}}
+---
+apiVersion: {{ $apiVersion }}
+kind: JenkinsGroovyScript
+metadata:
+  name: {{ $jenkinsGroovyScript.name }}
+  namespace: {{ $jenkinsGroovyScript.namespace }}
+  {{- with $jenkinsGroovyScript.labels }}
+  labels: {{ toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- with $jenkinsGroovyScript.data }}
+  data: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  secretRef:
+  {{- if $jenkinsGroovyScript.secretRef.name }}
+    name: {{ $jenkinsGroovyScript.secretRef.name }}
+  {{- end }}
+  {{- if $jenkinsGroovyScript.secretRef.namespace }}
+    namespace: {{ $jenkinsGroovyScript.secretRef.namespace }}
+  {{- end }}
+  dependsOn:
+    {{- if $jenkinsGroovyScript.dependsOn.name }}
+    name: {{ $jenkinsGroovyScript.dependsOn.name }}
+    {{- end }}
+    {{- if $jenkinsGroovyScript.dependsOn.namespace }}
+    namespace: {{ $jenkinsGroovyScript.dependsOn.namespace }}
+    {{- end }}
+{{- end }}
+{{- end }}

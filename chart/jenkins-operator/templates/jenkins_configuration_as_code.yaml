@@ -1,0 +1,25 @@
+{{- if .Values.jenkinsConfigurationsAsCodeEnabled }}
+  {{- $apiVersion := .Values.apiVersion }}
+  {{- range $jenkinsConfigurationAsCode := .Values.jenkinsConfigurationsAsCode}}
+---
+apiVersion: {{ $apiVersion }}
+kind: JenkinsConfigurationAsCode
+metadata:
+  name: {{ $jenkinsConfigurationAsCode.name }}
+  namespace: {{ $jenkinsConfigurationAsCode.namespace }}
+  {{- with $jenkinsConfigurationAsCode.labels }}
+  labels: {{ toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- with $jenkinsConfigurationAsCode.data }}
+  data: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  secretRef:
+    {{- if $jenkinsConfigurationAsCode.secretRef.name }}
+    name: {{ $jenkinsConfigurationAsCode.secretRef.name }}
+    {{- end }}
+    {{- if $jenkinsConfigurationAsCode.secretRef.namespace }}
+    namespace: {{ $jenkinsConfigurationAsCode.secretRef.namespace }}
+  {{- end }}
+  {{- end }}
+  {{- end }}

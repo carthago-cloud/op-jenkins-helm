@@ -1,0 +1,120 @@
+
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.4.1
+  creationTimestamp: null
+  name: jenkinsbackupconfigs.operator-service.com
+spec:
+  group: operator-service.com
+  names:
+    kind: JenkinsBackupConfig
+    listKind: JenkinsBackupConfigList
+    plural: jenkinsbackupconfigs
+    singular: jenkinsbackupconfig
+  scope: Namespaced
+  versions:
+  - name: v1beta1
+    schema:
+      openAPIV3Schema:
+        description: JenkinsBackupConfig is the Schema for the jenkinsbackupconfigs
+          API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: JenkinsBackupConfigSpec defines the desired state of JenkinsBackupConfig.
+              Using this CRD, the backup retention, data, trigger and providers can
+              be set.
+            properties:
+              data:
+                description: Data configures which data will be included in backup
+                properties:
+                  artifacts:
+                    description: Artifacts backup enable/disable toggle
+                    type: boolean
+                  buildHistory:
+                    description: Artifacts backup enable/disable toggle
+                    type: boolean
+                  jobs:
+                    description: Jobs backup enable/disable toggle
+                    type: boolean
+                type: object
+              retention:
+                description: Retention defines how much backups are being stored at
+                  the same time
+                type: integer
+              trigger:
+                description: Trigger defines the conditions when the backup is being
+                  created
+                properties:
+                  cronSchedule:
+                    description: CronSchedule is cron format schedule
+                    type: string
+                type: object
+            type: object
+          status:
+            description: JenkinsBackupConfigStatus defines the observed state of JenkinsBackupConfig
+            properties:
+              conditions:
+                description: Conditions contains JenkinsBackupConfig statuses
+                items:
+                  properties:
+                    lastProbeTime:
+                      description: Last time we probed the condition.
+                      format: date-time
+                      type: string
+                    lastTransitionTime:
+                      description: Last time the condition transitioned from one status
+                        to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Human-readable message indicating details about
+                        last transition.
+                      type: string
+                    reason:
+                      description: Unique, one-word, CamelCase reason for the condition's
+                        last transition.
+                      type: string
+                    status:
+                      description: 'Status is the status of the condition. Can be
+                        True, False, Unknown. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions'
+                      type: string
+                    type:
+                      description: 'Type is the type of the condition. More info:
+                        https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions'
+                      type: string
+                  required:
+                  - status
+                  - type
+                  type: object
+                type: array
+              operatorVersion:
+                description: OperatorVersion is the operator version which manages
+                  this CR
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
