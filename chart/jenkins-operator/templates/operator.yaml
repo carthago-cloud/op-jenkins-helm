@@ -35,13 +35,9 @@ spec:
             - --leader-elect
           env:
             - name: WATCH_NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
+              value: {{ .Values.jenkinsOperatorCRD.jenkins.namespace }}
             - name: POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
+              value: {{ .Values.jenkinsOperatorCRD.jenkins.name }}
             - name: OPERATOR_NAME
               value: "jenkins-operator"
           resources:
