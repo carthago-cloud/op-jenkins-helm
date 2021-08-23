@@ -4,6 +4,8 @@ metadata:
   name: {{ include "jenkins-operator.fullname" . }}
   labels:
 {{ include "jenkins-operator.labels" . | indent 4 }}
+  annotations:
+    helm.sdk.operatorframework.io/uninstall-wait: "true"
 spec:
   replicas: {{ .Values.operator.replicaCount }}
   selector:
@@ -35,9 +37,9 @@ spec:
             - --leader-elect
           env:
             - name: WATCH_NAMESPACE
-              value: {{ .Values.jenkinsOperatorCRD.jenkins.namespace }}
+              value: {{ .Values.operator.jenkinsNamespace }}
             - name: POD_NAME
-              value: {{ .Values.jenkinsOperatorCRD.jenkins.name }}
+              value: {{ .Values.operator.jenkinsName }}
             - name: OPERATOR_NAME
               value: "jenkins-operator"
           resources:

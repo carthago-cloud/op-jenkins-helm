@@ -1,3 +1,5 @@
+# Jenkins Operator Custom Resources Helm chart
+
 # apiVersion is the version of the Custom Resources manifests
 apiVersion: operator-service.com/v1beta1
 
