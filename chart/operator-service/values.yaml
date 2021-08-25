@@ -5,6 +5,8 @@ apiVersion: operator-service.com/v1beta1
 
 # operator is section for configuring operator deployment
 operator:
+  namespace: default
+
   replicaCount: 1
 
   # image is the name (and tag) of the Jenkins Operator image
@@ -31,5 +33,5 @@ operator:
   nodeSelector: { }
   tolerations: [ ]
   affinity: { }
-  jenkinsNamespace: "default"
+  jenkinsNamespace: "jenkins-place"
   jenkinsName: "jenkins"
