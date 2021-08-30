@@ -1,0 +1,21 @@
+{{- if .Values.jenkinsKubernetesAgentEnabled }}
+  {{- $apiVersion := .Values.apiVersion }}
+  {{- range $jenkinsKubernetesAgent := .Values.jenkinsKubernetesAgents}}
+---
+apiVersion: {{ $apiVersion }}
+kind: JenkinsKubernetesAgent
+metadata:
+  name: {{ $jenkinsKubernetesAgent.name }}
+  namespace: {{ $jenkinsKubernetesAgent.namespace }}
+  {{- with $jenkinsKubernetesAgent.labels }}
+  labels: {{ toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- with $jenkinsKubernetesAgent.podSpec }}
+  podSpec: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with $jenkinsKubernetesAgent.secretRef }}
+  secretRef: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- end }}
+  {{- end }}

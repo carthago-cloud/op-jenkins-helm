@@ -98,7 +98,7 @@ jenkins:
 
 # jenkinsGroovyScriptsEnabled can enable or disable the JenkinsGroovyScript instances
 # Set to false if you have configured CR(s) already and/or you want to deploy an operator only
-jenkinsGroovyScriptsEnabled: true
+jenkinsGroovyScriptsEnabled: false
 
 # JenkinsGroovyScripts instances configuration
 # JenkinsGroovyScriptSpec defines the desired state of JenkinsGroovyScript. It allows to write Groovy Scripts to modify the Jenkins.
@@ -121,7 +121,7 @@ jenkinsGroovyScripts:
     data: |
       import jenkins.model.Jenkins
 
-      def systemMessage = "Hello from v1beta1.JenkinsGroovyScript! Secrets: " + secrets
+      def systemMessage = "Hello from v1beta1.JenkinsGroovyScript!"
 
       Jenkins jenkins = Jenkins.getInstance()
       jenkins.setSystemMessage(systemMessage)
@@ -130,14 +130,14 @@ jenkinsGroovyScripts:
       println "Hello world!"
 
     # secretRef is secret reference which allows to inject the secrets into Groovy script code
-    secretRef:
-      name: ""
-      namespace: ""
+    #secretRef:
+      #name: ""
+      #namespace: ""
 
     # dependsOn is JenkinsGroovyScript reference which determines the order of the Groovy scripts
-    dependsOn:
-      name: ""
-      namespace: ""
+    #dependsOn:
+      #name: ""
+      #namespace: ""
 
 # jenkinsSeedJobsEnabled can enable or disable the JenkinsSeedJobs instances
 # Set to false if you have configured CR(s) already and/or you want to deploy an operator only
@@ -186,13 +186,13 @@ jenkinsSeedJobs:
 
     # agentRef represents a Jenkins Kubernetes Agent Reference. It has enough information to retrieve agent
     # in any namespace
-    #agentRef:
+    agentRef:
 
       # name is unique within a namespace to reference a secret resource.
-      #name: ""
+      name: first-agent
 
       # namespace defines the space within which the secret name must be unique.
-      #namespace: ""
+      namespace: jenkins-place
 
     # triggers define circumstances that execute jobs
     triggers:
@@ -259,10 +259,85 @@ jenkinsConfigurationsAsCode:
 
           Some settings are still injected from init.groovy.d scripts,
           but these settings will be ported over to JCasC as support becomes available.
-          This is test of secret in casc --> ${testKey}
         numExecutors: 1 #
 
     # secretRef is secret reference which allows to inject the secrets into Configuration As Code script
-    secretRef:
-      name: ""
-      namespace: ""
+    #secretRef:
+      #name: ""
+      #namespace: ""
+
+# jenkinsKubernetesAgentEnabled can enable or disable the JenkinsKubernetesAgent instances
+# Set to false if you have configured CR(s) already and/or you want to deploy an operator only
+jenkinsKubernetesAgentEnabled: true
+
+# JenkinsKubernetesAgent instances configuration
+# For configuration as code creation tutorial, check https://virtuslabrnd.github.io/operator-service-docs/operator-service-for-jenkins/latest/getting-started/seedjob-configuration/
+jenkinsKubernetesAgents:
+  # name of resource
+  - name: first-agent
+
+    # namespace is the namespace where the resources will be deployed
+    namespace: jenkins-place
+
+    # labels are injected into metadata labels field. Each JenkinsKubernetesAgent Custom Resource need to reference corresponding
+    # Jenkins Custom Resource via labels field
+    labels:
+      operator-service.com/jenkins: jenkins
+
+    # annotations are injected into metadata annotations field
+    annotations: { }
+
+    # PodSpec allows to set Jenkins Kubernetes Agent specific pod properties
+    podSpec:
+      containers:
+        - name: jnlp
+          image: quay.io/openshift/origin-jenkins-agent-base:4.9.0
+          imagePullPolicy: IfNotPresent
+    properties:
+      # Description of Jenkins Agent
+      description: ""
+
+      # Executors defines the maximum number of concurrent builds that Jenkins may perform on this node.
+      executors:
+
+      # RemoteRootDirectory is directory dedicated to Jenkins for temporary files storage purposes.
+      remoteRootDirectory: ""
+
+      # Usage controls how Jenkins schedules builds on this node.
+      # Available usage options are defined by AgentUsage enum
+      usage: ""
+
+      # LaunchMethod controls how Jenkins starts this agent.
+      # AgentLaunchMethod is enum that defines the available launch methods
+      launchMethod: ""
+
+      # DisableWorkDir allows disabling Remoting Work Directory for the agent.
+      disableWorkDir: false
+
+      # CustomWorkDirPath is a custom Remoting work directory will be used instead of the Agent Root Directory
+      customWorkDirPath: ""
+
+      # InternalDataDirectory defines a storage directory for the internal data
+      # By default it's "remoting"
+      internalDataDirectory: ""
+
+      # FailIfWorkspaceIsMissing if true, remoting will fail at startup if the target work directory is missing
+      failIfWorkspaceIsMissing: false
+
+      # UseWebSocket uses websocket to connect to the Jenkins Controller rather than the TCP port
+      useWebSocket: false
+
+      # TunnelConnectionThrough allows to route connection to another host
+      # Field allowed values: "HOST:PORT", ":PORT" and "HOST:"
+      tunnelConnectionThrough: ""
+
+      # JVMOptions are additional startup arguments for Java Virtual Machine which runs agent
+      JVMOptions: ""
+
+      # Availability controls when Jenkins starts and stops this agent.
+      availability: ""
+
+      # ToolLocations is list of tools location
+      toolLocations:
+        - name: ""
+          home: ""

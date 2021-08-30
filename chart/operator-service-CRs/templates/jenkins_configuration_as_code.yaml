@@ -14,12 +14,8 @@ spec:
   {{- with $jenkinsConfigurationAsCode.data }}
   data: {{- toYaml . | nindent 4 }}
   {{- end }}
-  secretRef:
-    {{- if $jenkinsConfigurationAsCode.secretRef.name }}
-    name: {{ $jenkinsConfigurationAsCode.secretRef.name }}
-    {{- end }}
-    {{- if $jenkinsConfigurationAsCode.secretRef.namespace }}
-    namespace: {{ $jenkinsConfigurationAsCode.secretRef.namespace }}
+  {{- with $jenkinsConfigurationAsCode.secretRef }}
+  secretRef: {{- toYaml . | nindent 4 }}
   {{- end }}
   {{- end }}
   {{- end }}
