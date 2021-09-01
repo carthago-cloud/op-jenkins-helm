@@ -14,8 +14,12 @@ spec:
   {{- with $jenkinsKubernetesAgent.podSpec }}
   podSpec: {{- toYaml . | nindent 4 }}
   {{- end }}
-  {{- with $jenkinsKubernetesAgent.secretRef }}
-  secretRef: {{- toYaml . | nindent 4 }}
+  {{- with $jenkinsKubernetesAgent.properties }}
+  properties: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with $jenkinsKubernetesAgent.roleRef }}
+  roleRef: {{- toYaml . | nindent 4}}
   {{- end }}
   {{- end }}
   {{- end }}
+

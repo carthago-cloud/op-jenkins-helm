@@ -98,7 +98,7 @@ jenkins:
 
 # jenkinsGroovyScriptsEnabled can enable or disable the JenkinsGroovyScript instances
 # Set to false if you have configured CR(s) already and/or you want to deploy an operator only
-jenkinsGroovyScriptsEnabled: false
+jenkinsGroovyScriptsEnabled: true
 
 # JenkinsGroovyScripts instances configuration
 # JenkinsGroovyScriptSpec defines the desired state of JenkinsGroovyScript. It allows to write Groovy Scripts to modify the Jenkins.
@@ -293,6 +293,7 @@ jenkinsKubernetesAgents:
         - name: jnlp
           image: quay.io/openshift/origin-jenkins-agent-base:4.9.0
           imagePullPolicy: IfNotPresent
+
     properties:
       # Description of Jenkins Agent
       description: ""
@@ -322,7 +323,7 @@ jenkinsKubernetesAgents:
       internalDataDirectory: ""
 
       # FailIfWorkspaceIsMissing if true, remoting will fail at startup if the target work directory is missing
-      failIfWorkspaceIsMissing: false
+      failIfWorkplaceIsMissing: false
 
       # UseWebSocket uses websocket to connect to the Jenkins Controller rather than the TCP port
       useWebSocket: false
@@ -332,7 +333,7 @@ jenkinsKubernetesAgents:
       tunnelConnectionThrough: ""
 
       # JVMOptions are additional startup arguments for Java Virtual Machine which runs agent
-      JVMOptions: ""
+      jvmOptions: ""
 
       # Availability controls when Jenkins starts and stops this agent.
       availability: ""
@@ -341,3 +342,5 @@ jenkinsKubernetesAgents:
       toolLocations:
         - name: ""
           home: ""
+
+    roleRef: [ ]
