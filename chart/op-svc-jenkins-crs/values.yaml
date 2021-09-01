@@ -16,7 +16,7 @@ jenkins:
   # namespace is the namespace where the resources will be deployed
   # It's not recommended to use default namespace
   # Create new namespace for jenkins (called e.g. jenkins)
-  namespace: jenkins-place
+  namespace: default
 
   # labels are injected into metadata labels field
   #labels: { }
@@ -98,7 +98,7 @@ jenkins:
 
 # jenkinsGroovyScriptsEnabled can enable or disable the JenkinsGroovyScript instances
 # Set to false if you have configured CR(s) already and/or you want to deploy an operator only
-jenkinsGroovyScriptsEnabled: true
+jenkinsGroovyScriptsEnabled: false
 
 # JenkinsGroovyScripts instances configuration
 # JenkinsGroovyScriptSpec defines the desired state of JenkinsGroovyScript. It allows to write Groovy Scripts to modify the Jenkins.
@@ -107,7 +107,7 @@ jenkinsGroovyScripts:
   - name: groovy
 
     # namespace is the namespace where the resources will be deployed
-    namespace: jenkins-place
+    namespace: default
 
     # labels are injected into metadata labels field. Each JenkinsSeedJob Custom Resource need to reference corresponding
     # Jenkins Custom Resource via labels field
@@ -141,7 +141,7 @@ jenkinsGroovyScripts:
 
 # jenkinsSeedJobsEnabled can enable or disable the JenkinsSeedJobs instances
 # Set to false if you have configured CR(s) already and/or you want to deploy an operator only
-jenkinsSeedJobsEnabled: true
+jenkinsSeedJobsEnabled: false
 
 # JenkinsSeedJobs instances configuration
 # For seed job creation tutorial, check https://jenkinsci.github.io/kubernetes-operator/docs/getting-started/latest/configuration/#prepare-job-definitions-and-pipelines
@@ -151,7 +151,7 @@ jenkinsSeedJobs:
   - name: example
 
     # namespace is the namespace where the resources will be deployed
-    namespace: jenkins-place
+    namespace: default
 
     # labels are injected into metadata labels field. Each JenkinsSeedJob Custom Resource need to reference corresponding
     # Jenkins Custom Resource via labels field
@@ -186,13 +186,13 @@ jenkinsSeedJobs:
 
     # agentRef represents a Jenkins Kubernetes Agent Reference. It has enough information to retrieve agent
     # in any namespace
-    agentRef:
+    #agentRef:
 
       # name is unique within a namespace to reference a secret resource.
-      name: first-agent
+      #name:
 
       # namespace defines the space within which the secret name must be unique.
-      namespace: jenkins-place
+      #namespace:
 
     # triggers define circumstances that execute jobs
     triggers:
@@ -228,7 +228,7 @@ jenkinsSeedJobs:
 
 # jenkinsConfigurationsAsCodeEnabled can enable or disable the JenkinsConfigurationAsCode instances
 # Set to false if you have configured CR(s) already and/or you want to deploy an operator only
-jenkinsConfigurationsAsCodeEnabled: true
+jenkinsConfigurationsAsCodeEnabled: false
 
 # JenkinsConfigurationAsCode instances configuration
 # For configuration as code creation tutorial, check https://virtuslabrnd.github.io/operator-service-docs/operator-service-for-jenkins/latest/getting-started/customization/
@@ -237,7 +237,7 @@ jenkinsConfigurationsAsCode:
   - name: casc
 
     # namespace is the namespace where the resources will be deployed
-    namespace: jenkins-place
+    namespace: default
 
     # labels are injected into metadata labels field. Each JenkinsConfigurationAsCode Custom Resource need to reference corresponding
     # Jenkins Custom Resource via labels field
@@ -268,7 +268,7 @@ jenkinsConfigurationsAsCode:
 
 # jenkinsKubernetesAgentEnabled can enable or disable the JenkinsKubernetesAgent instances
 # Set to false if you have configured CR(s) already and/or you want to deploy an operator only
-jenkinsKubernetesAgentEnabled: true
+jenkinsKubernetesAgentEnabled: false
 
 # JenkinsKubernetesAgent instances configuration
 # For configuration as code creation tutorial, check https://virtuslabrnd.github.io/operator-service-docs/operator-service-for-jenkins/latest/getting-started/seedjob-configuration/
@@ -277,7 +277,7 @@ jenkinsKubernetesAgents:
   - name: first-agent
 
     # namespace is the namespace where the resources will be deployed
-    namespace: jenkins-place
+    namespace: default
 
     # labels are injected into metadata labels field. Each JenkinsKubernetesAgent Custom Resource need to reference corresponding
     # Jenkins Custom Resource via labels field

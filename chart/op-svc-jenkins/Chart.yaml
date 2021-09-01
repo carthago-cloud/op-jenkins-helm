@@ -2,5 +2,5 @@ apiVersion: v2
 appVersion: "0.7.0"
 description: Operator Service for Jenkins
 name: operator-service
-version: 0.1.0
+version: 0.1.2
 icon: https://raw.githubusercontent.com/jenkinsci/kubernetes-operator/master/assets/jenkins-operator-icon.png
