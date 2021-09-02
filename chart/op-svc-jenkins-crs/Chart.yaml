@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: "0.7.0"
+appVersion: "0.8.0"
 description: Custom Resources for Operator Service for Jenkins
 name: op-svc-jenkins-crs
 version: 0.1.2

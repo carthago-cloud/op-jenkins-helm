@@ -24,6 +24,7 @@ jenkins:
   # annotations are injected into metadata annotations field
   annotations: { }
 
+  # podSpec
   podSpec:
     initContainers: [ ]
     containers:
@@ -79,7 +80,6 @@ jenkins:
 
   # plugins are plugins required by the user
   # You can define plugins here
-  # See https://jenkinsci.github.io/kubernetes-operator/docs/getting-started/latest/customization/#install-plugins for more details
   #
   # Example:
   #
@@ -147,8 +147,7 @@ jenkinsGroovyScripts:
 jenkinsSeedJobsEnabled: false
 
 # JenkinsSeedJobs instances configuration
-# For seed job creation tutorial, check https://jenkinsci.github.io/kubernetes-operator/docs/getting-started/latest/configuration/#prepare-job-definitions-and-pipelines
-# See https://jenkinsci.github.io/kubernetes-operator/docs/getting-started/latest/configuration/#configure-seed-jobs for additional info
+# See https://virtuslabrnd.github.io/operator-service-docs/operator-service-for-jenkins/latest/getting-started/seedjob-configuration/ for additional info
 jenkinsSeedJobs:
   # name of resource
   - name: example
@@ -346,4 +345,5 @@ jenkinsKubernetesAgents:
         - name: ""
           home: ""
 
+    # RoleRef defines list of extra RBAC roles for the Jenkins Kubernetes Agent pod service account
     roleRef: [ ]
