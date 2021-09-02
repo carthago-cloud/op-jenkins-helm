@@ -1,6 +1,6 @@
 apiVersion: v2
 appVersion: "0.7.0"
 description: Custom Resources for Operator Service for Jenkins
-name: operator-service-CRs
+name: op-svc-jenkins-crs
 version: 0.1.2
 icon: https://raw.githubusercontent.com/jenkinsci/kubernetes-operator/master/assets/jenkins-operator-icon.png

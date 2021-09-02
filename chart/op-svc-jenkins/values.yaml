@@ -1,15 +1,18 @@
-# Jenkins Operator Helm chart
+# Operator Service for Jenkins Helm chart
 
 # apiVersion is the version of the Custom Resources manifests
 apiVersion: operator-service.com/v1beta1
 
 # operator is section for configuring operator deployment
 operator:
+  # namespace is the namespace where the operator will be deployed
+  # It's not recommended to use default namespace
+  # Create new namespace for jenkins (called e.g. operator-service)
   namespace: default
 
   replicaCount: 1
 
-  # image is the name (and tag) of the Jenkins Operator image
+  # image is the name (and tag) of the Operator Service for Jenkins image
   image: operatorservice.azurecr.io/op-svc-jenkins:0.8.1
 
   # imagePullPolicy defines policy for pulling images
@@ -17,7 +20,6 @@ operator:
 
   # imagePullSecrets is used to pull images from private repository
   imagePullSecrets:
-    - name: token
 
   # command
   command:
@@ -29,9 +31,24 @@ operator:
   # fullnameOverride overrides the deployment name
   fullnameOverride: ""
 
+  # Resource limit/request for Operator Service
+  # See https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/ for details
   resources: { }
+
+  # NodeSelector for Operator Service
+  # For more details see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
   nodeSelector: { }
+
+  # Tolerations are applied to pods, and allow the pods to schedule onto nodes with matching taints.
+  # See https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/ fore more details
   tolerations: [ ]
+
+  # Affinity allows you to constrain which nodes your pod is eligible to be scheduled on, based on labels on the node.
+  # For more details see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity
   affinity: { }
+
+  # JenkinsNamespace is used by Operator Service to watch namespace where Jenkins will be deployed
   jenkinsNamespace: "default"
+
+  # JenkinsName is name of Jenkins to watch by Operator Service
   jenkinsName: "jenkins"

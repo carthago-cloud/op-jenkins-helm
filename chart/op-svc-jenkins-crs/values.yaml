@@ -1,4 +1,4 @@
-# Jenkins Operator Custom Resources Helm chart
+# Operator Service for Jenkins Custom Resources Helm chart
 
 # apiVersion is the version of the Custom Resources manifests
 apiVersion: operator-service.com/v1beta1
@@ -52,25 +52,28 @@ jenkins:
         memory: 500Mi
     podSecurityContext: ""
     affinity: ""
+
   # homePVC allows to set PersistentVolumeClaim properties for Jenkins home
   homePVC: { }
+
   # accessMode specifies the way the plugins cache can be mounted
   # accessMode: ""
-  #
+
   # resourceStorage is the plugins cache volume size
   # resourceStorage: ""
-  #
+
   # storageClassName is the name of the StorageClass required by the claim
   # storageClassName: ""
 
   # pluginsCache allows to set plugins cache specific pvc properties
   pluginsCache: { }
+
   # accessMode specifies the way the plugins cache can be mounted
   # accessMode: ""
-  #
+
   # resourceStorage is the plugins cache volume size
   # resourceStorage: ""
-  #
+
   # storageClassName is the name of the StorageClass required by the claim
   # storageClassName: ""
 
