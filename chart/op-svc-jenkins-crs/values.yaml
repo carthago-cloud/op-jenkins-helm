@@ -65,6 +65,7 @@ jenkins:
 
   # storageClassName is the name of the StorageClass required by the claim
   # storageClassName: ""
+  # storageClassName: ""
 
   # pluginsCache allows to set plugins cache specific pvc properties
   pluginsCache: { }
@@ -101,7 +102,7 @@ jenkins:
 
 # jenkinsGroovyScriptsEnabled can enable or disable the JenkinsGroovyScript instances
 # Set to false if you have configured CR(s) already and/or you want to deploy an operator only
-jenkinsGroovyScriptsEnabled: false
+jenkinsGroovyScriptsEnabled: true
 
 # JenkinsGroovyScripts instances configuration
 # JenkinsGroovyScriptSpec defines the desired state of JenkinsGroovyScript. It allows to write Groovy Scripts to modify the Jenkins.
@@ -144,7 +145,7 @@ jenkinsGroovyScripts:
 
 # jenkinsSeedJobsEnabled can enable or disable the JenkinsSeedJobs instances
 # Set to false if you have configured CR(s) already and/or you want to deploy an operator only
-jenkinsSeedJobsEnabled: false
+jenkinsSeedJobsEnabled: true
 
 # JenkinsSeedJobs instances configuration
 # See https://virtuslabrnd.github.io/operator-service-docs/operator-service-for-jenkins/latest/getting-started/seedjob-configuration/ for additional info
@@ -230,7 +231,7 @@ jenkinsSeedJobs:
 
 # jenkinsConfigurationsAsCodeEnabled can enable or disable the JenkinsConfigurationAsCode instances
 # Set to false if you have configured CR(s) already and/or you want to deploy an operator only
-jenkinsConfigurationsAsCodeEnabled: false
+jenkinsConfigurationsAsCodeEnabled: true
 
 # JenkinsConfigurationAsCode instances configuration
 # For configuration as code creation tutorial, check https://virtuslabrnd.github.io/operator-service-docs/operator-service-for-jenkins/latest/getting-started/customization/
@@ -270,7 +271,7 @@ jenkinsConfigurationsAsCode:
 
 # jenkinsKubernetesAgentEnabled can enable or disable the JenkinsKubernetesAgent instances
 # Set to false if you have configured CR(s) already and/or you want to deploy an operator only
-jenkinsKubernetesAgentEnabled: false
+jenkinsKubernetesAgentEnabled: true
 
 # JenkinsKubernetesAgent instances configuration
 # For configuration as code creation tutorial, check https://virtuslabrnd.github.io/operator-service-docs/operator-service-for-jenkins/latest/getting-started/seedjob-configuration/

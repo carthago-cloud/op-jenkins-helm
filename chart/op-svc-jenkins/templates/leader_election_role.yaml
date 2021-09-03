@@ -4,6 +4,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: leader-election-role
+  namespace: {{.Values.operator.namespace}}
 rules:
   - apiGroups:
       - ""
@@ -37,6 +38,7 @@ rules:
       - create
       - patch
 ---
+{{- if ne .Values.operator.jenkinsNamespace .Values.operator.namespace }}
 # permissions to do leader election.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -75,3 +77,4 @@ rules:
     verbs:
       - create
       - patch
+  {{- end }}

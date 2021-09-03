@@ -20,6 +20,7 @@ operator:
 
   # imagePullSecrets is used to pull images from private repository
   imagePullSecrets:
+    - name: token
 
   # command
   command:
