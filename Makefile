@@ -17,7 +17,7 @@ helm-lint: helm
 	@echo "+ $@"
 	bin/helm lint chart/jenkins-operator
 
-.PHONY: helm-release-latest
+.PHONY: helm-package-latest
 helm-release-latest: helm
 	@echo "+ $@"
 	bin/helm package chart/op-svc-jenkins
