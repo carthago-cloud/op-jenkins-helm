@@ -16,6 +16,8 @@ jobs:
   build:
     name: publish acr 
     runs-on: ubuntu-latest
+    env: 
+      HELM_EXPERIMENTAL_OCI: 1
     steps:
     
       - uses: actions/checkout@v2
@@ -24,7 +26,6 @@ jobs:
       - name: install helm
         uses: Azure/setup-helm@v1
         env:
-          HELM_EXPERIMENTAL_OCI: 1
           HELM_VERSION_TO_INSTALL: 3.6.3
         with:
           version: ${{ env.HELM_VERSION_TO_INSTALL }}
