@@ -44,11 +44,15 @@ jobs:
             sed -i "/appVersion:/c\appVersion: \"${{ github.event.inputs.appVersion }}\"" chart/jenkins-operator/Chart.yaml
           fi
           
-          make helm-release-latest
+          make helm-package-latest
           
       - name: Push Helm Charts to ACR registry
         run: | 
           helm chart save op-svc-jenkins-${{ github.event.inputs.chartVersion }}.tgz operatorservice.azurecr.io/helm/op-svc-jenkins:${{ github.event.inputs.chartVersion }}
           helm chart save op-svc-jenkins-crs-${{ github.event.inputs.chartVersion }}.tgz operatorservice.azurecr.io/helm/op-svc-jenkins-crs:${{ github.event.inputs.chartVersion }}
+          helm chart save op-svc-jenkins-${{ github.event.inputs.chartVersion }}.tgz operatorservice.azurecr.io/helm/op-svc-jenkins:latest
+          helm chart save op-svc-jenkins-crs-${{ github.event.inputs.chartVersion }}.tgz operatorservice.azurecr.io/helm/op-svc-jenkins-crs:latest
           helm chart push operatorservice.azurecr.io/helm/op-svc-jenkins:${{ github.event.inputs.chartVersion }}
           helm chart push operatorservice.azurecr.io/helm/op-svc-jenkins-crs:${{ github.event.inputs.chartVersion }}
+          helm chart push operatorservice.azurecr.io/helm/op-svc-jenkins:latest
+          helm chart push operatorservice.azurecr.io/helm/op-svc-jenkins-crs:latest
