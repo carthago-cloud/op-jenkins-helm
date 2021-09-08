@@ -39,10 +39,16 @@ jobs:
           
       - name: Create Helm Chart package
         run: |
-          sed -i "/version:/c\version: ${{ github.event.inputs.chartVersion }}" chart/jenkins-operator/Chart.yaml
+          sed -i "/version:/c\version: ${{ github.event.inputs.chartVersion }}" chart/op-svc-jenkins/Chart.yaml
           
           if [ ${{ github.event.inputs.appVersion }} ] ; then
-            sed -i "/appVersion:/c\appVersion: \"${{ github.event.inputs.appVersion }}\"" chart/jenkins-operator/Chart.yaml
+            sed -i "/appVersion:/c\appVersion: \"${{ github.event.inputs.appVersion }}\"" chart/op-svc-jenkins/Chart.yaml
+          fi
+          
+          sed -i "/version:/c\version: ${{ github.event.inputs.chartVersion }}" chart/op-svc-jenkins-crs/Chart.yaml
+          
+          if [ ${{ github.event.inputs.appVersion }} ] ; then
+            sed -i "/appVersion:/c\appVersion: \"${{ github.event.inputs.appVersion }}\"" chart/op-svc-jenkins-crs/Chart.yaml
           fi
           
           make helm-package-latest
