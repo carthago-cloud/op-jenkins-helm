@@ -27,7 +27,7 @@ jobs:
           HELM_EXPERIMENTAL_OCI: 1
           HELM_VERSION_TO_INSTALL: 3.6.3
         with:
-          version: ${{ env.HELM_VERSION_TO_INSTALL }}# default is latest
+          version: ${{ env.HELM_VERSION_TO_INSTALL }}
         
       - name: login to acr using helm
         env:
