@@ -12,3 +12,6 @@
 .vscode
 
 .history
+
+bin/
+*.tgz
