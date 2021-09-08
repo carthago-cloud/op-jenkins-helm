@@ -1,0 +1,65 @@
+name: Build a Helm package and Push it to ACR
+
+on:
+  workflow_dispatch:
+    inputs:
+      chartVersion:
+        description: "Helm chart version to release. eg. 0.1.1"
+        required: true
+      appVersion:
+        description: "Operator app version without quotes, eg. 0.8.1 . If not provided, the one in Chart.yaml won't be overwritten."
+        required: false
+
+
+
+jobs:
+  build:
+    name: publish acr 
+    runs-on: ubuntu-latest
+    env: 
+      HELM_EXPERIMENTAL_OCI: 1
+    steps:
+    
+      - uses: actions/checkout@v2
+        name: checkout repo
+      
+      - name: install helm
+        uses: Azure/setup-helm@v1
+        env:
+          HELM_VERSION_TO_INSTALL: 3.6.3
+        with:
+          version: ${{ env.HELM_VERSION_TO_INSTALL }}
+        
+      - name: login to acr using helm
+        env:
+          ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
+          ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
+        run: |
+          helm registry login operatorservice.azurecr.io -u $ACR_USERNAME -p $ACR_PASSWORD
+          
+      - name: Create Helm Chart package
+        run: |
+          sed -i "/version:/c\version: ${{ github.event.inputs.chartVersion }}" chart/op-svc-jenkins/Chart.yaml
+          
+          if [ ${{ github.event.inputs.appVersion }} ] ; then
+            sed -i "/appVersion:/c\appVersion: \"${{ github.event.inputs.appVersion }}\"" chart/op-svc-jenkins/Chart.yaml
+          fi
+          
+          sed -i "/version:/c\version: ${{ github.event.inputs.chartVersion }}" chart/op-svc-jenkins-crs/Chart.yaml
+          
+          if [ ${{ github.event.inputs.appVersion }} ] ; then
+            sed -i "/appVersion:/c\appVersion: \"${{ github.event.inputs.appVersion }}\"" chart/op-svc-jenkins-crs/Chart.yaml
+          fi
+          
+          make helm-package-latest
+          
+      - name: Push Helm Charts to ACR registry
+        run: | 
+          helm chart save op-svc-jenkins-${{ github.event.inputs.chartVersion }}.tgz operatorservice.azurecr.io/helm/op-svc-jenkins:${{ github.event.inputs.chartVersion }}
+          helm chart save op-svc-jenkins-crs-${{ github.event.inputs.chartVersion }}.tgz operatorservice.azurecr.io/helm/op-svc-jenkins-crs:${{ github.event.inputs.chartVersion }}
+          helm chart save op-svc-jenkins-${{ github.event.inputs.chartVersion }}.tgz operatorservice.azurecr.io/helm/op-svc-jenkins:latest
+          helm chart save op-svc-jenkins-crs-${{ github.event.inputs.chartVersion }}.tgz operatorservice.azurecr.io/helm/op-svc-jenkins-crs:latest
+          helm chart push operatorservice.azurecr.io/helm/op-svc-jenkins:${{ github.event.inputs.chartVersion }}
+          helm chart push operatorservice.azurecr.io/helm/op-svc-jenkins-crs:${{ github.event.inputs.chartVersion }}
+          helm chart push operatorservice.azurecr.io/helm/op-svc-jenkins:latest
+          helm chart push operatorservice.azurecr.io/helm/op-svc-jenkins-crs:latest
