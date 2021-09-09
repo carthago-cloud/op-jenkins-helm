@@ -36,7 +36,7 @@ helm-release-latest: helm
 	bin/helm package chart/op-svc-jenkins-crs
 
 .PHONY: helm-save-local
-helm-save-local: helm-package-latest
+helm-save-local:
 	bin/helm chart save op-svc-jenkins-$(CHARTVERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins:$(CHARTVERSION)
 	bin/helm chart save op-svc-jenkins-crs-$(CHARTVERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins-crs:$(CHARTVERSION)
 	bin/helm chart save op-svc-jenkins-$(CHARTVERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins:latest
