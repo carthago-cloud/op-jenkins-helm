@@ -30,12 +30,12 @@ change-chart-version:
 	fi
 
 .PHONY: helm-package-latest
-helm-package-latest: helm
+helm-package-latest:
 	bin/helm package chart/op-svc-jenkins
 	bin/helm package chart/op-svc-jenkins-crs
 
 .PHONY: helm-save-local
-helm-save-local: helm
+helm-save-local:
 	@ls
 	bin/helm chart save op-svc-jenkins-$(CHART_VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins:$(CHART_VERSION)
 	bin/helm chart save op-svc-jenkins-crs-$(CHART_VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins-crs:$(CHART_VERSION)
