@@ -10,8 +10,6 @@ on:
         description: "Operator app version without quotes, eg. 0.8.1 . If not provided, the one in Chart.yaml won't be overwritten."
         required: false
 
-
-
 jobs:
   build:
     name: publish acr 
