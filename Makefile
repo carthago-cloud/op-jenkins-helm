@@ -20,14 +20,12 @@ helm-lint: helm
 .PHONE: change-chart-version
 change-chart-version:
 	sed -i "/version:/c\version: $(CHART_VERSION)" chart/op-svc-jenkins/Chart.yaml
-	if [ $(APP_VERSION) ]
-	then
+	if [ $(APP_VERSION) != "0.8.1" ] ; then
 		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" chart/op-svc-jenkins/Chart.yaml
 	fi
 
 	sed -i "/version:/c\version: $(CHART_VERSION)" chart/op-svc-jenkins-crs/Chart.yaml
-	if [ $(APP_VERSION) ]
-	then
+	if [ $(APP_VERSION) != "0.8.1"] ; then
 		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" chart/op-svc-jenkins-crs/Chart.yaml
 	fi
 
