@@ -30,8 +30,7 @@ change-chart-version:
 	fi
 
 .PHONY: helm-package-latest
-helm-release-latest: helm
-	@echo "+ $@"
+helm-package-latest: helm
 	bin/helm package chart/op-svc-jenkins
 	bin/helm package chart/op-svc-jenkins-crs
 
