@@ -17,3 +17,4 @@ endif
 PROJECT_DIR := $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
 PLATFORM = $(shell echo $(UNAME_S) | tr A-Z a-z)
 HELM_VERSION=3.6.3
+CHARTVERSION = 0.1.0
