@@ -38,16 +38,16 @@ jobs:
       - name: Create Helm Chart package
         run: |
           if [ ${{ github.event.inputs.appVersion }} ] ; then
-            make change-chart-version CHARTVERSION=${{ github.event.inputs.chartVersion }} APP_VERSION=${{ github.event.inputs.appVersion }}
+            make change-chart-version CHART_VERSION=${{ github.event.inputs.chartVersion }} APP_VERSION=${{ github.event.inputs.appVersion }}
           else 
-            make change-chart-version CHARTVERSION=${{ github.event.inputs.chartVersion }}
+            make change-chart-version CHART_VERSION=${{ github.event.inputs.chartVersion }}
           fi
           
-          make helm-package-latest CHARTVERSION=${{ github.event.inputs.chartVersion }}
+          make helm-package-latest CHART_VERSION=${{ github.event.inputs.chartVersion }}
           
       - name: Save Charts to local helm registry
         run: | 
-          make helm-save-local CHARTVERSION=${{ github.event.inputs.chartVersion }}
+          make helm-save-local CHART_VERSION=${{ github.event.inputs.chartVersion }}
           
       - name: Push saved charts to ACR registry
         run: |
