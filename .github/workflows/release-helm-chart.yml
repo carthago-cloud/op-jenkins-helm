@@ -39,7 +39,11 @@ jobs:
           
       - name: Create Helm Chart package
         run: |
-          make change-chart-version CHARTVERSION=${{ github.event.inputs.chartVersion }}
+          if [ ${{ github.event.inputs.appVersion }} ] ; then
+            make change-chart-version CHARTVERSION=${{ github.event.inputs.chartVersion }} APP_VERSION=${{ github.event.inputs.appVersion }}
+          else 
+            make change-chart-version CHARTVERSION=${{ github.event.inputs.chartVersion }}
+          fi
           
           make helm-package-latest CHARTVERSION=${{ github.event.inputs.chartVersion }}
           
