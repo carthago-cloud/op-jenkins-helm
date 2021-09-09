@@ -19,14 +19,14 @@ helm-lint: helm
 
 .PHONE: change-chart-version
 change-chart-version:
-	sed -i "/version:/c\version: $(CHARTVERSION)" chart/op-svc-jenkins/Chart.yaml
-	if [ $(CHARTVERSION) ] ; then
-		sed -i "/appVersion:/c\appVersion: \"$(CHARTVERSION)\"" chart/op-svc-jenkins/Chart.yaml
+	sed -i "/version:/c\version: $(CHART_VERSION)" chart/op-svc-jenkins/Chart.yaml
+	if [ $(APP_VERSION) ] ; then
+		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" chart/op-svc-jenkins/Chart.yaml
 	fi
 
-	sed -i "/version:/c\version: $(CHARTVERSION)" chart/op-svc-jenkins-crs/Chart.yaml
-	if [ $(CHARTVERSION) ] ; then
-		sed -i "/appVersion:/c\appVersion: \"$(CHARTVERSION)\"" chart/op-svc-jenkins-crs/Chart.yaml
+	sed -i "/version:/c\version: $(CHART_VERSION)" chart/op-svc-jenkins-crs/Chart.yaml
+	if [ $(APP_VERSION) ] ; then
+		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" chart/op-svc-jenkins-crs/Chart.yaml
 	fi
 
 .PHONY: helm-package-latest
@@ -37,7 +37,7 @@ helm-release-latest: helm
 
 .PHONY: helm-save-local
 helm-save-local:
-	bin/helm chart save op-svc-jenkins-$(CHARTVERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins:$(CHARTVERSION)
-	bin/helm chart save op-svc-jenkins-crs-$(CHARTVERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins-crs:$(CHARTVERSION)
-	bin/helm chart save op-svc-jenkins-$(CHARTVERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins:latest
-	bin/helm chart save op-svc-jenkins-crs-$(CHARTVERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins-crs:latest
+	bin/helm chart save op-svc-jenkins-$(CHART_VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins:$(CHART_VERSION)
+	bin/helm chart save op-svc-jenkins-crs-$(CHART_VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins-crs:$(CHART_VERSION)
+	bin/helm chart save op-svc-jenkins-$(CHART_VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins:latest
+	bin/helm chart save op-svc-jenkins-crs-$(CHART_VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins-crs:latest
