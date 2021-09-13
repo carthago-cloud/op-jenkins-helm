@@ -41,3 +41,27 @@ helm-save-local:
 	bin/helm chart save op-svc-jenkins-crs-$(CHART_VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins-crs:$(CHART_VERSION)
 	bin/helm chart save op-svc-jenkins-$(CHART_VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins:latest
 	bin/helm chart save op-svc-jenkins-crs-$(CHART_VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins-crs:latest
+
+
+.PHONY: sembump
+HAS_SEMBUMP := $(shell which $(PROJECT_DIR)/bin/sembump)
+sembump: ## Download sembump locally if necessary
+	@echo "+ $@"
+ifndef HAS_SEMBUMP
+	@mkdir -p bin
+	wget -O $(PROJECT_DIR)/bin/sembump https://github.com/justintout/sembump/releases/download/v0.1.0/sembump-$(PLATFORM)-amd64
+	chmod +x $(PROJECT_DIR)/bin/sembump
+endif
+
+.PHONY: bump-version
+BUMP := patch
+bump-version: sembump ## Bump the version in the version file. Set BUMP to [ patch | major | minor ]
+	@echo "+ $@"
+	$(eval NEW_VERSION=$(shell bin/sembump --kind $(BUMP) $(CHART_VERSION)))
+	@echo "Bumping VERSION.txt from $(CHART_VERSION) to $(NEW_VERSION)"
+	echo $(NEW_VERSION) > VERSION.txt
+	@echo "Updating version from $(CHART_VERSION) to $(NEW_VERSION) in README.md"
+	perl -i -pe 's/$(VERSION)/$(NEW_VERSION)/g' README.md
+	git add VERSION.txt README.md
+	git commit -vaem "Bump version to $(NEW_VERSION)"
+	@echo "Run make tag to create and push the tag for new version $(NEW_VERSION)"
