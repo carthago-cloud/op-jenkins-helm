@@ -19,10 +19,13 @@ jenkins:
   namespace: default
 
   # labels are injected into metadata labels field
-  #labels: { }
+  #labels: {}
 
   # annotations are injected into metadata annotations field
-  annotations: { }
+  annotations: {}
+
+  # podLabels are injected into Jenkins Controller Pod's metadata labels field
+  podLabels: {}
 
   # podSpec
   podSpec:

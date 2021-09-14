@@ -8,6 +8,9 @@ metadata:
   labels: {{ toYaml . | nindent 4 }}
   {{- end }}
 spec:
+  {{- with .Values.jenkins.podLabels }}
+  podLabels: {{ toYaml . | nindent 6 }}
+  {{- end }}
   podSpec:
   {{- if .Values.jenkins.podSpec.containers }}
     containers:
