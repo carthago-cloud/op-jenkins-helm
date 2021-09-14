@@ -19,28 +19,31 @@ helm-lint: helm
 	bin/helm lint chart/op-svc-jenkins-crs
 
 .PHONE: change-chart-version
-change-chart-version:
-	sed -i "/version:/c\version: $(CHART_VERSION)" chart/op-svc-jenkins/Chart.yaml
-	@if [ $(APP_VERSION) != 0.8.1 ] ; then \
-		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" chart/op-svc-jenkins/Chart.yaml ;\
+change-chart-version: bump-version
+	@echo "+ $@"
+	sed -i "/version:/c\version: $(VERSION)" chart/op-svc-jenkins/Chart.yaml
+	@if [ $(VERSION) != 0.8.1 ] ; then \
+		sed -i "/appVersion:/c\appVersion: \"$(VERSION)\"" chart/op-svc-jenkins/Chart.yaml ;\
 	fi
 
-	sed -i "/version:/c\version: $(CHART_VERSION)" chart/op-svc-jenkins-crs/Chart.yaml
-	@if [ $(APP_VERSION) != 0.8.1 ] ; then \
-		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" chart/op-svc-jenkins-crs/Chart.yaml ;\
+	sed -i "/version:/c\version: $(VERSION)" chart/op-svc-jenkins-crs/Chart.yaml
+	@if [ $(VERSION) != 0.8.1 ] ; then \
+		sed -i "/appVersion:/c\appVersion: \"$(VERSION)\"" chart/op-svc-jenkins-crs/Chart.yaml ;\
 	fi
 
 .PHONY: helm-package-latest
 helm-package-latest: helm
+	@echo "+ $@"
 	bin/helm package chart/op-svc-jenkins
 	bin/helm package chart/op-svc-jenkins-crs
 
 .PHONY: helm-save-local
 helm-save-local:
-	bin/helm chart save op-svc-jenkins-$(CHART_VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins:$(CHART_VERSION)
-	bin/helm chart save op-svc-jenkins-crs-$(CHART_VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins-crs:$(CHART_VERSION)
-	bin/helm chart save op-svc-jenkins-$(CHART_VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins:latest
-	bin/helm chart save op-svc-jenkins-crs-$(CHART_VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins-crs:latest
+	@echo "+ $@"
+	bin/helm chart save op-svc-jenkins-$(VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins:$(VERSION)
+	bin/helm chart save op-svc-jenkins-crs-$(VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins-crs:$(VERSION)
+	bin/helm chart save op-svc-jenkins-$(VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins:latest
+	bin/helm chart save op-svc-jenkins-crs-$(VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins-crs:latest
 
 
 .PHONY: sembump
@@ -57,11 +60,11 @@ endif
 BUMP := patch
 bump-version: sembump ## Bump the version in the version file. Set BUMP to [ patch | major | minor ]
 	@echo "+ $@"
-	$(eval NEW_VERSION=$(shell bin/sembump --kind $(BUMP) $(CHART_VERSION)))
-	@echo "Bumping VERSION.txt from $(CHART_VERSION) to $(NEW_VERSION)"
+	$(eval NEW_VERSION=$(shell bin/sembump --kind $(BUMP) $(VERSION)))
+	@echo "Bumping VERSION.txt from $(VERSION) to $(NEW_VERSION)"
 	echo $(NEW_VERSION) > VERSION.txt
-	@echo "Updating version from $(CHART_VERSION) to $(NEW_VERSION) in README.md"
+	@echo "Updating version from $(VERSION) to $(NEW_VERSION) in README.md"
 	perl -i -pe 's/$(VERSION)/$(NEW_VERSION)/g' README.md
 	git add VERSION.txt README.md
-	git commit -vaem "Bump version to $(NEW_VERSION)"
-	@echo "Run make tag to create and push the tag for new version $(NEW_VERSION)"
+	git commit -vaem "Bump version to $(VERSION)"
+	@echo "Run make tag to create and push the tag for new version $(VERSION)"
