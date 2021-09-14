@@ -65,6 +65,6 @@ bump-version: sembump ## Bump the version in the version file. Set BUMP to [ pat
 	echo $(NEW_VERSION) > VERSION.txt
 	@echo "Updating version from $(VERSION) to $(NEW_VERSION) in README.md"
 	perl -i -pe 's/$(VERSION)/$(NEW_VERSION)/g' README.md
-	git add VERSION.txt README.md
-	git commit -vaem "Bump version to $(VERSION)"
+	##git add VERSION.txt README.md
+	##git commit -vaem "Bump version to $(VERSION)"
 	@echo "Run make tag to create and push the tag for new version $(VERSION)"
