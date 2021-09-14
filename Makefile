@@ -15,7 +15,8 @@ endif
 .PHONY: helm-lint
 helm-lint: helm
 	@echo "+ $@"
-	bin/helm lint chart/jenkins-operator
+	bin/helm lint chart/op-svc-jenkins
+	bin/helm lint chart/op-svc-jenkins-crs
 
 .PHONE: change-chart-version
 change-chart-version:
@@ -30,8 +31,7 @@ change-chart-version:
 	fi
 
 .PHONY: helm-package-latest
-helm-release-latest: helm
-	@echo "+ $@"
+helm-package-latest: helm
 	bin/helm package chart/op-svc-jenkins
 	bin/helm package chart/op-svc-jenkins-crs
 
