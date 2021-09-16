@@ -29,7 +29,7 @@ change-chart-version: bump-version
 
 	sed -i "/version:/c\version: $(VERSION)" chart/op-svc-jenkins-crs/Chart.yaml
 	@if [ $(APP_VERSION) != $(OLD_APP_VERSION) ] ; then \
-		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" chart/op-svc-jenkins-crs/Chart.yaml ;\
+		gsed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" chart/op-svc-jenkins-crs/Chart.yaml ;\
 		echo $(APP_VERSION) > APP_VERSION.txt ;\
 	fi
 
