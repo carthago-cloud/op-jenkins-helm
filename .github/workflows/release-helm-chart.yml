@@ -61,6 +61,8 @@ jobs:
           
       - name: Commit changes to repository
         run: |
+          git config --global user.email "mkajzik@virtuslab.com"
+          git config --global user.name "Mateusz Kajzik"
           git add APP_VERSION.txt VERSION.txt chart/op-svc-jenkins/Chart.yaml chart/op-svc-jenkins-crs/Chart.yaml
           git commit -m "Helm Chart Release"
           git push
