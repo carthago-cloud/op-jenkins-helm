@@ -22,14 +22,14 @@ helm-lint: helm
 change-chart-version: bump-version
 	@echo "+ $@"
 	$(eval VERSION=$(shell cat VERSION.txt))
-	gsed -i "/version:/c\version: $(VERSION)" chart/op-svc-jenkins/Chart.yaml
+	sed -i "/version:/c\version: $(VERSION)" chart/op-svc-jenkins/Chart.yaml
 	@if [ $(APP_VERSION) != $(OLD_APP_VERSION) ] ; then \
-		gsed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" chart/op-svc-jenkins/Chart.yaml ;\
+		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" chart/op-svc-jenkins/Chart.yaml ;\
 	fi
 
-	gsed -i "/version:/c\version: $(VERSION)" chart/op-svc-jenkins-crs/Chart.yaml
+	sed -i "/version:/c\version: $(VERSION)" chart/op-svc-jenkins-crs/Chart.yaml
 	@if [ $(APP_VERSION) != $(OLD_APP_VERSION) ] ; then \
-		gsed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" chart/op-svc-jenkins-crs/Chart.yaml ;\
+		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" chart/op-svc-jenkins-crs/Chart.yaml ;\
 		echo $(APP_VERSION) > APP_VERSION.txt ;\
 	fi
 
