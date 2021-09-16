@@ -19,6 +19,8 @@ jobs:
     steps:
     
       - uses: actions/checkout@v2
+        with:
+          ref: fix/action-workflow
         name: checkout repo
       
       - name: install helm
@@ -56,3 +58,9 @@ jobs:
           helm chart push operatorservice.azurecr.io/helm/op-svc-jenkins-crs:$CHART_VERSION
           helm chart push operatorservice.azurecr.io/helm/op-svc-jenkins:latest
           helm chart push operatorservice.azurecr.io/helm/op-svc-jenkins-crs:latest
+          
+      - name: Commit changes to repository
+        run: |
+          git add APP_VERSION.txt VERSION.txt chart/op-svc-jenkins/Chart.yaml chart/op-svc-jenkins-crs/Chart.yaml
+          git commit -m "Helm Chart Release"
+          git push
