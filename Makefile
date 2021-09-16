@@ -62,10 +62,10 @@ endif
 .PHONY: bump-version
 BUMP := patch
 bump-version: sembump ## Bump the version in the version file. Set BUMP to [ patch | major | minor ]
-	#@echo "+ $@"
-	#$(eval NEW_VERSION=$(shell bin/sembump --kind $(BUMP) $(VERSION)))
-	#@echo "Bumping VERSION.txt from $(VERSION) to $(NEW_VERSION)"
-	#echo $(NEW_VERSION) > VERSION.txt
-	#@echo "Updating version from $(VERSION) to $(NEW_VERSION) in README.md"
-	#perl -i -pe 's/$(VERSION)/$(NEW_VERSION)/g' README.md
+	@echo "+ $@"
+	$(eval NEW_VERSION=$(shell bin/sembump --kind $(BUMP) $(VERSION)))
+	@echo "Bumping VERSION.txt from $(VERSION) to $(NEW_VERSION)"
+	echo $(NEW_VERSION) > VERSION.txt
+	@echo "Updating version from $(VERSION) to $(NEW_VERSION) in README.md"
+	perl -i -pe 's/$(VERSION)/$(NEW_VERSION)/g' README.md
 	git log  --pretty=format:' * %s' $(VERSION)...HEAD > CHANGELOG.txt
