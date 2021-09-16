@@ -68,6 +68,11 @@ jobs:
           git commit -m "Helm Chart Release"
           git push
           
+      - name: Create Tag
+        run: |
+          git tag $CHART_VERSION
+          git push origin fix/action-workflow #CHART_VERSION
+          
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
