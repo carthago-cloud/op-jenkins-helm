@@ -21,15 +21,18 @@ helm-lint: helm
 .PHONE: change-chart-version
 change-chart-version: bump-version
 	@echo "+ $@"
-	sed -i "/version:/c\version: $(VERSION)" chart/op-svc-jenkins/Chart.yaml
-	@if [ $(VERSION) != 0.8.1 ] ; then \
-		sed -i "/appVersion:/c\appVersion: \"$(VERSION)\"" chart/op-svc-jenkins/Chart.yaml ;\
+	$(eval VERSION=$(shell cat VERSION.txt))
+	gsed -i "/version:/c\version: $(VERSION)" chart/op-svc-jenkins/Chart.yaml
+	@if [ $(APP_VERSION) != $(OLD_APP_VERSION) ] ; then \
+		gsed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" chart/op-svc-jenkins/Chart.yaml ;\
 	fi
 
-	sed -i "/version:/c\version: $(VERSION)" chart/op-svc-jenkins-crs/Chart.yaml
-	@if [ $(VERSION) != 0.8.1 ] ; then \
-		sed -i "/appVersion:/c\appVersion: \"$(VERSION)\"" chart/op-svc-jenkins-crs/Chart.yaml ;\
+	gsed -i "/version:/c\version: $(VERSION)" chart/op-svc-jenkins-crs/Chart.yaml
+	@if [ $(APP_VERSION) != $(OLD_APP_VERSION) ] ; then \
+		gsed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" chart/op-svc-jenkins-crs/Chart.yaml ;\
+		echo $(APP_VERSION) > APP_VERSION.txt ;\
 	fi
+
 
 .PHONY: helm-package-latest
 helm-package-latest: helm

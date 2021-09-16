@@ -19,4 +19,5 @@ PLATFORM = $(shell echo $(UNAME_S) | tr A-Z a-z)
 VERSION := $(shell cat VERSION.txt)
 HELM_VERSION=3.6.3
 CHART_VERSION=0.1.0
-APP_VERSION=0.8.1
+APP_VERSION := $(shell cat APP_VERSION.txt)
+OLD_APP_VERSION := $(shell cat APP_VERSION.txt)
