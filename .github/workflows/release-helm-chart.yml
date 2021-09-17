@@ -76,9 +76,9 @@ jobs:
           
       - name: Release
         uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
           body_path: CHANGELOG.txt
-          tag_name: ${{ env.CHART_VERSION }}
           files: |
             op-svc-jenkins-$CHART_VERSION.tgz
             op-svc-jenkins-crs-$CHART_VERSION.tgz
