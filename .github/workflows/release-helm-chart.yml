@@ -81,5 +81,6 @@ jobs:
         with:
           body_path: CHANGELOG.txt
           files: |
-            op-svc-jenkins-$CHART_VERSION.tgz
-            op-svc-jenkins-crs-$CHART_VERSION.tgz
+            op-svc-jenkins-${{env.CHART_VERSION}}.tgz
+            op-svc-jenkins-crs-${{CHART_VERSION}}.tgz
+          tag_name: ${{ env.CHART_VERSION }}
