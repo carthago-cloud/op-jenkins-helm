@@ -52,9 +52,11 @@ jobs:
         run: | 
           make helm-save-local
           
+      - name: Set env
+        run: echo "CHART_VERSION=$(cat VERSION.txt)" >> $GITHUB_ENV
+          
       - name: Push saved charts to ACR registry
         run: |
-          export CHART_VERSION=$(cat VERSION.txt)
           helm chart push operatorservice.azurecr.io/helm/op-svc-jenkins:$CHART_VERSION
           helm chart push operatorservice.azurecr.io/helm/op-svc-jenkins-crs:$CHART_VERSION
           helm chart push operatorservice.azurecr.io/helm/op-svc-jenkins:latest
@@ -70,14 +72,11 @@ jobs:
           
       - name: Create Tag
         run: |
-          export CHART_VERSION=$(cat VERSION.txt)
           git tag $CHART_VERSION
           git push origin fix/action-workflow $CHART_VERSION
           
       - name: Release
         uses: softprops/action-gh-release@v1
-        env: 
-          CHART_VERSION: $(cat VERSION.txt)
         with:
           body_path: CHANGELOG.txt
           files: |
