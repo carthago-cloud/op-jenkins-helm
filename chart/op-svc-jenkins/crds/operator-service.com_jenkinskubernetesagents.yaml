@@ -37,7 +37,7 @@ spec:
           spec:
             description: JenkinsKubernetesAgentSpec defines the desired state of Jenkins
               Agent. It's used as remote agent, running in separate pod, which connects
-              to Jenkins master.
+              to Jenkins Controller.
             properties:
               annotations:
                 additionalProperties:
@@ -6117,7 +6117,7 @@ spec:
                     type: string
                   useWebSocket:
                     description: UseWebSocket uses websocket to connect to the Jenkins
-                      master rather than the TCP port
+                      Controller rather than the TCP port
                     type: boolean
                 required:
                 - remoteRootDirectory
