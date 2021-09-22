@@ -35,7 +35,7 @@ spec:
             type: object
           spec:
             description: JenkinsSpec defines the desired state of Jenkins. It's used
-              for Jenkins master and Kubernetes pod configuration
+              for Jenkins Controller and Kubernetes pod configuration
             properties:
               annotations:
                 additionalProperties:
@@ -99,6 +99,14 @@ spec:
                     description: StorageClassName is the name of the StorageClass
                       required by the claim
                     type: string
+                type: object
+              podLabels:
+                additionalProperties:
+                  type: string
+                description: 'Map of string keys and values that can be used to organize
+                  and categorize (scope and select) objects. May match selectors of
+                  replication controllers and services. Allows to add custom labels
+                  to Jenkins Controller Pod More info: http://kubernetes.io/docs/user-guide/labels'
                 type: object
               podSpec:
                 description: PodSpec allows to set Jenkins Kubernetes specific pod
@@ -6113,7 +6121,7 @@ spec:
                 type: object
               roles:
                 description: Roles defines list of extra RBAC roles for the Jenkins
-                  Master pod service account
+                  Controller pod service account
                 items:
                   description: RoleRef contains information that points to the role
                     being used
@@ -7195,8 +7203,8 @@ spec:
                   this CR
                 type: string
               provisionStartTime:
-                description: ProvisionStartTime is a time when Jenkins master pod
-                  has been created
+                description: ProvisionStartTime is a time when Jenkins Controller
+                  pod has been created
                 format: date-time
                 type: string
             type: object
