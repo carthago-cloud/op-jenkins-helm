@@ -29,21 +29,21 @@ jenkins:
 
   # podSpec
   podSpec:
-    initContainers: [ ]
+    initContainers: []
     containers:
       - name: jenkins-controller
-        image: jenkins/jenkins:2.277.4-lts-alpine
+        image: jenkins/jenkins:2.289.2-lts
         imagePullPolicy: IfNotPresent
-        imagePullSecrets: [ ]
-        livenessProbe: { }
-        readinessProbe: { }
-        resources: { }
-        env: [ ]
-        volumeMounts: [ ]
-    volumes: [ ]
+        imagePullSecrets: []
+        livenessProbe: {}
+        readinessProbe: {}
+        resources: {}
+        env: []
+        volumeMounts: []
+    volumes: []
     restartPolicy: ""
-    nodeSelector: [ ]
-    imagePullSecrets: [ ]
+    nodeSelector: []
+    imagePullSecrets: []
 
     # Resource limit/request for Jenkins
     # See https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/ for details
@@ -58,7 +58,7 @@ jenkins:
     affinity: ""
 
   # homePVC allows to set PersistentVolumeClaim properties for Jenkins home
-  homePVC: { }
+  homePVC: {}
 
   # accessMode specifies the way the plugins cache can be mounted
   # accessMode: ""
@@ -71,7 +71,7 @@ jenkins:
   # storageClassName: ""
 
   # pluginsCache allows to set plugins cache specific pvc properties
-  pluginsCache: { }
+  pluginsCache: {}
 
   # accessMode specifies the way the plugins cache can be mounted
   # accessMode: ""
@@ -90,10 +90,10 @@ jenkins:
   # plugins:
   # - name: jacoco
   #   version: "3.1.1"
-  plugins: [ ]
+  plugins: []
 
   # roles defines list of extra RBAC roles for the Jenkins Master pod service account
-  roles: [ ]
+  roles: []
 
   # defines authorization strategy of the operator for the Jenkins API
   authorizationStrategy: createUser
@@ -122,7 +122,7 @@ jenkinsGroovyScripts:
       operator-service.com/jenkins: jenkins
 
     # annotations are injected into metadata annotations field
-    annotations: { }
+    annotations: {}
 
     # data is inline Groovy script
     data: |
@@ -165,7 +165,7 @@ jenkinsSeedJobs:
       operator-service.com/jenkins: jenkins
 
     # annotations are injected into metadata annotations field
-    annotations: { }
+    annotations: {}
 
     # Repository is VCS repository settings
     repository:
@@ -251,7 +251,7 @@ jenkinsConfigurationsAsCode:
       operator-service.com/jenkins: jenkins
 
     # annotations are injected into metadata annotations field
-    annotations: { }
+    annotations: {}
 
     # data is inline Groovy script
     data: |
@@ -291,7 +291,7 @@ jenkinsKubernetesAgents:
       operator-service.com/jenkins: jenkins
 
     # annotations are injected into metadata annotations field
-    annotations: { }
+    annotations: {}
 
     # PodSpec allows to set Jenkins Kubernetes Agent specific pod properties
     podSpec:
@@ -350,4 +350,4 @@ jenkinsKubernetesAgents:
           home: ""
 
     # RoleRef defines list of extra RBAC roles for the Jenkins Kubernetes Agent pod service account
-    roleRef: [ ]
+    roleRef: []
