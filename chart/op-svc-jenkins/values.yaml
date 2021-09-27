@@ -26,6 +26,10 @@ operator:
   command:
     - /manager
 
+  # args is used to specify flags
+  args:
+    - --leader-elect=true
+
   # nameOverride overrides the app name
   nameOverride: ""
 

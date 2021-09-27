@@ -7207,6 +7207,10 @@ spec:
                   pod has been created
                 format: date-time
                 type: string
+              userAndPasswordHash:
+                description: UserAndPasswordHash is a SHA256 hash made from user and
+                  password
+                type: string
             type: object
         type: object
     served: true

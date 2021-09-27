@@ -26,19 +26,19 @@ spec:
         - name: {{ .Chart.Name }}
           image: {{ .Values.operator.image }}
           imagePullPolicy: {{ .Values.operator.imagePullPolicy }}
-          command:
-            - /manager
+          {{- with .Values.operator.command }}
+          command: {{ toYaml . | nindent 10 }}
+          {{- end }}
           ports:
             - name: http
               containerPort: 80
               protocol: TCP
-          args:
-            - --leader-elect
+          {{- with .Values.operator.args }}
+          args: {{ toYaml . | nindent 10 }}
+          {{- end }}
           env:
             - name: WATCH_NAMESPACE
               value: {{ .Values.operator.jenkinsNamespace }}
-            - name: POD_NAME
-              value: {{ .Values.operator.jenkinsName }}
             - name: OPERATOR_NAME
               value: "operator-service"
           resources:
