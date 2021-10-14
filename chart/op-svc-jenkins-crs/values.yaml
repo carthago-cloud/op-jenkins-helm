@@ -30,32 +30,33 @@ jenkins:
   # podSpec
   podSpec:
     initContainers: []
-    containers:
-      - name: jenkins-controller
-        image: jenkins/jenkins:2.289.2-lts
-        imagePullPolicy: IfNotPresent
-        imagePullSecrets: []
-        livenessProbe: {}
-        readinessProbe: {}
-        resources: {}
-        env: []
-        volumeMounts: []
+    sidecars: []
+    jenkinsController:
+      name: jenkins-controller
+      image: jenkins/jenkins:2.277.4-lts-alpine
+      imagePullPolicy: IfNotPresent
+      imagePullSecrets: []
+      livenessProbe: {}
+      readinessProbe: {}
+      # Resource limit/request for Jenkins
+      # See https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/ for details
+      resources:
+        limits:
+          cpu: 1500m
+          memory: 3Gi
+        requests:
+          cpu: 1
+          memory: 500Mi
+      env: []
+      volumeMounts: []
     volumes: []
     restartPolicy: ""
     nodeSelector: []
     imagePullSecrets: []
-
-    # Resource limit/request for Jenkins
-    # See https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/ for details
-    resources:
-      limits:
-        cpu: 1500m
-        memory: 3Gi
-      requests:
-        cpu: 1
-        memory: 500Mi
+    hostAliases: []
     podSecurityContext: ""
     affinity: ""
+    priorityClassName: ""
 
   # homePVC allows to set PersistentVolumeClaim properties for Jenkins home
   homePVC: {}
@@ -94,6 +95,9 @@ jenkins:
 
   # roles defines list of extra RBAC roles for the Jenkins Master pod service account
   roles: []
+
+  # services allows to configure Jenkins services
+  services: {}
 
   # defines authorization strategy of the operator for the Jenkins API
   authorizationStrategy: createUser

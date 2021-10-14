@@ -12,9 +12,56 @@ spec:
   podLabels: {{ toYaml . | nindent 6 }}
   {{- end }}
   podSpec:
-  {{- if .Values.jenkins.podSpec.containers }}
+  {{- if .Values.jenkins.podSpec.initContainers }}
+    initContainers:
+    {{- range .Values.jenkins.podSpec.initContainers }}
+    - name: {{ .name }}
+      image: {{ .image }}
+      imagePullPolicy: {{ .imagePullPolicy }}
+      {{- with .imagePullSecrets }}
+      imagePullSecrets: {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .livenessProbe }}
+      livenessProbe: {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .readinessProbe }}
+      readinessProbe: {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .resources }}
+      resources: {{ toYaml . | nindent 10 }}
+      {{- end }}
+      {{- with .env }}
+      env: {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .volumeMounts }}
+      volumeMounts: {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
     containers:
-    {{- range .Values.jenkins.podSpec.containers }}
+      - name:  jenkins-controller
+        image: {{ .Values.jenkins.podSpec.jenkinsController.image }}
+        imagePullPolicy: {{ .Values.jenkins.podSpec.jenkinsController.imagePullPolicy }}
+        {{- with .Values.jenkins.podSpec.jenkinsController.imagePullSecrets }}
+        imagePullSecrets: {{ toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.jenkins.podSpec.jenkinsController.livenessProbe }}
+        livenessProbe: {{ toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.jenkins.podSpec.jenkinsController.readinessProbe }}
+        readinessProbe: {{ toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.jenkins.podSpec.jenkinsController.resources }}
+        resources: {{ toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.jenkins.podSpec.jenkinsController.env }}
+        env: {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.jenkins.podSpec.jenkinsController.volumeMounts }}
+        volumeMounts: {{- toYaml . | nindent 8 }}
+        {{- end }}
+    {{- if .Values.jenkins.podSpec.sidecars }}
+      {{- range .Values.jenkins.podSpec.sidecars }}
       - name: {{ .name }}
         image: {{ .image }}
         imagePullPolicy: {{ .imagePullPolicy }}
@@ -28,7 +75,7 @@ spec:
         readinessProbe: {{ toYaml . | nindent 8 }}
         {{- end }}
         {{- with .resources }}
-        resources: {{ toYaml . | nindent 8 }}
+        resources: {{ toYaml . | nindent 10 }}
         {{- end }}
         {{- with .env }}
         env: {{- toYaml . | nindent 8 }}
@@ -36,8 +83,29 @@ spec:
         {{- with .volumeMounts }}
         volumeMounts: {{- toYaml . | nindent 8 }}
         {{- end }}
+      {{- end }}
     {{- end }}
-  {{- end }}
+    {{- with .Values.jenkins.podSpec.volumes }}
+    volumes: {{ toYaml . | nindent 6 }}
+    {{- end }}
+    {{- if .Values.jenkins.podSpec.restartPolicy }}
+    restartPolicy: {{ .Values.jenkins.podSpec.restartPolicy }}
+    {{- end }}
+    {{- with .Values.jenkins.podSpec.nodeSelector }}
+    nodeSelector: {{ toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .Values.jenkins.podSpec.imagePullSecrets}}
+    imagePullSecrets: {{ toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .Values.jenkins.podSpec.hostAliases }}
+    hostAliases: {{ toYaml . | nindent 6 }}
+    {{- end }}
+    {{- if .Values.jenkins.podSpec.priorityClassName }}
+    priorityClassName: {{ .Values.jenkins.podSpec.priorityClassName }}
+    {{- end }}
+    {{- if .Values.jenkins.podSpec.podSecurityContext }}
+    securityContext: {{ .Values.jenkins.podSpec.podSecurityContext }}
+    {{- end }}
   {{- with .Values.jenkins.plugins }}
   plugins: {{ toYaml . | nindent 4 }}
   {{- end }}
