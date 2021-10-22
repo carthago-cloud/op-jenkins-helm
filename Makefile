@@ -35,7 +35,7 @@ change-chart-version: bump-version
 
 
 .PHONY: helm-package-latest
-helm-package-latest: helm
+helm-package-latest:
 	@echo "+ $@"
 	bin/helm package chart/op-svc-jenkins
 	bin/helm package chart/op-svc-jenkins-crs

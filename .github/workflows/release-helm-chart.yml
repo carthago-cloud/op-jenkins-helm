@@ -11,56 +11,56 @@ on:
         required: false
 
 jobs:
-  build:
-    name: publish acr 
+  publish-with-old-helm:
+    name: publish helm charts to ACR with Helm 3.6.3
     runs-on: ubuntu-latest
-    env: 
+    env:
       HELM_EXPERIMENTAL_OCI: 1
     steps:
-    
+
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
         name: checkout repo
-      
+
       - name: install helm
         uses: Azure/setup-helm@v1
         env:
           HELM_VERSION_TO_INSTALL: 3.6.3
         with:
           version: ${{ env.HELM_VERSION_TO_INSTALL }}
-        
+
       - name: login to acr using helm
         env:
           ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
           ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
         run: |
           helm registry login operatorservice.azurecr.io -u $ACR_USERNAME -p $ACR_PASSWORD
-          
+
       - name: Create Helm Chart package
         run: |
           if [ ${{ github.event.inputs.appVersion }} ] ; then
             make change-chart-version BUMP=${{ github.event.inputs.Bump }} APP_VERSION=${{ github.event.inputs.appVersion }}
-          else 
+          else
             make change-chart-version BUMP=${{ github.event.inputs.Bump }}
           fi
-          
+
           make helm-package-latest
-          
+
       - name: Save Charts to local helm registry
-        run: | 
+        run: |
           make helm-save-local
-          
+
       - name: Set env
         run: echo "CHART_VERSION=$(cat VERSION.txt)" >> $GITHUB_ENV
-          
+
       - name: Push saved charts to ACR registry
         run: |
           helm chart push operatorservice.azurecr.io/helm/op-svc-jenkins:$CHART_VERSION
           helm chart push operatorservice.azurecr.io/helm/op-svc-jenkins-crs:$CHART_VERSION
           helm chart push operatorservice.azurecr.io/helm/op-svc-jenkins:latest
           helm chart push operatorservice.azurecr.io/helm/op-svc-jenkins-crs:latest
-          
+
       - name: Commit changes to repository
         run: |
           git config --global user.email "mkajzik@virtuslab.com"
@@ -68,12 +68,12 @@ jobs:
           git add APP_VERSION.txt VERSION.txt chart/op-svc-jenkins/Chart.yaml chart/op-svc-jenkins-crs/Chart.yaml
           git commit -m "Helm Chart Release"
           git push
-          
+
       - name: Create Tag
         run: |
           git tag $CHART_VERSION
           git push origin main $CHART_VERSION
-          
+
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
@@ -82,3 +82,47 @@ jobs:
             op-svc-jenkins-${{ env.CHART_VERSION }}.tgz
             op-svc-jenkins-crs-${{ env.CHART_VERSION }}.tgz
           tag_name: ${{ env.CHART_VERSION }}
+
+  publish-with-new-helm:
+    name: publish helm charts to ACR with Helm 3.7.0
+    runs-on: ubuntu-latest
+    env:
+      HELM_EXPERIMENTAL_OCI: 1
+    steps:
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+        name: checkout repo
+
+      - name: install helm
+        uses: Azure/setup-helm@v1
+        env:
+          HELM_VERSION_TO_INSTALL: 3.7.0
+        with:
+          version: ${{ env.HELM_VERSION_TO_INSTALL }}
+
+      - name: login to acr using helm
+        env:
+          ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
+          ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
+        run: |
+          helm registry login operatorservice.azurecr.io -u $ACR_USERNAME -p $ACR_PASSWORD
+
+      - name: Create Helm Chart package
+        run: |
+          if [ ${{ github.event.inputs.appVersion }} ] ; then
+            make change-chart-version BUMP=${{ github.event.inputs.Bump }} APP_VERSION=${{ github.event.inputs.appVersion }}
+          else
+            make change-chart-version BUMP=${{ github.event.inputs.Bump }}
+          fi
+
+          make helm-package-latest
+
+      - name: Set env
+        run: echo "CHART_VERSION=$(cat VERSION.txt)" >> $GITHUB_ENV
+
+      - name: Push saved charts to ACR registry
+        run: |
+          helm push op-svc-jenkins-$CHART_VERSION.tgz oci://operatorservice.azurecr.io/chart/
+          helm push op-svc-jenkins-crs-$CHART_VERSION.tgz oci://operatorservice.azurecr.io/chart/
