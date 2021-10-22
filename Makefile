@@ -2,7 +2,7 @@ include variables.mk
 
 .PHONY: helm-install
 HAS_HELM := $(shell which $(PROJECT_DIR)/bin/helm)
-helm: ## Download helm if it's not present
+helm-install: ## Download helm if it's not present
 	@echo "+ $@"
 ifndef HAS_HELM
 	mkdir -p $(PROJECT_DIR)/bin
