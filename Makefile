@@ -1,6 +1,6 @@
 include variables.mk
 
-.PHONY: helm
+.PHONY: helm-install
 HAS_HELM := $(shell which $(PROJECT_DIR)/bin/helm)
 helm: ## Download helm if it's not present
 	@echo "+ $@"

@@ -96,18 +96,17 @@ jobs:
         name: checkout repo
 
       - name: install helm
-        uses: Azure/setup-helm@v1
         env:
           HELM_VERSION_TO_INSTALL: 3.7.0
-        with:
-          version: ${{ env.HELM_VERSION_TO_INSTALL }}
+        run: |
+          make helm-install HELM_VERSION=$HELM_VERSION_TO_INSTALL
 
       - name: login to acr using helm
         env:
           ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
           ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
         run: |
-          helm registry login operatorservice.azurecr.io -u $ACR_USERNAME -p $ACR_PASSWORD
+          bin/helm registry login operatorservice.azurecr.io -u $ACR_USERNAME -p $ACR_PASSWORD
 
       - name: Create Helm Chart package
         run: |
@@ -124,5 +123,5 @@ jobs:
 
       - name: Push saved charts to ACR registry
         run: |
-          helm push op-svc-jenkins-$CHART_VERSION.tgz oci://operatorservice.azurecr.io/chart/
-          helm push op-svc-jenkins-crs-$CHART_VERSION.tgz oci://operatorservice.azurecr.io/chart/
+          bin/helm push op-svc-jenkins-$CHART_VERSION.tgz oci://operatorservice.azurecr.io/chart/
+          bin/helm push op-svc-jenkins-crs-$CHART_VERSION.tgz oci://operatorservice.azurecr.io/chart/
