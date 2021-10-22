@@ -122,5 +122,5 @@ jobs:
 
       - name: Push saved charts to ACR registry
         run: |
-          bin/helm push op-svc-jenkins-$CHART_VERSION.tgz oci://operatorservice.azurecr.io/chart/
-          bin/helm push op-svc-jenkins-crs-$CHART_VERSION.tgz oci://operatorservice.azurecr.io/chart/
+          bin/helm push op-svc-jenkins-$CHART_VERSION.tgz oci://operatorservice.azurecr.io/charts/
+          bin/helm push op-svc-jenkins-crs-$CHART_VERSION.tgz oci://operatorservice.azurecr.io/charts/
