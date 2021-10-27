@@ -1,8 +1,8 @@
 include variables.mk
 
-.PHONY: helm
+.PHONY: helm-install
 HAS_HELM := $(shell which $(PROJECT_DIR)/bin/helm)
-helm: ## Download helm if it's not present
+helm-install: ## Download helm if it's not present
 	@echo "+ $@"
 ifndef HAS_HELM
 	mkdir -p $(PROJECT_DIR)/bin
@@ -13,7 +13,7 @@ ifndef HAS_HELM
 endif
 
 .PHONY: helm-lint
-helm-lint: helm
+helm-lint: helm-install
 	@echo "+ $@"
 	bin/helm lint chart/op-svc-jenkins
 	bin/helm lint chart/op-svc-jenkins-crs
@@ -35,13 +35,13 @@ change-chart-version: bump-version
 
 
 .PHONY: helm-package-latest
-helm-package-latest: helm
+helm-package-latest: helm-install
 	@echo "+ $@"
 	bin/helm package chart/op-svc-jenkins
 	bin/helm package chart/op-svc-jenkins-crs
 
 .PHONY: helm-save-local
-helm-save-local:
+helm-save-local: helm-install
 	@echo "+ $@"
 	bin/helm chart save op-svc-jenkins-$(VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins:$(VERSION)
 	bin/helm chart save op-svc-jenkins-crs-$(VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins-crs:$(VERSION)
