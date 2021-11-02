@@ -98,6 +98,27 @@ jenkins:
 
   # services allows to configure Jenkins services
   services: {}
+#    Http is Jenkins web UI service
+#    http:
+#      labels are injected into metadata labels field
+#      labels: {}
+#
+#      annotations are injected into metadata annotations field
+#      annotations: {}
+#
+#      Spec describes the attributes that a user creates on a service.
+#      spec: {}
+#
+#    Agent is Jenkins agent service
+#    agent:
+#      labels are injected into metadata labels field
+#      labels: {}
+#
+#      annotations are injected into metadata annotations field
+#      annotations: {}
+#
+#      Spec describes the attributes that a user creates on a service.
+#      spec: {}
 
   # defines authorization strategy of the operator for the Jenkins API
   authorizationStrategy: createUser
