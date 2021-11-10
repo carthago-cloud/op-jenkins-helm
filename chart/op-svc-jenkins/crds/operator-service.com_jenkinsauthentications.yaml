@@ -35,239 +35,60 @@ spec:
           metadata:
             type: object
           spec:
-            description: JenkinsAuthenticationSpec defines the desired state of JenkinsAuthentication.
-              It's used only for authentication purposes, to check if user with provided
+            description: 'JenkinsAuthenticationSpec defines the desired state of JenkinsAuthentication.
+              It''s used only for authentication purposes, to check if user with provided
               credentials exists. For granular access properties, look at JenkinsAuthorization
-              CRD
+              CRD. Before using, user has to set up an OAuth App on GitHub: https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app'
             properties:
-              github:
-                description: GitHub is configuration for GitHub OAuth provider
+              githubOAuth:
+                description: GithubOAuth is configuration for GitHub OAuth provider
                 properties:
                   apiUri:
+                    description: APIURI used if you are using GitHub Enterprise. The
+                      URI to the API root of your GitHub installation. The 'https://'
+                      or 'http://' part needs to be specified. There should not be
+                      any trailing slash (/). By default set to 'https://api.github.com'.
                     type: string
                   clientID:
+                    description: ClientID is the client ID you received from GitHub
+                      for your OAuth App.
                     type: string
-                  clientSecretKeySelector:
-                    description: SecretKeySelector selects a key of a Secret.
+                  clientSecretRef:
+                    description: ClientSecretRef is a secret reference which allows
+                      to safely pass into Authorization Spec. Has to contain "clientSecret"
+                      key with value of the client secret you received from GitHub
+                      for your OAuth App.
                     properties:
-                      key:
-                        description: The key of the secret to select from.  Must be
-                          a valid secret key.
+                      name:
+                        description: Name is unique within a namespace to reference
+                          a secret resource.
                         type: string
-                      secret:
-                        description: The name of the secret in the pod's namespace
-                          to select from.
-                        properties:
-                          name:
-                            description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                              TODO: Add other useful fields. apiVersion, kind, uid?'
-                            type: string
-                        type: object
-                    required:
-                    - key
-                    - secret
+                      namespace:
+                        description: Namespace defines the space within which the
+                          secret name must be unique.
+                        type: string
                     type: object
-                  mfaEnabled:
-                    type: boolean
                   scopes:
+                    description: Scopes let you specify exactly what your app is requesting
+                      access to. Scopes limit access for OAuth tokens. They do not
+                      grant any additional permission beyond that which the user already
+                      has. By default these are set to "org:user,user:email"
                     items:
                       type: string
                     type: array
                   webUri:
+                    description: WebURI used if you are using GitHub Enterprise. The
+                      URL to the web UI root of your GitHub installation. The 'https://'
+                      or 'http://' part needs to be specified. There should not be
+                      any trailing slash (/). By default set to 'https://github.com'.
                     type: string
                 required:
-                - apiUri
                 - clientID
-                - clientSecretKeySelector
-                - scopes
-                - webUri
-                type: object
-              saml:
-                description: SAML is configuration for enterprise authentication providers
-                  like OneLogin or Okta
-                properties:
-                  advanced:
-                    description: Advanced contains additional mechanisms for SAML
-                      login
-                    properties:
-                      authenticationContext:
-                        description: AuthenticationContext requests that the SAML
-                          provider uses a specific authentication context
-                        type: string
-                      forceAuthentication:
-                        description: ForceAuthentication once enabled, requests to
-                          force re-authentication even if user session is active.
-                        type: boolean
-                      maximumSessionLifetime:
-                        description: MaximumSessionLifetime is number of seconds,
-                          which defines how long the session is valid
-                        type: integer
-                      spEntityID:
-                        description: SPEntityID overrides default Entity ID for the
-                          Service Provider
-                        type: string
-                    required:
-                    - authenticationContext
-                    - forceAuthentication
-                    - maximumSessionLifetime
-                    - spEntityID
-                    type: object
-                  dataBindingMethod:
-                    description: DataBindingMethod defines redirection method binding
-                    type: string
-                  displayNameAttribute:
-                    description: DisplayNameAttribute is name of the attribute that
-                      carries the display name By default it's http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name
-                    type: string
-                  emailAttribute:
-                    description: EmailAttribute is email attribute in SAML response
-                    type: string
-                  encryption:
-                    description: Encryption contains additional configuration for
-                      setting up encryption or signing
-                    properties:
-                      authRequestSignature:
-                        description: AuthRequestSignature enables signature of the
-                          Auth Request. If you enable it, the encryption and signing
-                          key will be available in the SP metadata file and URL
-                        type: boolean
-                      keyAlias:
-                        description: KeyAlias is alias used in the -alias argument
-                          of keytool command
-                        type: string
-                      keystorePasswordSecretKeySelector:
-                        description: KeystorePasswordSecretKeySelector is selector
-                          for keystore password secret provided in -storepass argument
-                        properties:
-                          key:
-                            description: The key of the secret to select from.  Must
-                              be a valid secret key.
-                            type: string
-                          secret:
-                            description: The name of the secret in the pod's namespace
-                              to select from.
-                            properties:
-                              name:
-                                description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                  TODO: Add other useful fields. apiVersion, kind,
-                                  uid?'
-                                type: string
-                            type: object
-                        required:
-                        - key
-                        - secret
-                        type: object
-                      keystorePath:
-                        description: KeystorePath is path to keystore file
-                        type: string
-                      privateKeyPasswordSecretKeySelector:
-                        description: PrivateKeyPasswordSecretKeySelector is selector
-                          for private key password secret provided in -keypass argument
-                        properties:
-                          key:
-                            description: The key of the secret to select from.  Must
-                              be a valid secret key.
-                            type: string
-                          secret:
-                            description: The name of the secret in the pod's namespace
-                              to select from.
-                            properties:
-                              name:
-                                description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                  TODO: Add other useful fields. apiVersion, kind,
-                                  uid?'
-                                type: string
-                            type: object
-                        required:
-                        - key
-                        - secret
-                        type: object
-                    required:
-                    - keyAlias
-                    - keystorePasswordSecretKeySelector
-                    - keystorePath
-                    - privateKeyPasswordSecretKeySelector
-                    type: object
-                  groupAttribute:
-                    description: GroupAttribute is name of the attribute that carries
-                      user groups By default it's http://schemas.xmlsoap.org/claims/Group
-                    type: string
-                  idpMetadata:
-                    description: IdPMetadata is identity provider metadata file content.
-                    type: string
-                  idpMetadataURL:
-                    description: IdPMetadataURL is identity provider metadata file
-                      source URL.
-                    type: string
-                  logoutURL:
-                    description: LogoutURL is logout URL where user will be redirected
-                      once logout
-                    type: string
-                  maximumAuthenticationLifetime:
-                    description: MaximumAuthenticationLifetime is number of seconds
-                      since the user was authenticated in IdP while his authentication
-                      is considering as active By default it's 86400
-                    type: integer
-                  refreshPeriod:
-                    description: RefreshPeriod indicates period of minutes that we
-                      will wait until refresh the IdP Metadata. Set it to 0 to not
-                      update the metadata.
-                    type: integer
-                  usernameAttribute:
-                    description: UsernameAttribute is name of the attribute that carries
-                      user name which will be used as the Jenkins ID If blank, the
-                      nameID provided by identity provider is used
-                    type: string
-                  usernameCaseConvention:
-                    description: UsernameCaseConvention defines the convention for
-                      converting usernames
-                    type: string
-                required:
-                - dataBindingMethod
-                - displayNameAttribute
-                - emailAttribute
-                - encryption
-                - groupAttribute
-                - logoutURL
-                - maximumAuthenticationLifetime
-                - usernameAttribute
-                - usernameCaseConvention
+                - clientSecretRef
                 type: object
               type:
                 description: Type indicates which authentication provider is set
                 type: string
-              userPassword:
-                description: UserPassword is basic authentication provider which configures
-                  basic username/password authentication
-                properties:
-                  passwordSecretKeySelector:
-                    description: PasswordSecretKeySelector is selector for user's
-                      password secret
-                    properties:
-                      key:
-                        description: The key of the secret to select from.  Must be
-                          a valid secret key.
-                        type: string
-                      secret:
-                        description: The name of the secret in the pod's namespace
-                          to select from.
-                        properties:
-                          name:
-                            description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                              TODO: Add other useful fields. apiVersion, kind, uid?'
-                            type: string
-                        type: object
-                    required:
-                    - key
-                    - secret
-                    type: object
-                  username:
-                    description: Username is name of the user
-                    type: string
-                required:
-                - passwordSecretKeySelector
-                - username
-                type: object
             required:
             - type
             type: object
@@ -309,6 +130,13 @@ spec:
                   - type
                   type: object
                 type: array
+              hash:
+                description: Hash contains hash computed when running this script
+                type: string
+              operatorVersion:
+                description: OperatorVersion is the operator version which manages
+                  this CR
+                type: string
             type: object
         type: object
     served: true

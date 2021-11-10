@@ -376,3 +376,55 @@ jenkinsKubernetesAgents:
 
     # RoleRef defines list of extra RBAC roles for the Jenkins Kubernetes Agent pod service account
     roleRef: []
+
+# JenkinsAuthenticationEnabled can enable or disable the JenkinsAuthentication instance
+# Set to true if you want to deploy the resource, set to false if have configured CR(s) already and/or you want to deploy an operator only
+jenkinsAuthenticationEnabled: false
+
+# JenkinsAuthentication configuration
+# For authentication creation tutorial, check https://virtuslabrnd.github.io/operator-service-docs/operator-service-for-jenkins/latest/getting-started/integrating-authentication/
+jenkinsAuthentication:
+  # name of resource
+  name: ""
+
+  # namespace is the namespace where the resource will be deployed
+  namespace: default
+
+  # labels are injected into metadata labels field. Each JenkinsAuthentication Custom Resource need to reference corresponding
+  # Jenkins Custom Resource via labels field
+  labels:
+    operator-service.com/jenkins: jenkins
+
+  # annotations are injected into metadata annotations field
+  annotations: {}
+
+  # type indicates which authentication provider is set
+  type: "githubOAuth"
+
+  # githubOAuth is configuration for GitHub OAuth provider
+  githubOAuth:
+    # clientID is the client ID you received from GitHub for your OAuth App.
+    clientID: ""
+
+    # clientSecretRef is a secret reference which allows to safely pass into Authorization Spec. Has to contain "clientSecret" key with value of
+    # the client secret you received from GitHub for your OAuth App.
+    clientSecretRef:
+      name: ""
+      namespace: ""
+
+    # WebURI used if you are using GitHub Enterprise. The URL to the web UI root of your GitHub installation.
+    # The 'https://' or 'http://' part needs to be specified. There should not be any trailing slash (/).
+    # By default set to 'https://github.com'. (optional)
+    webUri: "https://github.com"
+
+    # APIURI used if you are using GitHub Enterprise. The URI to the API root of your GitHub installation.
+    # The 'https://' or 'http://' part needs to be specified. There should not be any trailing slash (/).
+    # By default set to 'https://api.github.com'. (optional)
+    apiUri: "https://api.github.com"
+
+    # Scopes let you specify exactly what your app is requesting access to. Scopes limit access for OAuth tokens.
+    # They do not grant any additional permission beyond that which the user already has.
+    # By default these are set to "org:user,user:email" (optional)
+    scopes:
+      - "read:org"
+      - "user:email"
