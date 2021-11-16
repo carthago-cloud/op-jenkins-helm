@@ -86,6 +86,34 @@ spec:
                 - clientID
                 - clientSecretRef
                 type: object
+              googleOAuth:
+                description: GoogleOAuth is configuration for Google OAuth provider
+                properties:
+                  clientID:
+                    description: ClientID is the client ID you from Google OAuth credentials.
+                    type: string
+                  clientSecretRef:
+                    description: ClientSecretRef is a secret reference which allows
+                      to safely pass into Authorization Spec. Has to contain "clientSecret"
+                      key with value of the client secret from Google OAuth credentials
+                    properties:
+                      name:
+                        description: Name is unique within a namespace to reference
+                          a secret resource.
+                        type: string
+                      namespace:
+                        description: Namespace defines the space within which the
+                          secret name must be unique.
+                        type: string
+                    type: object
+                  domain:
+                    description: Domain is the public domain of your Jenkins instance.
+                      Leave empty for localhost.
+                    type: string
+                required:
+                - clientID
+                - clientSecretRef
+                type: object
               type:
                 description: Type indicates which authentication provider is set
                 type: string

@@ -385,7 +385,7 @@ jenkinsAuthenticationEnabled: false
 # For authentication creation tutorial, check https://virtuslabrnd.github.io/operator-service-docs/operator-service-for-jenkins/latest/getting-started/integrating-authentication/
 jenkinsAuthentication:
   # name of resource
-  name: ""
+  name: authentication
 
   # namespace is the namespace where the resource will be deployed
   namespace: default
@@ -428,3 +428,17 @@ jenkinsAuthentication:
     scopes:
       - "read:org"
       - "user:email"
+
+  # googleOAuth is configuration for Google OAuth provider
+  googleOAuth:
+    # clientID is the client ID you from Google OAuth credentials
+    clientID: ""
+
+    # clientSecretRef is a secret reference which allows to safely pass into Authorization Spec. Has to contain "clientSecret" key with value of
+    # the client secret from Google OAuth credentials
+    clientSecretRef:
+      name: ""
+      namespace: ""
+
+    # Domain is the public domain of your Jenkins instance. Leave empty for localhost (optional)
+    domain: ""
