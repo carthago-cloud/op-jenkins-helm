@@ -19,4 +19,11 @@ spec:
     {{- with .Values.jenkinsAuthentication.githubOAuth.scopes }}
     scopes: {{- toYaml . | nindent 6 }}
     {{- end }}
+  {{- else if eq .Values.jenkinsAuthentication.type "googleOAuth" }}
+  googleOAuth:
+    clientID: {{ .Values.jenkinsAuthentication.googleOAuth.clientID }}
+    {{- with .Values.jenkinsAuthentication.googleOAuth.clientSecretRef }}
+    clientSecretRef: {{- toYaml . | nindent 6 }}
+    {{- end }}
+    domain: {{ .Values.jenkinsAuthentication.googleOAuth.domain }}
   {{- end }}
