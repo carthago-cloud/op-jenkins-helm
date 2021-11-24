@@ -1,0 +1,43 @@
+suite: test JenkinsConfigurationAsCode
+templates:
+  - jenkins_configuration_as_code.yaml
+tests:
+  - it: should propagate all the declared metadata fields
+    values:
+      - ./values/jenkinsconfigurationascode_test_values.yaml
+    asserts:
+      - isAPIVersion:
+          of: operator-service.com/v1beta1
+      - isKind:
+          of: JenkinsConfigurationAsCode
+      - equal:
+          path: metadata.name
+          value: casc
+      - equal:
+          path: metadata.namespace
+          value: default
+      - equal:
+          path: metadata.labels
+          value:
+            operator-service.com/jenkins: jenkins
+      - equal:
+          path: metadata.annotations
+          value:
+            annotationsTestKey: annotationsTestValue
+  - it: should propagate all the declared spec fields
+    values:
+      - ./values/jenkinsconfigurationascode_test_values.yaml
+    asserts:
+      - equal:
+          path: spec.data
+          value: |
+            jenkins:
+              systemMessage: |
+                Welcome to your CI/CD server managed by Operator Service for Jenkins!
+              numExecutors: 1 #
+      - equal:
+          path: spec.secretRef.name
+          value: secret
+      - equal:
+          path: spec.secretRef.namespace
+          value: default
