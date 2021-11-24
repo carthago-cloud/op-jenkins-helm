@@ -1,0 +1,34 @@
+jenkinsKubernetesAgentEnabled: true
+jenkinsKubernetesAgents:
+  - name: first-agent
+    namespace: default
+    labels:
+      operator-service.com/jenkins: jenkins
+    annotations:
+      annotationsTestKey: annotationsTestValue
+    podSpec:
+      containers:
+        - name: jnlp
+          image: quay.io/openshift/origin-jenkins-agent-base:4.9.0
+          imagePullPolicy: IfNotPresent
+    properties:
+      description: "This is a specified Kubernetes Agent"
+      executors: 1
+      remoteRootDirectory: D:\
+      usage: "withLabelsMatchingNode"
+      launchMethod: "connectToMaster"
+      disableWorkDir: false
+      customWorkDirPath: D:/Workspace/${ITEM_FULL_NAME}
+      internalDataDirectory: "remoting"
+      failIfWorkplaceIsMissing: false
+      useWebSocket: false
+      tunnelConnectionThrough: ":50001"
+      jvmOptions: "-Djava.awt.headless=true"
+      availability: "scheduled"
+      toolLocations:
+        - name: JDK
+          home: java.exe
+    roleRef:
+      - apiGroup: "rbac.authorization.k8s.io"
+        kind: "Role"
+        name: first-agent-role
