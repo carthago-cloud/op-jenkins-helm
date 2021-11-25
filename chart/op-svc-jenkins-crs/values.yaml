@@ -52,12 +52,12 @@ jenkins:
       volumeMounts: []
     volumes: []
     restartPolicy: ""
-    nodeSelector: []
     imagePullSecrets: []
     hostAliases: []
     podSecurityContext: {}
-    affinity: ""
+    affinity: {}
     priorityClassName: ""
+    tolerations: []
 
   # homePVC allows to set PersistentVolumeClaim properties for Jenkins home
   homePVC: {}

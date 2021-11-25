@@ -98,15 +98,19 @@ jenkins:
           defaultMode: 0754
           name: jenkins-operator-backup-s3
     restartPolicy: OnFailure
-    nodeSelector: []
     imagePullSecrets:
       - secret
     hostAliases: []
     podSecurityContext:
       runAsUser: 1000
       fsGroup: 1000
-    affinity: ""
+    affinity: {}
     priorityClassName: ""
+    tolerations:
+      - key: "key1"
+        operator: "Equal"
+        value: "value1"
+        effect: "NoSchedule"
   homePVC:
     accessMode: "ReadWriteOnce"
     resourceStorage: "20Gi"

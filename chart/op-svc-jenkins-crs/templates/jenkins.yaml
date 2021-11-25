@@ -109,6 +109,9 @@ spec:
     {{- with .Values.jenkins.podSpec.podSecurityContext }}
     securityContext: {{ toYaml . | nindent 6 }}
     {{- end }}
+    {{- with .Values.jenkins.podSpec.tolerations }}
+    tolerations: {{ toYaml . | nindent 6 }}
+    {{- end }}
   {{- with .Values.jenkins.plugins }}
   plugins: {{ toYaml . | nindent 4 }}
   {{- end }}
