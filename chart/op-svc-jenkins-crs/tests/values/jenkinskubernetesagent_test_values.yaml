@@ -32,3 +32,14 @@ jenkinsKubernetesAgents:
       - apiGroup: "rbac.authorization.k8s.io"
         kind: "Role"
         name: first-agent-role
+  - name: second-agent
+    namespace: default
+    labels:
+      operator-service.com/jenkins: jenkins
+    annotations:
+      annotationsTestKey: annotationsTestValue
+    podSpec:
+      containers:
+        - name: jnlp
+          image: quay.io/openshift/origin-jenkins-agent-base:4.9.0
+          imagePullPolicy: IfNotPresent

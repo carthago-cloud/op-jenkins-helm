@@ -84,3 +84,9 @@ tests:
             apiGroup: "rbac.authorization.k8s.io"
             kind: "Role"
             name: first-agent-role
+  - it: should render multiple JenkinsKubernetesAgent Custom Resources
+    values:
+      - ./values/jenkinskubernetesagent_test_values.yaml
+    asserts:
+      - hasDocuments:
+          count: 2

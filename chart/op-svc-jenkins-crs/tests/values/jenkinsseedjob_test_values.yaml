@@ -1,6 +1,6 @@
 jenkinsSeedJobsEnabled: true
 jenkinsSeedJobs:
-  - name: seedjob
+  - name: seedjob1
     namespace: default
     labels:
       operator-service.com/jenkins: jenkins
@@ -27,3 +27,15 @@ jenkinsSeedJobs:
       additionalClasspath: "meta_jobs/libs"
       failOnMissingPlugin: false
       unstableOnDeprecation: false
+  - name: seedjob2
+    namespace: default
+    labels:
+      operator-service.com/jenkins: jenkins
+    annotations:
+      annotationsTestKey: annotationsTestValue
+    repository:
+      branch: master
+      url: https://github.com/jenkinsci/kubernetes-operator.git
+      targets: "cicd/jobs/*.jenkins"
+      credentialID: deploy-keys
+      credentialType: "basicSSHUserPrivateKey"

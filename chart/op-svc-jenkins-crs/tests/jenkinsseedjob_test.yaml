@@ -12,7 +12,7 @@ tests:
           of: JenkinsSeedJob
       - equal:
           path: metadata.name
-          value: seedjob
+          value: seedjob1
       - equal:
           path: metadata.namespace
           value: default
@@ -73,3 +73,9 @@ tests:
       - equal:
           path: spec.settings.unstableOnDeprecation
           value: false
+  - it: should render multiple SeedJob Custom Resources
+    values:
+      - ./values/jenkinsseedjob_test_values.yaml
+    asserts:
+      - hasDocuments:
+          count: 2

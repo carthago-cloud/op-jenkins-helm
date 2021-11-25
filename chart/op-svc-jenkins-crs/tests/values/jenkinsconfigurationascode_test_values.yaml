@@ -1,6 +1,6 @@
 jenkinsConfigurationsAsCodeEnabled: true
 jenkinsConfigurationsAsCode:
-  - name: casc
+  - name: casc1
     namespace: default
     labels:
       operator-service.com/jenkins: jenkins
@@ -14,3 +14,14 @@ jenkinsConfigurationsAsCode:
     secretRef:
       name: secret
       namespace: default
+  - name: casc2
+    namespace: default
+    labels:
+      operator-service.com/jenkins: jenkins
+    annotations:
+      annotationsTestKey: annotationsTestValue
+    data: |
+      jenkins:
+        systemMessage: |
+          Welcome to your CI/CD server managed by Operator Service for Jenkins!
+        numExecutors: 1 #

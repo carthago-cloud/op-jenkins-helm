@@ -12,7 +12,7 @@ tests:
           of: JenkinsGroovyScript
       - equal:
           path: metadata.name
-          value: groovy
+          value: groovy1
       - equal:
           path: metadata.namespace
           value: default
@@ -52,3 +52,9 @@ tests:
       - equal:
           path: spec.dependsOn.namespace
           value: default
+  - it: should render multiple GroovyScript Custom Resources
+    values:
+      - ./values/jenkinsgroovyscript_test_values.yaml
+    asserts:
+      - hasDocuments:
+          count: 2

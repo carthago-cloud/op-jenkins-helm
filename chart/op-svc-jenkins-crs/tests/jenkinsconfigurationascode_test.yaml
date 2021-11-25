@@ -12,7 +12,7 @@ tests:
           of: JenkinsConfigurationAsCode
       - equal:
           path: metadata.name
-          value: casc
+          value: casc1
       - equal:
           path: metadata.namespace
           value: default
@@ -41,3 +41,9 @@ tests:
       - equal:
           path: spec.secretRef.namespace
           value: default
+  - it: should render multiple CaSC Custom Resources
+    values:
+      - ./values/jenkinsconfigurationascode_test_values.yaml
+    asserts:
+      - hasDocuments:
+          count: 2
