@@ -5,6 +5,7 @@ tests:
   - it: should propagate all the declared metadata fields
     values:
       - ./values/jenkinskubernetesagent_test_values.yaml
+    documentIndex: 0
     asserts:
       - isAPIVersion:
           of: operator-service.com/v1beta1
@@ -27,6 +28,7 @@ tests:
   - it: should propagate all the declared podSpec fields
     values:
       - ./values/jenkinskubernetesagent_test_values.yaml
+    documentIndex: 0
     asserts:
       - contains:
           path: spec.podSpec.containers

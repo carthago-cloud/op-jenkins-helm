@@ -10,7 +10,7 @@ jenkinsConfigurationsAsCode:
       jenkins:
         systemMessage: |
           Welcome to your CI/CD server managed by Operator Service for Jenkins!
-        numExecutors: 1 #
+        numExecutors: 1
     secretRef:
       name: secret
       namespace: default
@@ -24,4 +24,4 @@ jenkinsConfigurationsAsCode:
       jenkins:
         systemMessage: |
           Welcome to your CI/CD server managed by Operator Service for Jenkins!
-        numExecutors: 1 #
+        numExecutors: 1

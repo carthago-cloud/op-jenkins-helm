@@ -5,6 +5,7 @@ tests:
   - it: should propagate all the declared metadata fields
     values:
       - ./values/jenkinsseedjob_test_values.yaml
+    documentIndex: 0
     asserts:
       - isAPIVersion:
           of: operator-service.com/v1beta1
@@ -27,6 +28,7 @@ tests:
   - it: should propagate all the declared podSpec fields
     values:
       - ./values/jenkinsseedjob_test_values.yaml
+    documentIndex: 0
     asserts:
       - equal:
           path: spec.repository.branch

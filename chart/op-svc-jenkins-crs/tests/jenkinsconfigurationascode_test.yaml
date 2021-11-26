@@ -5,6 +5,7 @@ tests:
   - it: should propagate all the declared metadata fields
     values:
       - ./values/jenkinsconfigurationascode_test_values.yaml
+    documentIndex: 0
     asserts:
       - isAPIVersion:
           of: operator-service.com/v1beta1
@@ -27,6 +28,7 @@ tests:
   - it: should propagate all the declared spec fields
     values:
       - ./values/jenkinsconfigurationascode_test_values.yaml
+    documentIndex: 0
     asserts:
       - equal:
           path: spec.data
@@ -34,7 +36,7 @@ tests:
             jenkins:
               systemMessage: |
                 Welcome to your CI/CD server managed by Operator Service for Jenkins!
-              numExecutors: 1 #
+              numExecutors: 1
       - equal:
           path: spec.secretRef.name
           value: secret

@@ -5,6 +5,7 @@ tests:
   - it: should propagate all the declared metadata fields
     values:
       - ./values/jenkinsgroovyscript_test_values.yaml
+    documentIndex: 0
     asserts:
       - isAPIVersion:
           of: operator-service.com/v1beta1
@@ -27,6 +28,7 @@ tests:
   - it: should propagate all the declared spec fields
     values:
       - ./values/jenkinsgroovyscript_test_values.yaml
+    documentIndex: 0
     asserts:
       - equal:
           path: spec.data

@@ -79,4 +79,4 @@ unit-test-plugin:
 .PHONY: unit-test
 unit-test:
 	@echo "+ $@"
-	bin/helm unittest chart/op-svc-jenkins-crs/ --debug
+	bin/helm unittest chart/op-svc-jenkins-crs/ -3 --debug
