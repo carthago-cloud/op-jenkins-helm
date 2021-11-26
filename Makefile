@@ -70,7 +70,13 @@ bump-version: sembump ## Bump the version in the version file. Set BUMP to [ pat
 	perl -i -pe 's/$(VERSION)/$(NEW_VERSION)/g' README.md
 	git log  --pretty=format:' * %s' $(VERSION)...HEAD > CHANGELOG.txt
 
+.PHONY: unit-test-plugin
+HELM_PLUGINS := $(PROJECT_DIR)/bin
+unit-test-plugin:
+	@echo "+ $@"
+	bin/helm plugin install https://github.com/quintush/helm-unittest
+
 .PHONY: unit-test
 unit-test:
 	@echo "+ $@"
-	helm unittest chart/op-svc-jenkins-crs/ --debug
+	bin/helm unittest chart/op-svc-jenkins-crs/ --debug
