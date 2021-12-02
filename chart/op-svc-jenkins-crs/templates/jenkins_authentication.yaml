@@ -6,6 +6,9 @@ metadata:
   {{- with .Values.jenkinsAuthentication.labels }}
   labels: {{ toYaml . | nindent 4 }}
   {{- end }}
+  {{- with .Values.jenkinsAuthentication.annotations }}
+  annotations: {{ toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.jenkinsAuthentication.type }}
   {{- if eq .Values.jenkinsAuthentication.type "githubOAuth" }}
@@ -14,8 +17,8 @@ spec:
     {{- with .Values.jenkinsAuthentication.githubOAuth.clientSecretRef }}
     clientSecretRef: {{- toYaml . | nindent 6 }}
     {{- end }}
-    webUri: {{ .Values.jenkinsAuthentication.githubOAuth.webURI }}
-    apiUri: {{ .Values.jenkinsAuthentication.githubOAuth.webURI }}
+    webUri: {{ .Values.jenkinsAuthentication.githubOAuth.webUri }}
+    apiUri: {{ .Values.jenkinsAuthentication.githubOAuth.apiUri }}
     {{- with .Values.jenkinsAuthentication.githubOAuth.scopes }}
     scopes: {{- toYaml . | nindent 6 }}
     {{- end }}

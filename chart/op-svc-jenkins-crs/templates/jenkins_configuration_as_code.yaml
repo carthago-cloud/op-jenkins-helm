@@ -10,6 +10,9 @@ metadata:
   {{- with $jenkinsConfigurationAsCode.labels }}
   labels: {{ toYaml . | nindent 4 }}
   {{- end }}
+  {{- with $jenkinsConfigurationAsCode.annotations }}
+  annotations: {{ toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   {{- with $jenkinsConfigurationAsCode.data }}
   data: {{- toYaml . | nindent 4 }}

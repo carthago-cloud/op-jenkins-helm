@@ -35,7 +35,7 @@ jenkins:
       name: jenkins-controller
       image: jenkins/jenkins:2.277.4-lts-alpine
       imagePullPolicy: IfNotPresent
-      imagePullSecrets: []
+      command: []
       livenessProbe: {}
       readinessProbe: {}
       # Resource limit/request for Jenkins
@@ -48,15 +48,16 @@ jenkins:
           cpu: 1
           memory: 500Mi
       env: []
+      envFrom: []
       volumeMounts: []
     volumes: []
     restartPolicy: ""
-    nodeSelector: []
     imagePullSecrets: []
     hostAliases: []
-    podSecurityContext: ""
-    affinity: ""
+    podSecurityContext: {}
+    affinity: {}
     priorityClassName: ""
+    tolerations: []
 
   # homePVC allows to set PersistentVolumeClaim properties for Jenkins home
   homePVC: {}
@@ -282,15 +283,8 @@ jenkinsConfigurationsAsCode:
     data: |
       jenkins:
         systemMessage: |
-          Welcome to our build server.
-
-          This Jenkins is 100% configured and managed 'as code'.
-          Config is now mostly handled by the 'Jenkins Configuration as Code' (JCasC) plugin.
-          JCasC config can be found in the jenkins.yaml file in the ${JENKINS_HOME}/casc/ folder.
-
-          Some settings are still injected from init.groovy.d scripts,
-          but these settings will be ported over to JCasC as support becomes available.
-        numExecutors: 1 #
+          Welcome to your CI/CD server managed by Operator Service for Jenkins!
+        numExecutors: 1
 
     # secretRef is secret reference which allows to inject the secrets into Configuration As Code script
     #secretRef:

@@ -69,3 +69,14 @@ bump-version: sembump ## Bump the version in the version file. Set BUMP to [ pat
 	@echo "Updating version from $(VERSION) to $(NEW_VERSION) in README.md"
 	perl -i -pe 's/$(VERSION)/$(NEW_VERSION)/g' README.md
 	git log  --pretty=format:' * %s' $(VERSION)...HEAD > CHANGELOG.txt
+
+.PHONY: unit-test-plugin
+HELM_PLUGINS := $(PROJECT_DIR)/bin
+unit-test-plugin:
+	@echo "+ $@"
+	bin/helm plugin install https://github.com/quintush/helm-unittest
+
+.PHONY: unit-test
+unit-test:
+	@echo "+ $@"
+	bin/helm unittest chart/op-svc-jenkins-crs/ -3 --debug

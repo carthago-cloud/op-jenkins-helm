@@ -10,6 +10,9 @@ metadata:
   {{- with $jenkinsGroovyScript.labels }}
   labels: {{ toYaml . | nindent 4 }}
   {{- end }}
+  {{- with $jenkinsGroovyScript.annotations }}
+  annotations: {{ toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   {{- with $jenkinsGroovyScript.data }}
   data: {{- toYaml . | nindent 4 }}
