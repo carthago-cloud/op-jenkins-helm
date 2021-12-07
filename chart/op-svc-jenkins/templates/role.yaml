@@ -5,7 +5,6 @@ kind: Role
 metadata:
   creationTimestamp: null
   name: manager-role
-  namespace: {{.Values.operator.namespace}}
 rules:
   - apiGroups:
       - apps
@@ -142,7 +141,7 @@ rules:
       - watch
 
 ---
-{{- if ne .Values.operator.jenkinsNamespace .Values.operator.namespace }}
+{{- if ne .Values.operator.jenkinsNamespace .Release.Namespace }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:

@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "operator-service.fullname" . }}
-  namespace: {{.Values.operator.namespace}}
   labels:
 {{ include "operator-service.labels" . | indent 4 }}
 spec:

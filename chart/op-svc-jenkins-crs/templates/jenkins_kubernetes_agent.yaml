@@ -6,7 +6,6 @@ apiVersion: {{ $apiVersion }}
 kind: JenkinsKubernetesAgent
 metadata:
   name: {{ $jenkinsKubernetesAgent.name }}
-  namespace: {{ $jenkinsKubernetesAgent.namespace }}
   {{- with $jenkinsKubernetesAgent.labels }}
   labels: {{ toYaml . | nindent 4 }}
   {{- end }}
