@@ -49,4 +49,4 @@ operator:
   affinity: {}
 
   # JenkinsNamespace is used by Operator Service to watch namespace where Jenkins will be deployed
-  jenkinsNamespace: "default"
+  jenkinsNamespace: "jenkins"

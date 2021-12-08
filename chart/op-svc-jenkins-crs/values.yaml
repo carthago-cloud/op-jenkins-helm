@@ -299,7 +299,7 @@ jenkinsKubernetesAgents:
     podSpec:
       containers:
         - name: jnlp
-          image: quay.io/openshift/origin-jenkins-agent-base:4.9.0
+          image: jenkins/inbound-agent:4.10-3-alpine
           imagePullPolicy: IfNotPresent
 
     properties:
