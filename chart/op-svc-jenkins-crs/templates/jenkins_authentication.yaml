@@ -1,8 +1,11 @@
+{{- if .Values.jenkinsAuthenticationEnabled }}
+  {{- $apiVersion := .Values.apiVersion }}
+  {{- range $jenkinsAuthentication := .Values.jenkinsAuthentication}}
+---
 apiVersion: {{ .Values.apiVersion }}
 kind: JenkinsAuthentication
 metadata:
   name: {{ .Values.jenkinsAuthentication.name }}
-  namespace: {{ .Values.jenkinsAuthentication.namespace }}
   {{- with .Values.jenkinsAuthentication.labels }}
   labels: {{ toYaml . | nindent 4 }}
   {{- end }}
@@ -29,4 +32,6 @@ spec:
     clientSecretRef: {{- toYaml . | nindent 6 }}
     {{- end }}
     domain: {{ .Values.jenkinsAuthentication.googleOAuth.domain }}
+  {{- end }}
+  {{- end }}
   {{- end }}

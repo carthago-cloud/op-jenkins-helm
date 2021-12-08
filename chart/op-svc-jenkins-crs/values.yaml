@@ -13,11 +13,6 @@ jenkins:
   # The pod name will be jenkins-<name> (name will be set as suffix)
   name: jenkins
 
-  # namespace is the namespace where the resources will be deployed
-  # It's not recommended to use default namespace
-  # Create new namespace for jenkins (called e.g. jenkins)
-  namespace: default
-
   # labels are injected into metadata labels field
   #labels: {}
 
@@ -139,9 +134,6 @@ jenkinsGroovyScripts:
   # name of resource
   - name: groovy
 
-    # namespace is the namespace where the resources will be deployed
-    namespace: default
-
     # labels are injected into metadata labels field. Each JenkinsSeedJob Custom Resource need to reference corresponding
     # Jenkins Custom Resource via labels field
     labels:
@@ -181,9 +173,6 @@ jenkinsSeedJobsEnabled: true
 jenkinsSeedJobs:
   # name of resource
   - name: example
-
-    # namespace is the namespace where the resources will be deployed
-    namespace: default
 
     # labels are injected into metadata labels field. Each JenkinsSeedJob Custom Resource need to reference corresponding
     # Jenkins Custom Resource via labels field
@@ -268,9 +257,6 @@ jenkinsConfigurationsAsCode:
   # name of resource
   - name: casc
 
-    # namespace is the namespace where the resources will be deployed
-    namespace: default
-
     # labels are injected into metadata labels field. Each JenkinsConfigurationAsCode Custom Resource need to reference corresponding
     # Jenkins Custom Resource via labels field
     labels:
@@ -301,9 +287,6 @@ jenkinsKubernetesAgents:
   # name of resource
   - name: first-agent
 
-    # namespace is the namespace where the resources will be deployed
-    namespace: default
-
     # labels are injected into metadata labels field. Each JenkinsKubernetesAgent Custom Resource need to reference corresponding
     # Jenkins Custom Resource via labels field
     labels:
@@ -316,7 +299,7 @@ jenkinsKubernetesAgents:
     podSpec:
       containers:
         - name: jnlp
-          image: quay.io/openshift/origin-jenkins-agent-base:4.9.0
+          image: jenkins/inbound-agent:4.10-3-alpine
           imagePullPolicy: IfNotPresent
 
     properties:
@@ -380,9 +363,6 @@ jenkinsAuthenticationEnabled: false
 jenkinsAuthentication:
   # name of resource
   name: authentication
-
-  # namespace is the namespace where the resource will be deployed
-  namespace: default
 
   # labels are injected into metadata labels field. Each JenkinsAuthentication Custom Resource need to reference corresponding
   # Jenkins Custom Resource via labels field
