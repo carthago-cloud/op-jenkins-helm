@@ -3,7 +3,6 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: leader-election-rolebinding
-  namespace: {{.Values.operator.namespace}}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -12,7 +11,7 @@ subjects:
   - kind: ServiceAccount
     name: service-account
 ---
-{{- if ne .Values.operator.jenkinsNamespace .Values.operator.namespace }}
+{{- if ne .Values.operator.jenkinsNamespace .Release.Namespace }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
@@ -25,5 +24,5 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: service-account
-    namespace: {{.Values.operator.namespace}}
+    namespace: {{.Release.Namespace}}
 {{- end }}

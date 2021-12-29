@@ -6,7 +6,6 @@ apiVersion: {{ $apiVersion }}
 kind: JenkinsSeedJob
 metadata:
   name: {{ $jenkinsSeedJob.name }}
-  namespace: {{ $jenkinsSeedJob.namespace }}
   {{- with $jenkinsSeedJob.labels }}
   labels: {{ toYaml . | nindent 4 }}
   {{- end }}

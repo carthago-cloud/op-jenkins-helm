@@ -6,7 +6,6 @@ apiVersion: {{ $apiVersion }}
 kind: JenkinsGroovyScript
 metadata:
   name: {{ $jenkinsGroovyScript.name }}
-  namespace: {{ $jenkinsGroovyScript.namespace }}
   {{- with $jenkinsGroovyScript.labels }}
   labels: {{ toYaml . | nindent 4 }}
   {{- end }}

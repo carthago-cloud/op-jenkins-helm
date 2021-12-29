@@ -6,6 +6,6 @@ $ kubectl --namespace {{ .Release.Namespace }} get secret {{ .Values.jenkins.nam
 $ kubectl --namespace {{ .Release.Namespace }} get secret {{ .Values.jenkins.name }}-credentials -o 'jsonpath={.data.password}' | base64 -d
 
 3. Connect to Jenkins (actual Kubernetes cluster):
-$ kubectl --namespace {{ .Release.Namespace }} port-forward {{ .Values.jenkins.name }}-jenkins 8080:8080
+$ kubectl --namespace {{ .Release.Namespace }} port-forward svc/{{ .Values.jenkins.name }}-http 8080:8080
 
 Now open the browser and enter http://localhost:8080
