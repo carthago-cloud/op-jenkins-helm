@@ -56,6 +56,8 @@ tests:
             user:email
       - isNull:
           path: spec.googleOAuth
+      - isNull:
+          path: spec.openIDConnectAuth
   - it: should propagate all the declared googleOAuth spec fields
     values:
       - values/jenkinsauthentication_googletest_values.yaml
@@ -77,3 +79,5 @@ tests:
           value: myTestDomain
       - isNull:
           path: spec.githubOAuth
+      - isNull:
+          path: spec.openIDConnectAuth
