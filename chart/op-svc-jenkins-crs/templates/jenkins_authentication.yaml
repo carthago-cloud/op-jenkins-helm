@@ -39,6 +39,7 @@ spec:
     clientSecretRef: {{- toYaml . | nindent 6 }}
     {{- end }}
     autoManualConfigure: {{ $jenkinsAuthentication.openIDConnectAuth.autoManualConfigure }}
+    wellKnownOpenIDConfigurationURL: {{ $jenkinsAuthentication.openIDConnectAuth.wellKnownOpenIDConfigurationURL }}
     tokenServerURL: {{ $jenkinsAuthentication.openIDConnectAuth.tokenServerURL }}
     authorizationServerURL: {{ $jenkinsAuthentication.openIDConnectAuth.authorizationServerURL }}
     userInfoServerURL: {{ $jenkinsAuthentication.openIDConnectAuth.userInfoServerURL }}
