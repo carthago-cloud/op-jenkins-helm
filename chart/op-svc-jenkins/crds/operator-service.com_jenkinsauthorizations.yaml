@@ -42,11 +42,44 @@ spec:
                 description: 'Matrix is matrix-based authorization configuration NOTE:
                   It requires additional plugin'
                 properties:
-                  administrators:
-                    description: Administrators is list of the users with administrative
-                      permissions
+                  users:
+                    description: Users is list of the users with permissions
                     items:
-                      type: string
+                      description: User contains name and permissions
+                      properties:
+                        name:
+                          description: Name is a name of a user
+                          type: string
+                        permissions:
+                          description: Permissions is list of permissions
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                type: object
+              roleBased:
+                description: 'RoleBased is role-based authorization configuration
+                  NOTE: It requires additional plugin'
+                properties:
+                  roles:
+                    description: Roles is list of the users with permissions
+                    items:
+                      properties:
+                        name:
+                          description: Name of the role
+                          type: string
+                        permissions:
+                          description: Permissions assigned to the role
+                          items:
+                            type: string
+                          type: array
+                        usersOrGroups:
+                          description: UsersOrGroups to which this role is assigned
+                          items:
+                            type: string
+                          type: array
+                      type: object
                     type: array
                 type: object
               type:
@@ -93,6 +126,9 @@ spec:
                   - type
                   type: object
                 type: array
+              hash:
+                description: Hash contains hash computed when running this script
+                type: string
             type: object
         type: object
     served: true
