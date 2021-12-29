@@ -416,3 +416,89 @@ jenkinsAuthentication:
 
     # Domain is the public domain of your Jenkins instance. Leave empty for localhost (optional)
     domain: ""
+
+  # openIDConnectAuth is configuration for various authentication providers compliant with OpenID Connect standard.
+  # For more information, visit the documentation of the oic-auth: https://github.com/jenkinsci/oic-auth-plugin
+  openIDConnectAuth:
+    # clientID is the client ID you received from your identity provider
+    clientID: ""
+
+    # clientSecretRef is a secret reference which lets you safely pass the client secret to Authentication Spec.
+    # The secret has to contain the "clientSecret" key with value of the client secret from OpenID Connect credentials.
+    clientSecretRef:
+      name: ""
+      namespace: ""
+
+    # autoManualConfigure specifies configuration mode. This can be either auto or manual.
+    # If set to auto, WellKnownOpenIDConfigurationURL will be required and configuration will be fetched from the
+    # well-known configuration endpoint. If set to false, tokenServerURL and authorizationServerURL will be required.
+    autoManualConfig: ""
+
+    # WellKnownOpenIDConfigurationURL is an endpoint with well-known configuration endpoint, where your OpenID server
+    # publishes its metadata. Required when autoManualConfigure is set to auto, otherwise optional.
+    wellKnownOpenIDConfigurationURL: ""
+
+    # Required when autoManualConfigure is set to manual, otherwise optional.
+    tokenServerURL: ""
+
+    # Required when autoManualConfigure is set to manual, otherwise optional.
+    authorizationServerURL: ""
+
+    # (optional)
+    userInfoServerURL: ""
+
+    # (optional)
+    userNameField: ""
+
+    # (optional)
+    tokenFieldToCheckKey: ""
+
+    # (optional)
+    tokenFieldToCheckValue: ""
+
+    # (optional)
+    fullNameFieldName: ""
+
+    # (optional)
+    emailFieldName: ""
+
+    # scopes are used to specify access privileges while authenticating. It is a string containing space-separated
+    # scopes. (optional)
+    #
+    # Example:
+    #
+    # scopes: "openid email profile"
+    scopes: ""
+
+    # (optional)
+    groupsFieldName: ""
+
+    # (optional)
+    disableSSLVerification: false
+
+    # logoutFromOpenIDProvider specifies whether to call endSessionEndpoint on logout from Jenkins. (optional)
+    logoutFromOpenIDProvider: false
+
+    # endSessionEndpoint is an endpoint to be called on logging out from Jenkins.
+    # Required when logoutFromOpenIDProvider is set to true, otherwise optional.
+    endSessionEndpoint: ""
+
+    # (optional)
+    postLogoutRedirectURL: ""
+
+    # (optional)
+    escapeHatchEnabled: false
+
+    # (optional)
+    escapeHatchUsername: ""
+
+    # escapeHatchSecretRef is a secret reference which lets you safely pass the escape hatch secret to Authentication Spec.
+    # It is required when EscapeHatchEnabled is set to true.
+    # The secret has to contain the "escapeHatchSecret" key with value of the client secret from OpenID Connect credentials.
+    # Required when escapeHatchEnabled is set to true, otherwise optional.
+    escapeHatchSecretRef:
+      name: ""
+      namespace: ""
+
+    # (optional)
+    escapeHatchGroup: ""
