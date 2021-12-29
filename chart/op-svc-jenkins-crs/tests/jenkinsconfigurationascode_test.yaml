@@ -16,7 +16,7 @@ tests:
           value: casc1
       - equal:
           path: metadata.namespace
-          value: default
+          value: null
       - equal:
           path: metadata.labels
           value:

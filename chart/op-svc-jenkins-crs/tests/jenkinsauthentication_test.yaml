@@ -15,7 +15,7 @@ tests:
           value: authentication
       - equal:
           path: metadata.namespace
-          value: default
+          value: null
       - equal:
           path: metadata.labels
           value:

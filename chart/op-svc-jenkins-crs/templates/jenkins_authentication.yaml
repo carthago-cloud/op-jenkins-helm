@@ -1,37 +1,36 @@
 {{- if .Values.jenkinsAuthenticationEnabled }}
   {{- $apiVersion := .Values.apiVersion }}
-  {{- range $jenkinsAuthentication := .Values.jenkinsAuthentication}}
+  {{- $jenkinsAuthentication := .Values.jenkinsAuthentication}}
 ---
-apiVersion: {{ .Values.apiVersion }}
+apiVersion: {{ $apiVersion }}
 kind: JenkinsAuthentication
 metadata:
-  name: {{ .Values.jenkinsAuthentication.name }}
-  {{- with .Values.jenkinsAuthentication.labels }}
+  name: {{ $jenkinsAuthentication.name }}
+  {{- with $jenkinsAuthentication.labels }}
   labels: {{ toYaml . | nindent 4 }}
   {{- end }}
-  {{- with .Values.jenkinsAuthentication.annotations }}
+  {{- with $jenkinsAuthentication.annotations }}
   annotations: {{ toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  type: {{ .Values.jenkinsAuthentication.type }}
-  {{- if eq .Values.jenkinsAuthentication.type "githubOAuth" }}
+  type: {{ $jenkinsAuthentication.type }}
+  {{- if eq $jenkinsAuthentication.type "githubOAuth" }}
   githubOAuth:
-    clientID: {{ .Values.jenkinsAuthentication.githubOAuth.clientID }}
-    {{- with .Values.jenkinsAuthentication.githubOAuth.clientSecretRef }}
+    clientID: {{ $jenkinsAuthentication.githubOAuth.clientID }}
+    {{- with $jenkinsAuthentication.githubOAuth.clientSecretRef }}
     clientSecretRef: {{- toYaml . | nindent 6 }}
     {{- end }}
-    webUri: {{ .Values.jenkinsAuthentication.githubOAuth.webUri }}
-    apiUri: {{ .Values.jenkinsAuthentication.githubOAuth.apiUri }}
-    {{- with .Values.jenkinsAuthentication.githubOAuth.scopes }}
+    webUri: {{ $jenkinsAuthentication.githubOAuth.webUri }}
+    apiUri: {{ $jenkinsAuthentication.githubOAuth.apiUri }}
+    {{- with $jenkinsAuthentication.githubOAuth.scopes }}
     scopes: {{- toYaml . | nindent 6 }}
     {{- end }}
-  {{- else if eq .Values.jenkinsAuthentication.type "googleOAuth" }}
+  {{- else if eq $jenkinsAuthentication.type "googleOAuth" }}
   googleOAuth:
-    clientID: {{ .Values.jenkinsAuthentication.googleOAuth.clientID }}
-    {{- with .Values.jenkinsAuthentication.googleOAuth.clientSecretRef }}
+    clientID: {{ $jenkinsAuthentication.googleOAuth.clientID }}
+    {{- with $jenkinsAuthentication.googleOAuth.clientSecretRef }}
     clientSecretRef: {{- toYaml . | nindent 6 }}
     {{- end }}
-    domain: {{ .Values.jenkinsAuthentication.googleOAuth.domain }}
-  {{- end }}
+    domain: {{ $jenkinsAuthentication.googleOAuth.domain }}
   {{- end }}
   {{- end }}

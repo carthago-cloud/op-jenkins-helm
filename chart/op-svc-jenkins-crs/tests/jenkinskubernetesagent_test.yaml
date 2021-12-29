@@ -16,7 +16,7 @@ tests:
           value: first-agent
       - equal:
           path: metadata.namespace
-          value: default
+          value: null
       - equal:
           path: metadata.labels
           value:
