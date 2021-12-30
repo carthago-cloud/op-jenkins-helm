@@ -32,5 +32,33 @@ spec:
     clientSecretRef: {{- toYaml . | nindent 6 }}
     {{- end }}
     domain: {{ $jenkinsAuthentication.googleOAuth.domain }}
+  {{- else if eq $jenkinsAuthentication.type "openIDConnectAuth" }}
+  openIDConnectAuth:
+    clientID: {{ $jenkinsAuthentication.openIDConnectAuth.clientID }}
+    {{- with $jenkinsAuthentication.openIDConnectAuth.clientSecretRef }}
+    clientSecretRef: {{- toYaml . | nindent 6 }}
+    {{- end }}
+    autoManualConfigure: {{ $jenkinsAuthentication.openIDConnectAuth.autoManualConfigure }}
+    wellKnownOpenIDConfigurationURL: {{ $jenkinsAuthentication.openIDConnectAuth.wellKnownOpenIDConfigurationURL }}
+    tokenServerURL: {{ $jenkinsAuthentication.openIDConnectAuth.tokenServerURL }}
+    authorizationServerURL: {{ $jenkinsAuthentication.openIDConnectAuth.authorizationServerURL }}
+    userInfoServerURL: {{ $jenkinsAuthentication.openIDConnectAuth.userInfoServerURL }}
+    userNameField: {{ $jenkinsAuthentication.openIDConnectAuth.userNameField }}
+    tokenFieldToCheckKey: {{ $jenkinsAuthentication.openIDConnectAuth.tokenFieldToCheckKey }}
+    tokenFieldToCheckValue: {{ $jenkinsAuthentication.openIDConnectAuth.tokenFieldToCheckValue }}
+    fullNameFieldName: {{ $jenkinsAuthentication.openIDConnectAuth.fullNameFieldName }}
+    emailFieldName: {{ $jenkinsAuthentication.openIDConnectAuth.emailFieldName }}
+    scopes: {{ $jenkinsAuthentication.openIDConnectAuth.scopes }}
+    groupsFieldName: {{ $jenkinsAuthentication.openIDConnectAuth.groupsFieldName }}
+    disableSSLVerification: {{ $jenkinsAuthentication.openIDConnectAuth.disableSSLVerification }}
+    logoutFromOpenIDProvider: {{ $jenkinsAuthentication.openIDConnectAuth.logoutFromOpenIDProvider }}
+    endSessionEndpoint: {{ $jenkinsAuthentication.openIDConnectAuth.endSessionEndpoint }}
+    postLogoutRedirectURL: {{ $jenkinsAuthentication.openIDConnectAuth.postLogoutRedirectURL }}
+    escapeHatchEnabled: {{ $jenkinsAuthentication.openIDConnectAuth.escapeHatchEnabled }}
+    escapeHatchUsername: {{ $jenkinsAuthentication.openIDConnectAuth.escapeHatchUsername }}
+    {{- with $jenkinsAuthentication.openIDConnectAuth.escapeHatchSecretRef }}
+    escapeHatchSecretRef: {{- toYaml . | nindent 6 }}
+    {{- end }}
+    escapeHatchGroup: {{ $jenkinsAuthentication.openIDConnectAuth.escapeHatchGroup }}
   {{- end }}
-  {{- end }}
+{{- end }}

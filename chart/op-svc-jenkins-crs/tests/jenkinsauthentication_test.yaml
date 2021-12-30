@@ -56,6 +56,8 @@ tests:
             user:email
       - isNull:
           path: spec.googleOAuth
+      - isNull:
+          path: spec.openIDConnectAuth
   - it: should propagate all the declared googleOAuth spec fields
     values:
       - values/jenkinsauthentication_googletest_values.yaml
@@ -77,3 +79,89 @@ tests:
           value: myTestDomain
       - isNull:
           path: spec.githubOAuth
+      - isNull:
+          path: spec.openIDConnectAuth
+  - it: should propagate all the declared openIDConnectAuth spec fields
+    values:
+      - values/jenkinsauthentication_openidconnecttest_values.yaml
+    asserts:
+      - equal:
+          path: spec.type
+          value: openIDConnectAuth
+      - equal:
+          path: spec.openIDConnectAuth.clientID
+          value: testClientID
+      - equal:
+          path: spec.openIDConnectAuth.clientSecretRef.name
+          value: secret
+      - equal:
+          path: spec.openIDConnectAuth.clientSecretRef.namespace
+          value: default
+      - equal:
+          path: spec.openIDConnectAuth.autoManualConfigure
+          value: auto
+      - equal:
+          path: spec.openIDConnectAuth.wellKnownOpenIDConfigurationURL
+          value: https://login.microsoftonline.com/123-420-2137/v2.0/.well-known/openid-configuration
+      - equal:
+          path: spec.openIDConnectAuth.tokenServerURL
+          value: https://login.microsoftonline.com/123-420-2137/oauth2/v2.0/token
+      - equal:
+          path: spec.openIDConnectAuth.authorizationServerURL
+          value: https://login.microsoftonline.com/123-420-2137/oauth2/v2.0/authorize
+      - equal:
+          path: spec.openIDConnectAuth.userInfoServerURL
+          value: https://login.microsoftonline.com/123-420-2137/oauth2/v2.0/userinfo
+      - equal:
+          path: spec.openIDConnectAuth.userNameField
+          value: bob
+      - equal:
+          path: spec.openIDConnectAuth.tokenFieldToCheckKey
+          value: field1
+      - equal:
+          path: spec.openIDConnectAuth.tokenFieldToCheckValue
+          value: field2
+      - equal:
+          path: spec.openIDConnectAuth.fullNameFieldName
+          value: field3
+      - equal:
+          path: spec.openIDConnectAuth.emailFieldName
+          value: field4
+      - equal:
+          path: spec.openIDConnectAuth.scopes
+          value: openid email profile
+      - equal:
+          path: spec.openIDConnectAuth.groupsFieldName
+          value: field5
+      - equal:
+          path: spec.openIDConnectAuth.disableSSLVerification
+          value: true
+      - equal:
+          path: spec.openIDConnectAuth.logoutFromOpenIDProvider
+          value: true
+      - equal:
+          path: spec.openIDConnectAuth.endSessionEndpoint
+          value: https://login.microsoftonline.com/123-420-2137/oauth2/v2.0/logout
+      - equal:
+          path: spec.openIDConnectAuth.postLogoutRedirectURL
+          value: https://localhost:8080
+      - equal:
+          path: spec.openIDConnectAuth.escapeHatchEnabled
+          value: true
+      - equal:
+          path: spec.openIDConnectAuth.escapeHatchUsername
+          value: bob1
+      - equal:
+          path: spec.openIDConnectAuth.escapeHatchSecretRef.name
+          value: escapeHatchSecret
+      - equal:
+          path: spec.openIDConnectAuth.escapeHatchSecretRef.namespace
+          value: default
+      - equal:
+          path: spec.openIDConnectAuth.escapeHatchGroup
+          value: group1
+      - isNull:
+          path: spec.githubOAuth
+      - isNull:
+          path: spec.googleOAuth
+
