@@ -35,10 +35,10 @@ spec:
           metadata:
             type: object
           spec:
-            description: 'JenkinsAuthenticationSpec defines the desired state of JenkinsAuthentication.
-              It''s used only for authentication purposes, to check if user with provided
+            description: JenkinsAuthenticationSpec defines the desired state of JenkinsAuthentication.
+              It's used only for authentication purposes, to check if user with provided
               credentials exists. For granular access properties, look at JenkinsAuthorization
-              CRD. Before using, user has to set up an OAuth App on GitHub: https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app'
+              CRD.
             properties:
               githubOAuth:
                 description: GithubOAuth is configuration for GitHub OAuth provider
@@ -54,10 +54,10 @@ spec:
                       for your OAuth App.
                     type: string
                   clientSecretRef:
-                    description: ClientSecretRef is a secret reference which allows
-                      to safely pass into Authorization Spec. Has to contain "clientSecret"
-                      key with value of the client secret you received from GitHub
-                      for your OAuth App.
+                    description: ClientSecretRef is a secret reference which lets
+                      you safely pass the client secret to Authentication Spec. It
+                      has to contain the "clientSecret" key with value of the client
+                      secret from GitHub for your OAuth App.
                     properties:
                       name:
                         description: Name is unique within a namespace to reference
@@ -72,7 +72,7 @@ spec:
                     description: Scopes let you specify exactly what your app is requesting
                       access to. Scopes limit access for OAuth tokens. They do not
                       grant any additional permission beyond that which the user already
-                      has. By default these are set to "org:user,user:email"
+                      has. By default these are set to "read:org,user:email"
                     items:
                       type: string
                     type: array
@@ -93,9 +93,10 @@ spec:
                     description: ClientID is the client ID you from Google OAuth credentials.
                     type: string
                   clientSecretRef:
-                    description: ClientSecretRef is a secret reference which allows
-                      to safely pass into Authorization Spec. Has to contain "clientSecret"
-                      key with value of the client secret from Google OAuth credentials
+                    description: ClientSecretRef is a secret reference which lets
+                      you safely pass the client secret to Authentication Spec. It
+                      has to contain the "clientSecret" key with value of the client
+                      secret from Google OAuth credentials.
                     properties:
                       name:
                         description: Name is unique within a namespace to reference
@@ -111,6 +112,105 @@ spec:
                       Leave empty for localhost.
                     type: string
                 required:
+                - clientID
+                - clientSecretRef
+                type: object
+              openIDConnectAuth:
+                description: OpenIDConnectAuth is configuration for OpenIDConnect
+                  protocol
+                properties:
+                  authorizationServerURL:
+                    description: Required when AutoManualConfigure is set to "manual".
+                    type: string
+                  autoManualConfigure:
+                    description: AutoManualConfigure specifies configuration mode.
+                      This can be either auto or manual. If set to auto, WellKnownOpenIDConfigurationURL
+                      will be required and configuration will be fetched from the
+                      well-known configuration endpoint. If set to false, TokenServerURL,
+                      AuthorizationServerURL will be required.
+                    enum:
+                    - auto
+                    - manual
+                    type: string
+                  clientID:
+                    description: ClientID is the client ID you received from your
+                      identity provider.
+                    type: string
+                  clientSecretRef:
+                    description: ClientSecretRef is a secret reference which lets
+                      you safely pass the client secret to Authentication Spec. It
+                      has to contain the "clientSecret" key with value of the client
+                      secret from OpenID Connect credentials.
+                    properties:
+                      name:
+                        description: Name is unique within a namespace to reference
+                          a secret resource.
+                        type: string
+                      namespace:
+                        description: Namespace defines the space within which the
+                          secret name must be unique.
+                        type: string
+                    type: object
+                  disableSSLVerification:
+                    type: boolean
+                  emailFieldName:
+                    type: string
+                  endSessionEndpoint:
+                    description: Required when LogoutFromOpenIDProvider is set to
+                      true.
+                    type: string
+                  escapeHatchEnabled:
+                    type: boolean
+                  escapeHatchGroup:
+                    type: string
+                  escapeHatchSecretRef:
+                    description: EscapeHatchSecretRef is a secret reference which
+                      lets you safely pass the escape hatch secret to Authentication
+                      Spec. It is required when EscapeHatchEnabled is set to true.
+                      It has to contain the "escapeHatchSecret" key with value of
+                      the escape hatch secret from OpenID Connect credentials.
+                    properties:
+                      name:
+                        description: Name is unique within a namespace to reference
+                          a secret resource.
+                        type: string
+                      namespace:
+                        description: Namespace defines the space within which the
+                          secret name must be unique.
+                        type: string
+                    type: object
+                  escapeHatchUsername:
+                    description: Required when EscapeHatchEnabled is set to true.
+                    type: string
+                  fullNameFieldName:
+                    type: string
+                  groupsFieldName:
+                    type: string
+                  logoutFromOpenIDProvider:
+                    type: boolean
+                  postLogoutRedirectURL:
+                    type: string
+                  scopes:
+                    type: string
+                  tokenFieldToCheckKey:
+                    type: string
+                  tokenFieldToCheckValue:
+                    type: string
+                  tokenServerURL:
+                    description: Required when AutoManualConfigure is set to "manual".
+                    type: string
+                  userInfoServerURL:
+                    type: string
+                  userNameField:
+                    type: string
+                  wellKnownOpenIDConfigurationURL:
+                    description: WellKnownOpenIDConfigurationURL is an endpoint with
+                      well-known configuration endpoint, where your OpenID server
+                      publishes its metadata. Required when AutoManualConfigure is
+                      set to auto.
+                    type: string
+                required:
+                - autoManualConfigure
                 - clientID
                 - clientSecretRef
                 type: object
