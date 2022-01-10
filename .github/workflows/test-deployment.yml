@@ -1,0 +1,65 @@
+name: Verify that the  current chart can be deployed locally on minikube
+
+env:
+  HELM_VERSION: 3.7.0
+  OP_CHART_DIRECTORY: ./chart/op-svc-jenkins # should match repo's directory structure
+  CRS_CHART_DIRECTORY: ./chart/op-svc-jenkins-crs # should match repo's directory structure
+  OPERATOR_NAMESPACE: operator
+  JENKINS_NAMESPACE: jenkins # should match 'jenkinsNamespace' field value in operator-service values.yaml
+
+#on:
+#  push:
+#    branches:
+#      - main
+#  pull_request:
+#    branches:
+#      - main
+
+on:
+  push:
+    branches:
+      - chore/sc-451-helm-chart-tests-on-pr
+
+jobs:
+    verify-that-chart-can-be-deployoed:
+      name: test that current chart can be deployed locally on minikube
+      runs-on: ubuntu-latest
+
+      steps:
+        - uses: actions/checkout@v2
+          with:
+            fetch-depth: 0
+          name: checkout repo
+
+        - name: install minikube
+          run: |
+            make minikube
+
+        - name: install helm
+          run: |
+            make helm-install HELM_VERSION=$HELM_VERSION
+
+        - name: start local minikube cluster
+          run: |
+            make minikube-start
+
+        - name: create namespaces for Jenkins and Operator
+          run: |
+            kubectl create ns $JENKINS_NAMESPACE
+            kubectl create ns $OPERATOR_NAMESPACE
+
+        - name: install operator-service chart
+          run: |
+            helm install operator-service $OP_CHART_DIRECTORY -f $OP_CHART_DIRECTORY/values.yaml -n $OPERATOR_NAMESPACE
+
+        # todo: verify that Operator is up and running step
+        - name: verify that Operator is up and running
+
+        - name: install crs chart
+          run: |
+            helm install operator-service-crs $CRS_CHART_DIRECTORY -f $CRS_CHART_DIRECTORY/values.yaml -n $JENKINS_NAMESPACE
+
+        # todo: verify that Jenkins is up and running step
+        - name: verify that Jenkins is up and running
+
+

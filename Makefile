@@ -80,3 +80,20 @@ unit-test-plugin:
 unit-test:
 	@echo "+ $@"
 	bin/helm unittest chart/op-svc-jenkins-crs/ -3 --debug
+
+.PHONY: minikube
+HAS_MINIKUBE := $(shell which $(PROJECT_DIR)/bin/minikube)
+minikube: ## Download minikube if it's not present - necessary for deployment test
+	@echo "+ $@"
+ifndef HAS_MINIKUBE
+	mkdir -p $(PROJECT_DIR)/bin
+	wget -O $(PROJECT_DIR)/bin/minikube https://github.com/kubernetes/minikube/releases/download/v$(MINIKUBE_VERSION)/minikube-$(PLATFORM)-amd64
+	chmod +x $(PROJECT_DIR)/bin/minikube
+endif
+
+.PHONY: minikube-start
+minikube-start: minikube ## Start minikube
+	@echo "+ $@"
+	bin/minikube status && exit 0 || \
+	bin/minikube start --kubernetes-version $(MINIKUBE_KUBERNETES_VERSION) --dns-domain=$(CLUSTER_DOMAIN) --extra-config=kubelet.cluster-domain=$(CLUSTER_DOMAIN) --driver=$(MINIKUBE_DRIVER) --memory $(MEMORY_AMOUNT) --cpus $(CPUS_NUMBER)
+
