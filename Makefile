@@ -83,7 +83,7 @@ unit-test:
 
 .PHONY: minikube
 HAS_MINIKUBE := $(shell which $(PROJECT_DIR)/bin/minikube)
-minikube: ## Download minikube if it's not present - necessary for deployment test
+minikube: ## Download minikube if it's not present
 	@echo "+ $@"
 ifndef HAS_MINIKUBE
 	mkdir -p $(PROJECT_DIR)/bin

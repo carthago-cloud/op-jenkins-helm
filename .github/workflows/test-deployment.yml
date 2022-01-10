@@ -31,17 +31,17 @@ jobs:
             fetch-depth: 0
           name: checkout repo
 
-        - name: install minikube
-          run: |
-            make minikube
-
         - name: install helm
           run: |
             make helm-install HELM_VERSION=$HELM_VERSION
 
-        - name: start local minikube cluster
+        - name: prepare and start local minikube cluster
           run: |
-            make minikube-start
+            sudo apt-get update
+            sudo apt-get install socat
+            sudo mkdir -p $HOME/.kube $HOME/.minikube
+            sudo chown -R $USER $HOME/.kube $HOME/.minikube
+            make minikube-start MINIKUBE_DRIVER='docker' MEMORY_AMOUNT=4096 CPUS_NUMBER=2
 
         - name: create namespaces for Jenkins and Operator
           run: |
