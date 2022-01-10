@@ -77,7 +77,10 @@ jobs:
         - name: verify that Operator is up and running
           timeout-minutes: 3
           run: |
-            watch kubectl get pods -n operator
+            sleep 150
+            kubectl get pods -n operator
+            sleep 150
+            kubectl get pods -n operator
 
 
         - name: install crs chart
