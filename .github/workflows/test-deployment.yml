@@ -2,6 +2,7 @@ name: Verify that the  current chart can be deployed locally on minikube
 
 env:
   HELM_VERSION: 3.7.0
+  IMAGE_REGISTRY: operatorservice.azurecr.io
   OP_CHART_DIRECTORY: ./chart/op-svc-jenkins # should match repo's directory structure
   CRS_CHART_DIRECTORY: ./chart/op-svc-jenkins-crs # should match repo's directory structure
   OPERATOR_NAMESPACE: operator
@@ -48,14 +49,36 @@ jobs:
             kubectl create ns $JENKINS_NAMESPACE
             kubectl create ns $OPERATOR_NAMESPACE
 
+        - name: create secret with data for accessing image registry
+          run: |
+            kubectl create secret docker-registry token \
+            --namespace $OPERATOR_NAMESPACE \
+            --docker-server=$IMAGE_REGISTRY \
+            --docker-username=${{ secrets.DEPLOYMENT_TEST_WORKFLOW_CUSTOMER_NAME }} \
+            --docker-password=${{ secrets.DEPLOYMENT_TEST_WORKFLOW_ACR_PASSWORD }}
+
+        - name: create license secret
+          run: |
+            cat <<EOF | kubectl apply -f -
+            apiVersion: v1
+            kind: Secret
+            metadata:
+              name: license
+            stringData:
+              clientName: ${{ secrets.DEPLOYMENT_TEST_WORKFLOW_CUSTOMER_NAME }}
+              licenseKey: ${{ secrets.DEPLOYMENT_TEST_WORKFLOW_LICENSE_SECRET_KEY }}
+            EOF
+
         - name: install operator-service chart
           run: |
             helm install operator-service $OP_CHART_DIRECTORY -f $OP_CHART_DIRECTORY/values.yaml -n $OPERATOR_NAMESPACE
 
         # todo: verify that Operator is up and running step
         - name: verify that Operator is up and running
+          timeout-minutes: 3
           run: |
-            echo "I guess Operator is fine"
+            watch kubectl get pods -n operator
+
 
         - name: install crs chart
           run: |
