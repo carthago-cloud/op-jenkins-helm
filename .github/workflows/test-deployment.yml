@@ -54,6 +54,8 @@ jobs:
 
         # todo: verify that Operator is up and running step
         - name: verify that Operator is up and running
+          run: |
+            echo "I guess Operator is fine"
 
         - name: install crs chart
           run: |
@@ -61,5 +63,7 @@ jobs:
 
         # todo: verify that Jenkins is up and running step
         - name: verify that Jenkins is up and running
+          run: |
+            echo "I guess Jenkins is fine too"
 
 
