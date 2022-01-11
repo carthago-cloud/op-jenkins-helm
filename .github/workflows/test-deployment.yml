@@ -77,9 +77,9 @@ jobs:
           timeout-minutes: 5
           run: |
             READY=false
-            while [[ $READY != true ]]; do
+            while [[ $READY == false ]]; do
               READY=$(kubectl get pods -n $OPERATOR_NAMESPACE --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}' | \
-              kubectl get pod -n $OPERATOR_NAMESPACE -o custom-columns=":status.containerStatuses[0].ready")
+                kubectl get pod -n $OPERATOR_NAMESPACE -o custom-columns=":status.containerStatuses[0].ready") | tr -d '\n'
             done
 
             echo "Operator got ready! All good so far! But just to be sure, here's kubectl get pod and the logs!"
