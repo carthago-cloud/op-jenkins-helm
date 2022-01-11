@@ -80,7 +80,7 @@ jobs:
             READY=false
             while [ $READY ne true ]; do
               READY=$(kubectl get pods -n operator --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}' | \
-              kubectl get pod -n operator -o custom-columns=":status.containerStatuses[0].ready)
+              kubectl get pod -n operator -o custom-columns=":status.containerStatuses[0].ready")
             done
 
             echo "Operator got ready! All good so far!"
