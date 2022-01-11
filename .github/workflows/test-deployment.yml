@@ -73,9 +73,8 @@ jobs:
           run: |
             helm install operator-service $OP_CHART_DIRECTORY -f $OP_CHART_DIRECTORY/values.yaml -n $OPERATOR_NAMESPACE
 
-        # todo: verify that Operator is up and running step
         - name: verify that Operator is up and running
-          timeout-minutes: 3
+          timeout-minutes: 5
           run: |
             READY=false
             while [[ $READY != true ]]; do
@@ -83,7 +82,14 @@ jobs:
               kubectl get pod -n $OPERATOR_NAMESPACE -o custom-columns=":status.containerStatuses[0].ready")
             done
 
-            echo "Operator got ready! All good so far!"
+            echo "Operator got ready! All good so far! But just to be sure, here's kubectl get pod and the logs!"
+
+            kubectl get pods -n $OPERATOR_NAMESPACE --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}' | \
+              kubectl logs -n $OPERATOR_NAMESPACE
+
+            kubectl get pods -n $OPERATOR_NAMESPACE
+
+
 
         - name: install crs chart
           run: |
