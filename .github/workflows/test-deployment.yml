@@ -78,13 +78,10 @@ jobs:
           timeout-minutes: 3
           run: |
             READY=false
-            while [ $READY ne true ]; do
-              READY=$(kubectl get pods -n operator --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}' | \
-              kubectl get pod -n operator -o custom-columns=":status.containerStatuses[0].ready")
+            while [[ $READY != true ]]; do
+              READY=$(kubectl get pods -n $OPERATOR_NAMESPACE --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}' | \
+              kubectl get pod -n $OPERATOR_NAMESPACE -o custom-columns=":status.containerStatuses[0].ready")
             done
-
-            kubectl get pods -n operator --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}' | \
-            kubectl get pod -n operator -o custom-columns=":status.containerStatuses[0].ready"
 
             echo "Operator got ready! All good so far!"
 
