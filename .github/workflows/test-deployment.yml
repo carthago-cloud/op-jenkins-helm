@@ -83,6 +83,9 @@ jobs:
               kubectl get pod -n operator -o custom-columns=":status.containerStatuses[0].ready")
             done
 
+            kubectl get pods -n operator --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}' | \
+            kubectl get pod -n operator -o custom-columns=":status.containerStatuses[0].ready"
+
             echo "Operator got ready! All good so far!"
 
         - name: install crs chart
