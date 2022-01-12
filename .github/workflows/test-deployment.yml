@@ -76,12 +76,15 @@ jobs:
         - name: verify that Operator is up and running
           timeout-minutes: 5
           run: |
-            READY=false
-            while [[ $READY == false ]]; do
-              READY=$(kubectl get pods -n $OPERATOR_NAMESPACE --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}' | \
-                kubectl get pod -n $OPERATOR_NAMESPACE -o custom-columns=":status.containerStatuses[0].ready") | tr -d '\n'
+            sleep 15
 
-              kubectl get pod -n $OPERATOR_NAMESPACE
+            PHASE=NotRunning
+            while [[ $PHASE != Running ]]; do
+              PHASE=$(kubectl get pod -n $OPERATOR_NAMESPACE -l app.kubernetes.io/name=op-svc-jenkins \
+                -o jsonpath="{.items[0].status.phase}") | tr -d '\n'
+
+              echo "Operator pod phase: $PHASE"
+              sleep 2
             done
 
             echo "Operator got ready! All good so far! But just to be sure, here's kubectl get pod and the logs!"
