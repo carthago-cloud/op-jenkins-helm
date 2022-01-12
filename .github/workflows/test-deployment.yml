@@ -80,8 +80,7 @@ jobs:
 
             PHASE=NotRunning
             while [[ $PHASE != Running ]]; do
-              PHASE=$(kubectl get pod -n $OPERATOR_NAMESPACE -l app.kubernetes.io/name=op-svc-jenkins \
-                -o jsonpath="{.items[0].status.phase}") | tr -d '\n'
+              PHASE=$(kubectl get pod -n $OPERATOR_NAMESPACE -l app.kubernetes.io/name=op-svc-jenkins -o jsonpath="{.items[0].status.phase}")
 
               echo "Operator pod phase: $PHASE"
               sleep 2
