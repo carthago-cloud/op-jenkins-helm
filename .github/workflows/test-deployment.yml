@@ -64,6 +64,7 @@ jobs:
             kind: Secret
             metadata:
               name: license
+              namespace: $OPERATOR_NAMESPACE
             stringData:
               clientName: ${{ secrets.DEPLOYMENT_TEST_WORKFLOW_CUSTOMER_NAME }}
               licenseKey: ${{ secrets.DEPLOYMENT_TEST_WORKFLOW_LICENSE_SECRET_KEY }}
@@ -86,7 +87,7 @@ jobs:
               sleep 2
             done
 
-            echo "Operator got running! Here are the logs:"
+            echo "Operator is running! Here are the logs:"
 
             kubectl logs -n operator -l app.kubernetes.io/name=op-svc-jenkins
 
@@ -95,9 +96,15 @@ jobs:
           run: |
             helm install operator-service-crs $CRS_CHART_DIRECTORY -f $CRS_CHART_DIRECTORY/values.yaml -n $JENKINS_NAMESPACE
 
-        # todo: verify that Jenkins is up and running step
+
         - name: verify that Jenkins is up and running
           run: |
-            echo "I guess Jenkins is fine too"
+            sleep 15
 
+            PHASE=NotRunning
+            while [[ $PHASE != Running ]]; do
+              PHASE=$(kubectl get pod -n $OPERATOR_NAMESPACE -l app.kubernetes.io/name=op-svc-jenkins -o jsonpath="{.items[0].status.phase}")
 
+              echo "Jenkins pod phase: $PHASE"
+              sleep 2
+            done
