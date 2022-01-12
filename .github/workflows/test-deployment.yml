@@ -86,13 +86,9 @@ jobs:
               sleep 2
             done
 
-            echo "Operator got ready! All good so far! But just to be sure, here's kubectl get pod and the logs!"
+            echo "Operator got running! Here are the logs:"
 
-            kubectl get pods -n $OPERATOR_NAMESPACE --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}' | \
-              kubectl logs -n $OPERATOR_NAMESPACE
-
-            kubectl get pods -n $OPERATOR_NAMESPACE
-
+            kubectl logs -n operator -l app.kubernetes.io/name=op-svc-jenkins
 
 
         - name: install crs chart
