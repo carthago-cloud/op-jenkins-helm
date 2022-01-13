@@ -96,21 +96,46 @@ jobs:
 
 
         - name: Verify that Jenkins is running and ready
-          timeout-minutes: 5
           run: |
             PHASE=NotRunning
             READY=false
 
             sleep 30
 
-            while [[ $PHASE != Running ]] || [[ $READY != true ]]; do
+            for i in {0..60}
+            do
               sleep 5
+
               PHASE=$(kubectl get pod -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins -o jsonpath="{.items[0].status.phase}")
               READY=$(kubectl get pod -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins -o jsonpath="{.items[0].status.containerStatuses[0].ready}")
 
               echo "Jenkins pod phase: $PHASE"
               echo "Jenkins is ready: $READY"
+
+              if [[ $PHASE == Running && $READY == true ]]; then
+                echo "Jenkins should be fully up and running! Here are the logs from Jenkins pod:"
+                kubectl logs -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins
+                break
+              fi
             done
 
-            echo "Jenkins should be fully up and running! Here are the logs:"
-            kubectl logs -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins
+            if [[ $PHASE != Running || $READY != true ]]; then
+              echo "Jenkins didn't get Running and Ready within 5 minutes. Good luck with troubleshooting."
+              echo "Here are the logs from Jenkins pod:"
+              kubectl logs -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins
+
+              echo "\nHere are the logs from initial-config container:"
+              kubectl logs -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins initial-config
+
+              echo "\nHere are the logs from jenkins-controller container:"
+              kubectl logs -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins jenkins-controller
+
+              echo "\nHere are the logs from operator:"
+              kubectl logs -n operator -l app.kubernetes.io/name=op-svc-jenkins
+
+              echo "\nHere are events from Jenkins namespace:"
+              kubectl get events -n $JENKINS_NAMESPACE
+
+              echo "\nHere are events from Operator namespace:"
+              kubectl get events -n $OPERATOR_NAMESPACE
+            fi
