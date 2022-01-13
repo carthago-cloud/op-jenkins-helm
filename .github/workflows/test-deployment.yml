@@ -100,9 +100,13 @@ jobs:
           run: |
             PHASE=NotRunning
             READY=false
+
             while [[ $PHASE != Running ]] || [[ $READY != true ]]; do
               sleep 2
+
               NO_RESOURCES_FOUND_ERROR=$(kubectl get pods -n $JENKINS_NAMESPACE 2>&1 | grep -c "No resources found")
+              echo "$NO_RESOURCES_FOUND_ERROR"
+              kubectl get pods -n $JENKINS_NAMESPACE 2>&1 | grep "No resources found"
 
               if [ $NO_RESOURCES_FOUND_ERROR -eq 0 ]
               then
