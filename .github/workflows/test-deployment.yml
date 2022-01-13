@@ -104,7 +104,8 @@ jobs:
               sleep 2
               NO_RESOURCES_FOUND_ERROR=$(kubectl get pods -n $JENKINS_NAMESPACE 2>&1 | grep -c "No resources found")
 
-              if [ $NO_RESOURCES_FOUND_ERROR == "0" ]; then
+              if [ $NO_RESOURCES_FOUND_ERROR -eq 0 ]
+              then
                 PHASE=$(kubectl get pod -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins -o jsonpath="{.items[0].status.phase}")
                 READY=$(kubectl get pod -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins -o jsonpath="{.items[0].status.containerStatuses[0].ready}")
 
