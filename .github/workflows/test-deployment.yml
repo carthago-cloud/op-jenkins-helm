@@ -13,8 +13,6 @@ env:
 #    branches:
 #      - main
 #  pull_request:
-#    branches:
-#      - main
 
 on:
   push:
@@ -22,7 +20,7 @@ on:
       - chore/sc-451-helm-chart-tests-on-pr
 
 jobs:
-    verify-that-chart-can-be-deployoed:
+    verify-that-chart-can-be-deployed:
       name: test that current chart can be deployed locally on minikube
       runs-on: ubuntu-latest
 
@@ -32,11 +30,11 @@ jobs:
             fetch-depth: 0
           name: checkout repo
 
-        - name: install helm
+        - name: Install helm
           run: |
             make helm-install HELM_VERSION=$HELM_VERSION
 
-        - name: prepare and start local minikube cluster
+        - name: Prepare and start a local Minikube cluster
           run: |
             sudo apt-get update
             sudo apt-get install socat
@@ -44,12 +42,12 @@ jobs:
             sudo chown -R $USER $HOME/.kube $HOME/.minikube
             make minikube-start MINIKUBE_DRIVER='docker' MEMORY_AMOUNT=4096 CPUS_NUMBER=2
 
-        - name: create namespaces for Jenkins and Operator
+        - name: Create namespaces for Jenkins and Operator
           run: |
             kubectl create ns $JENKINS_NAMESPACE
             kubectl create ns $OPERATOR_NAMESPACE
 
-        - name: create secret with data for accessing image registry
+        - name: Create secret with data for accessing the image registry
           run: |
             kubectl create secret docker-registry token \
             --namespace $OPERATOR_NAMESPACE \
@@ -57,7 +55,7 @@ jobs:
             --docker-username=${{ secrets.DEPLOYMENT_TEST_WORKFLOW_CUSTOMER_NAME }} \
             --docker-password=${{ secrets.DEPLOYMENT_TEST_WORKFLOW_ACR_PASSWORD }}
 
-        - name: create license secret
+        - name: Create license secret
           run: |
             cat <<EOF | kubectl apply -f -
             apiVersion: v1
@@ -70,11 +68,11 @@ jobs:
               licenseKey: ${{ secrets.DEPLOYMENT_TEST_WORKFLOW_LICENSE_SECRET_KEY }}
             EOF
 
-        - name: install operator-service chart
+        - name: Install operator-service chart
           run: |
             helm install operator-service $OP_CHART_DIRECTORY -f $OP_CHART_DIRECTORY/values.yaml -n $OPERATOR_NAMESPACE
 
-        - name: verify that Operator is up and running
+        - name: Verify that Operator is up and running
           timeout-minutes: 3
           run: |
             sleep 15
@@ -88,17 +86,16 @@ jobs:
               echo "Operator pod phase: $PHASE"
             done
 
-            echo "Operator is running! Here are the logs:"
-
+            echo "Operator should be fully up and running! Here are the logs:"
             kubectl logs -n operator -l app.kubernetes.io/name=op-svc-jenkins
 
 
-        - name: install crs chart
+        - name: Install crs chart
           run: |
             helm install operator-service-crs $CRS_CHART_DIRECTORY -f $CRS_CHART_DIRECTORY/values.yaml -n $JENKINS_NAMESPACE
 
 
-        - name: verify that Jenkins is up and running
+        - name: Verify that Jenkins is running and ready
           timeout-minutes: 5
           run: |
             sleep 15
@@ -109,7 +106,7 @@ jobs:
               sleep 2
 
               PHASE=$(kubectl get pod -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins -o jsonpath="{.items[0].status.phase}")
-              READY=$(kubectl get pod -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins -o jsonpath="{.items[0].status.containerStatuses[0].ready}"
+              READY=$(kubectl get pod -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins -o jsonpath="{.items[0].status.containerStatuses[0].ready}")
 
               echo "Jenkins pod phase: $PHASE"
               echo "Jenkins is ready: $READY"
