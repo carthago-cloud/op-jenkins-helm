@@ -101,20 +101,15 @@ jobs:
             PHASE=NotRunning
             READY=false
 
+            sleep 30
+
             while [[ $PHASE != Running ]] || [[ $READY != true ]]; do
               sleep 2
+              PHASE=$(kubectl get pod -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins -o jsonpath="{.items[0].status.phase}")
+              READY=$(kubectl get pod -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins -o jsonpath="{.items[0].status.containerStatuses[0].ready}")
 
-              NO_RESOURCES_FOUND_ERROR=$(kubectl get pods -n $JENKINS_NAMESPACE 2>&1)
-              echo "$NO_RESOURCES_FOUND_ERROR"
-
-              if [[ $NO_RESOURCES_FOUND_ERROR == "No resources found in $JENKINS_NAMESPACE namespace." ]]
-              then
-                PHASE=$(kubectl get pod -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins -o jsonpath="{.items[0].status.phase}")
-                READY=$(kubectl get pod -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins -o jsonpath="{.items[0].status.containerStatuses[0].ready}")
-
-                echo "Jenkins pod phase: $PHASE"
-                echo "Jenkins is ready: $READY"
-              fi
+              echo "Jenkins pod phase: $PHASE"
+              echo "Jenkins is ready: $READY"
             done
 
             echo "Jenkins should be fully up and running! Here are the logs:"
