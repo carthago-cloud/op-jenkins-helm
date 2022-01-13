@@ -75,16 +75,17 @@ jobs:
             helm install operator-service $OP_CHART_DIRECTORY -f $OP_CHART_DIRECTORY/values.yaml -n $OPERATOR_NAMESPACE
 
         - name: verify that Operator is up and running
-          timeout-minutes: 5
+          timeout-minutes: 3
           run: |
             sleep 15
 
             PHASE=NotRunning
             while [[ $PHASE != Running ]]; do
+              sleep 2
+
               PHASE=$(kubectl get pod -n $OPERATOR_NAMESPACE -l app.kubernetes.io/name=op-svc-jenkins -o jsonpath="{.items[0].status.phase}")
 
               echo "Operator pod phase: $PHASE"
-              sleep 2
             done
 
             echo "Operator is running! Here are the logs:"
@@ -98,13 +99,21 @@ jobs:
 
 
         - name: verify that Jenkins is up and running
+          timeout-minutes: 5
           run: |
             sleep 15
 
             PHASE=NotRunning
-            while [[ $PHASE != Running ]]; do
-              PHASE=$(kubectl get pod -n $OPERATOR_NAMESPACE -l app.kubernetes.io/name=op-svc-jenkins -o jsonpath="{.items[0].status.phase}")
+            READY=false
+            while [[ $PHASE != Running ]] || [[ $READY != true ]]; do
+              sleep 2
+
+              PHASE=$(kubectl get pod -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins -o jsonpath="{.items[0].status.phase}")
+              READY=$(kubectl get pod -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins -o jsonpath="{.items[0].status.containerStatuses[0].ready}"
 
               echo "Jenkins pod phase: $PHASE"
-              sleep 2
+              echo "Jenkins is ready: $READY"
             done
+
+            echo "Jenkins should be fully up and running! Here are the logs:"
+            kubectl logs -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins
