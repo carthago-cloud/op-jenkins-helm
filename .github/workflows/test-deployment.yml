@@ -104,7 +104,7 @@ jobs:
             sleep 30
 
             while [[ $PHASE != Running ]] || [[ $READY != true ]]; do
-              sleep 2
+              sleep 5
               PHASE=$(kubectl get pod -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins -o jsonpath="{.items[0].status.phase}")
               READY=$(kubectl get pod -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins -o jsonpath="{.items[0].status.containerStatuses[0].ready}")
 
