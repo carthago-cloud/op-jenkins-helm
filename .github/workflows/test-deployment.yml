@@ -73,21 +73,38 @@ jobs:
             helm install operator-service $OP_CHART_DIRECTORY -f $OP_CHART_DIRECTORY/values.yaml -n $OPERATOR_NAMESPACE
 
         - name: Verify that Operator is up and running
-          timeout-minutes: 3
           run: |
             sleep 15
 
             PHASE=NotRunning
-            while [[ $PHASE != Running ]]; do
+            for i in {0..90}
+            do
               sleep 2
 
               PHASE=$(kubectl get pod -n $OPERATOR_NAMESPACE -l app.kubernetes.io/name=op-svc-jenkins -o jsonpath="{.items[0].status.phase}")
 
               echo "Operator pod phase: $PHASE"
+
+              if [[ $PHASE != Running ]]; then
+                break
+              fi
             done
 
-            echo "Operator should be fully up and running! Here are the logs:"
-            kubectl logs -n operator -l app.kubernetes.io/name=op-svc-jenkins
+            if [[ $PHASE == Running ]]; then
+              echo "Operator should be fully up and running! Here are the logs from the Operator pod:"
+              kubectl logs -n operator -l app.kubernetes.io/name=op-svc-jenkins
+            else
+              echo "Operator didn't get Running within 3 minutes. Good luck with troubleshooting."
+
+              echo "Here are the logs from Operator pod:"
+              kubectl logs -n operator -l app.kubernetes.io/name=op-svc-jenkins
+
+              echo "\nHere are the events from Operator namespace:"
+              kubectl get events -n $OPERATOR_NAMESPACE
+            fi
+
+
+
 
 
         - name: Install crs chart
@@ -132,9 +149,9 @@ jobs:
               echo "\nHere are the logs from operator:"
               kubectl logs -n operator -l app.kubernetes.io/name=op-svc-jenkins
 
-              echo "\nHere are events from Jenkins namespace:"
+              echo "\nHere are the events from Jenkins namespace:"
               kubectl get events -n $JENKINS_NAMESPACE
 
-              echo "\nHere are events from Operator namespace:"
+              echo "\nHere are the events from Operator namespace:"
               kubectl get events -n $OPERATOR_NAMESPACE
             fi
