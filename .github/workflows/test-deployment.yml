@@ -1,4 +1,4 @@
-name: Verify that the  current chart can be deployed locally on minikube
+name: Verify that the current chart can be deployed locally on minikube
 
 env:
   HELM_VERSION: 3.7.0
@@ -8,6 +8,7 @@ env:
   OPERATOR_NAMESPACE: operator
   JENKINS_NAMESPACE: jenkins # should match 'jenkinsNamespace' field value in operator-service values.yaml
 
+# todo: uncomment before merging
 #on:
 #  push:
 #    branches:
@@ -103,18 +104,13 @@ jobs:
               kubectl get events -n $OPERATOR_NAMESPACE
             fi
 
-
-
-
-
         - name: Install crs chart
           run: |
             helm install operator-service-crs $CRS_CHART_DIRECTORY -f $CRS_CHART_DIRECTORY/values.yaml -n $JENKINS_NAMESPACE
 
-
         - name: Verify that Jenkins is running and ready
           run: |
-            sleep 90
+            sleep 180
 
             PHASE=NotRunning
             READY=false
