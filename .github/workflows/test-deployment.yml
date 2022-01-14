@@ -129,7 +129,7 @@ jobs:
               fi
             done
 
-            if [[ $PHASE == Running || $READY == true ]]; then
+            if [[ $PHASE == Running && $READY == true ]]; then
               echo "Jenkins should be fully up and running! Here are the logs from Jenkins pod:"
               kubectl logs -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins
             else
