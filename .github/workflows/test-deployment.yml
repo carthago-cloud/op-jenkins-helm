@@ -100,7 +100,7 @@ jobs:
               echo "Here are the logs from Operator pod:"
               kubectl logs -n operator -l app.kubernetes.io/name=op-svc-jenkins
 
-              echo "\nHere are the events from Operator namespace:"
+              echo "Here are the events from Operator namespace:"
               kubectl get events -n $OPERATOR_NAMESPACE
             fi
 
@@ -138,18 +138,18 @@ jobs:
               echo "Here are the logs from Jenkins pod:"
               kubectl logs -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins
 
-              echo "\nHere are the logs from initial-config container:"
+              echo "Here are the logs from initial-config container:"
               kubectl logs -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins -c initial-config
 
-              echo "\nHere are the logs from jenkins-controller container:"
+              echo "Here are the logs from jenkins-controller container:"
               kubectl logs -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins -c jenkins-controller
 
-              echo "\nHere are the logs from operator:"
+              echo "Here are the logs from operator:"
               kubectl logs -n operator -l app.kubernetes.io/name=op-svc-jenkins
 
-              echo "\nHere are the events from Jenkins namespace:"
+              echo "Here are the events from Jenkins namespace:"
               kubectl get events -n $JENKINS_NAMESPACE
 
-              echo "\nHere are the events from Operator namespace:"
+              echo "Here are the events from Operator namespace:"
               kubectl get events -n $OPERATOR_NAMESPACE
             fi
