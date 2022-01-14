@@ -71,33 +71,37 @@ jobs:
 
         - name: Verify that Operator is up and running
           run: |
-            sleep 15
-
             PHASE=NotRunning
             for i in {0..90}
             do
               sleep 2
 
-              PHASE=$(kubectl get pod -n $OPERATOR_NAMESPACE -l app.kubernetes.io/name=op-svc-jenkins -o jsonpath="{.items[0].status.phase}")
+              PHASE=$(kubectl get pod -n $OPERATOR_NAMESPACE -l app.kubernetes.io/name=op-svc-jenkins -o jsonpath="{.items[0].status.phase}" --ignore-not-found)
+              READY=$(kubectl get pod -n $OPERATOR_NAMESPACE -l app.kubernetes.io/name=op-svc-jenkins -o jsonpath="{.items[0].status.containerStatuses[0].ready}" --ignore-not-found)
 
-              echo "Operator pod phase: $PHASE"
+              if [ -z "$PHASE" ]; then
+                echo "Operator pod hasn't yet been created, waiting another 2 secs"
+              else
+                echo "Operator pod phase: $PHASE"
+                echo "Operator pod ready: $READY"
+              fi
 
-              if [[ $PHASE == Running ]]; then
+              if [[ $PHASE == Running && $READY == true ]]; then
                 break
               fi
             done
 
-            if [[ $PHASE == Running ]]; then
+            if [[ $PHASE == Running && $READY == true ]]; then
               echo "Operator should be fully up and running! Here are the logs from the Operator pod:"
               kubectl logs -n operator -l app.kubernetes.io/name=op-svc-jenkins
             else
-              echo "Operator didn't get Running within 3 minutes. Good luck with troubleshooting."
+              echo "Operator didn't get Running and Ready within 3 minutes. Good luck with troubleshooting."
 
               echo "Here are the logs from Operator pod:"
               kubectl logs -n operator -l app.kubernetes.io/name=op-svc-jenkins
 
               echo "Here are the events from Operator namespace:"
-              kubectl get events -n $OPERATOR_NAMESPACE
+              kubectl get events -n $OPERATOR_NAMESPACE --sort-by='.lastTimestamp'
             fi
 
         - name: Install crs chart
@@ -106,7 +110,7 @@ jobs:
 
         - name: Verify that Jenkins is running and ready
           run: |
-            for i in {0..120}
+            for i in {0..60}
             do
               sleep 5
 
@@ -144,10 +148,10 @@ jobs:
               kubectl logs -n operator -l app.kubernetes.io/name=op-svc-jenkins
 
               echo "Here are the events from Jenkins namespace:"
-              kubectl get events -n $JENKINS_NAMESPACE
+              kubectl get events -n $JENKINS_NAMESPACE --sort-by='.lastTimestamp'
 
               echo "Here are the events from Operator namespace:"
-              kubectl get events -n $OPERATOR_NAMESPACE
+              kubectl get events -n $OPERATOR_NAMESPACE --sort-by='.lastTimestamp'
 
-              exit 42
+              exit 1
             fi
