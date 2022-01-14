@@ -129,14 +129,16 @@ jobs:
               echo "Jenkins is ready: $READY"
 
               if [[ $PHASE == Running && $READY == true ]]; then
-                echo "Jenkins should be fully up and running! Here are the logs from Jenkins pod:"
-                kubectl logs -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins
                 break
               fi
             done
 
-            if [[ $PHASE != Running || $READY != true ]]; then
+            if [[ $PHASE == Running || $READY == true ]]; then
+              echo "Jenkins should be fully up and running! Here are the logs from Jenkins pod:"
+              kubectl logs -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins
+            else
               echo "Jenkins didn't get Running and Ready within 5 minutes. Good luck with troubleshooting."
+
               echo "Here are the logs from Jenkins pod:"
               kubectl logs -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins
 
