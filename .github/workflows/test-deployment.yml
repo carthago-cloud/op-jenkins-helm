@@ -85,7 +85,7 @@ jobs:
 
               echo "Operator pod phase: $PHASE"
 
-              if [[ $PHASE != Running ]]; then
+              if [[ $PHASE == Running ]]; then
                 break
               fi
             done
