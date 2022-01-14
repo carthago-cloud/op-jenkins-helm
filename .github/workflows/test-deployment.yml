@@ -110,11 +110,11 @@ jobs:
 
         - name: Verify that Jenkins is running and ready
           run: |
-            sleep 180
+            sleep 45
 
             PHASE=NotRunning
             READY=false
-            for i in {0..60}
+            for i in {0..2}
             do
               sleep 5
 
