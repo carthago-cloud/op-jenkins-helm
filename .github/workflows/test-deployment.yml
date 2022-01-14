@@ -148,4 +148,6 @@ jobs:
 
               echo "Here are the events from Operator namespace:"
               kubectl get events -n $OPERATOR_NAMESPACE
+
+              exit 1
             fi
