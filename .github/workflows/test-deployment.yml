@@ -139,10 +139,10 @@ jobs:
               kubectl logs -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins
 
               echo "\nHere are the logs from initial-config container:"
-              kubectl logs -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins initial-config
+              kubectl logs -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins -c initial-config
 
               echo "\nHere are the logs from jenkins-controller container:"
-              kubectl logs -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins jenkins-controller
+              kubectl logs -n $JENKINS_NAMESPACE -l operator-service.com/kind=Jenkins -c jenkins-controller
 
               echo "\nHere are the logs from operator:"
               kubectl logs -n operator -l app.kubernetes.io/name=op-svc-jenkins
