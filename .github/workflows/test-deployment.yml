@@ -8,17 +8,13 @@ env:
   OPERATOR_NAMESPACE: operator
   JENKINS_NAMESPACE: jenkins # should match 'jenkinsNamespace' field value in operator-service values.yaml
 
-# todo: uncomment before merging
-#on:
-#  push:
-#    branches:
-#      - main
-#  pull_request:
-
 on:
   push:
     branches:
-      - chore/sc-451-helm-chart-tests-on-pr
+      - main
+  pull_request:
+    types: [opened, synchronize, ready_for_review, reopened]
+  workflow_dispatch:
 
 jobs:
     verify-that-chart-can-be-deployed:
