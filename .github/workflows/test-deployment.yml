@@ -121,7 +121,7 @@ jobs:
                 echo "Jenkins pod hasn't yet been created, waiting another 5 secs"
               else
                 echo "Jenkins pod phase: $PHASE"
-                echo "Jenkins is ready: $READY\n"
+                echo -e "Jenkins is ready: $READY\n"
               fi
 
               if [[ $PHASE == Running && $READY == true ]]; then
