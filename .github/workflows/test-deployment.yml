@@ -71,7 +71,6 @@ jobs:
 
         - name: Verify that Operator is up and running
           run: |
-            PHASE=NotRunning
             for i in {0..90}
             do
               sleep 2
@@ -83,7 +82,7 @@ jobs:
                 echo "Operator pod hasn't yet been created, waiting another 2 secs"
               else
                 echo "Operator pod phase: $PHASE"
-                echo "Operator pod ready: $READY"
+                echo -e "Operator pod ready: $READY\n"
               fi
 
               if [[ $PHASE == Running && $READY == true ]]; then

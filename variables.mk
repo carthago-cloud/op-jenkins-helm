@@ -22,9 +22,6 @@ CHART_VERSION=0.1.0
 APP_VERSION := $(shell cat APP_VERSION.txt)
 OLD_APP_VERSION := $(shell cat APP_VERSION.txt)
 
-# this all might not be necessary
-KUBERNETES_PROVIDER=minikube
 MINIKUBE_VERSION=1.21.0
 MINIKUBE_KUBERNETES_VERSION=v1.21.0
-#KUBECTL_CONTEXT=minikube
 CLUSTER_DOMAIN=cluster.local
