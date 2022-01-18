@@ -23,8 +23,6 @@ jobs:
 
       steps:
         - uses: actions/checkout@v2
-          with:
-            fetch-depth: 0
           name: checkout repo
 
         - name: Install helm
