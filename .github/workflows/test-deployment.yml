@@ -101,6 +101,9 @@ jobs:
 
               echo "Here are the events from Operator namespace:"
               kubectl get events -n $OPERATOR_NAMESPACE --sort-by='.lastTimestamp'
+
+              echo "Here are the events from default namespace:"
+              kubectl get events --sort-by='.lastTimestamp'
             fi
 
         - name: Install crs chart
@@ -151,6 +154,9 @@ jobs:
 
               echo "Here are the events from Operator namespace:"
               kubectl get events -n $OPERATOR_NAMESPACE --sort-by='.lastTimestamp'
+
+              echo "Here are the events from default namespace:"
+              kubectl get events --sort-by='.lastTimestamp'
 
               exit 1
             fi
