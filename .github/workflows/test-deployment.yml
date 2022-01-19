@@ -71,8 +71,8 @@ jobs:
 
         - name: Verify that Operator is up and running
           run: |
-            chmod +x test-operator-gets-up.sh
-            ./test-operator-gets-up.sh -
+          chmod +x $OPERATOR_TEST_SCRIPT
+          ./$OPERATOR_TEST_SCRIPT $OPERATOR_NAMESPACE
 
         - name: Install crs chart
           run: |
@@ -80,5 +80,5 @@ jobs:
 
         - name: Verify that Jenkins is running and ready
           run: |
-            chmod +x test-jenkins-gets-up.sh
-            ./test-operator-gets-up.sh
+          chmod +x $JENKINS_TEST_SCRIPT
+          ./$JENKINS_TEST_SCRIPT $JENKINS_NAMESPACE
