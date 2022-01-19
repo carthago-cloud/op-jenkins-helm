@@ -9,10 +9,11 @@ if [ $# -eq 0 ]; then
 fi
 
 readonly OPERATOR_NAMESPACE=$1
+readonly NUMBER_OF_RETRIES=90
+readonly CHECK_INTERVAL=2
 
-for _ in {0..90}
-do
-  sleep 2
+for (( i = 0; i <= NUMBER_OF_RETRIES; i++)); do
+  sleep $CHECK_INTERVAL
 
   PHASE=$(kubectl get pod -n "$OPERATOR_NAMESPACE" -l app.kubernetes.io/name=op-svc-jenkins -o jsonpath="{.items[0].status.phase}" --ignore-not-found)
   READY=$(kubectl get pod -n "$OPERATOR_NAMESPACE" -l app.kubernetes.io/name=op-svc-jenkins -o jsonpath="{.items[0].status.containerStatuses[0].ready}" --ignore-not-found)

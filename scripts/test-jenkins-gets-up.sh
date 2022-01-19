@@ -9,10 +9,11 @@ if [ $# -eq 0 ]; then
 fi
 
 readonly JENKINS_NAMESPACE=$1
+readonly NUMBER_OF_RETRIES=60
+readonly CHECK_INTERVAL=5
 
-for _ in {0..60}
-do
-  sleep 5
+for (( i = 0; i <= NUMBER_OF_RETRIES; i++)); do
+  sleep $CHECK_INTERVAL
 
   PHASE=$(kubectl get pod -n "$JENKINS_NAMESPACE" -l operator-service.com/kind=Jenkins -o jsonpath="{.items[0].status.phase}" --ignore-not-found)
   READY=$(kubectl get pod -n "$JENKINS_NAMESPACE" -l operator-service.com/kind=Jenkins -o jsonpath="{.items[0].status.containerStatuses[0].ready}" --ignore-not-found)
