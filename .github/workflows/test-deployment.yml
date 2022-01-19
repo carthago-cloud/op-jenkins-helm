@@ -71,8 +71,8 @@ jobs:
 
         - name: Verify that Operator is up and running
           run: |
-          chmod +x ${{ env.OPERATOR_TEST_SCRIPT }}
-          ./${{ env.OPERATOR_TEST_SCRIPT }} ${{ env.OPERATOR_NAMESPACE }}
+            chmod +x ${{ env.OPERATOR_TEST_SCRIPT }}
+            ./${{ env.OPERATOR_TEST_SCRIPT }} ${{ env.OPERATOR_NAMESPACE }}
 
         - name: Install crs chart
           run: |
@@ -80,5 +80,5 @@ jobs:
 
         - name: Verify that Jenkins is running and ready
           run: |
-          chmod +x ${{ env.JENKINS_TEST_SCRIPT }}
-          ./${{ env.JENKINS_TEST_SCRIPT }} ${{ env.JENKINS_NAMESPACE }}
+            chmod +x ${{ env.JENKINS_TEST_SCRIPT }}
+            ./${{ env.JENKINS_TEST_SCRIPT }} ${{ env.JENKINS_NAMESPACE }}
