@@ -3,12 +3,12 @@ name: Verify that the current chart can be deployed locally on minikube
 env:
   HELM_VERSION: 3.7.0
   IMAGE_REGISTRY: operatorservice.azurecr.io
-  OP_CHART_DIRECTORY: ./chart/op-svc-jenkins # should match repo's directory structure
-  CRS_CHART_DIRECTORY: ./chart/op-svc-jenkins-crs # should match repo's directory structure
+  OP_CHART_DIRECTORY: chart/op-svc-jenkins # should match repo's directory structure
+  CRS_CHART_DIRECTORY: chart/op-svc-jenkins-crs # should match repo's directory structure
   OPERATOR_NAMESPACE: operator
   JENKINS_NAMESPACE: jenkins # should match 'jenkinsNamespace' field value in operator-service values.yaml
-  OPERATOR_TEST_SCRIPT: test-operator-gets-up.sh
-  JENKINS_TEST_SCRIPT: test-jenkins-gets-up.sh
+  OPERATOR_TEST_SCRIPT: scripts/test-operator-gets-up.sh
+  JENKINS_TEST_SCRIPT: scripts/test-jenkins-gets-up.sh
 
 on:
   push:
