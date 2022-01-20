@@ -12,7 +12,7 @@ readonly JENKINS_NAMESPACE=$1
 readonly NUMBER_OF_RETRIES=60
 readonly CHECK_INTERVAL=5
 
-if [[ -z $(kubectl get namespace "JENKINS_NAMESPACE" --ignore-not-found) ]]; then
+if [[ -z $(kubectl get namespace "$JENKINS_NAMESPACE" --ignore-not-found) ]]; then
   echo "Namespace $JENKINS_NAMESPACE doesn't exist."
   exit 1
 fi
