@@ -146,7 +146,7 @@ jenkinsGroovyScripts:
     data: |
       import jenkins.model.Jenkins
 
-      def systemMessage = "Hello from v1beta1.JenkinsGroovyScript! 123123123test"
+      def systemMessage = "Hello from v1beta1.JenkinsGroovyScript!"
 
       Jenkins jenkins = Jenkins.getInstance()
       jenkins.setSystemMessage(systemMessage)
