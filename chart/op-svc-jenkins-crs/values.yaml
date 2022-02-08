@@ -54,7 +54,7 @@ jenkins:
     priorityClassName: ""
     tolerations: []
 
-  # homePVC allows to set PersistentVolumeClaim properties for Jenkins home
+  # homePVC allows setting PersistentVolumeClaim properties for Jenkins home
   homePVC: {}
 
   # accessMode specifies the way the plugins cache can be mounted
@@ -67,7 +67,8 @@ jenkins:
   # storageClassName: ""
   # storageClassName: ""
 
-  # pluginsCache allows to set plugins cache specific pvc properties
+  # pluginsCache allows setting plugins cache specific pvc properties
+  # pluginsCache is not available in the free plan and requires a valid license
   pluginsCache: {}
 
   # accessMode specifies the way the plugins cache can be mounted
@@ -92,7 +93,7 @@ jenkins:
   # roles defines list of extra RBAC roles for the Jenkins Master pod service account
   roles: []
 
-  # services allows to configure Jenkins services
+  # services allow configuring Jenkins services
   services: {}
 #    Http is Jenkins web UI service
 #    http:
@@ -116,7 +117,8 @@ jenkins:
 #      Spec describes the attributes that a user creates on a service.
 #      spec: {}
 
-  # defines authorization strategy of the operator for the Jenkins API
+  # defines authorization strategy of the operator for the Jenkins API.
+  # It is not available in the free plan and requires a valid license.
   authorizationStrategy: createUser
 
   # disableCSRFProtection can enable or disable operator built-in CSRF protection
@@ -232,7 +234,7 @@ jenkinsSeedJobs:
       # pollSCM is setting for polling changes in SCM (optional)
       pollSCM: ""
 
-    # settings configures the job build options
+    # settings configure the job build options
     settings:
 
       # ignoreMissingFiles is setting for Job DSL API plugin to ignore files that are missing (optional)
@@ -282,9 +284,11 @@ jenkinsConfigurationsAsCode:
 jenkinsKubernetesAgentEnabled: true
 
 # JenkinsKubernetesAgent instances configuration
+# In the free plan, only 1 jenkinsKubernetesAgent can be configured, and its name must be equal to operator-agent
 # For configuration as code creation tutorial, check https://virtuslabrnd.github.io/operator-service-docs/operator-service-for-jenkins/latest/getting-started/seedjob-configuration/
 jenkinsKubernetesAgents:
   # name of resource
+  # in the free plan, name be equal to operator-agent
   - name: first-agent
 
     # labels are injected into metadata labels field. Each JenkinsKubernetesAgent Custom Resource need to reference corresponding
@@ -295,7 +299,7 @@ jenkinsKubernetesAgents:
     # annotations are injected into metadata annotations field
     annotations: {}
 
-    # PodSpec allows to set Jenkins Kubernetes Agent specific pod properties
+    # PodSpec allows setting Jenkins Kubernetes Agent specific pod properties
     podSpec:
       containers:
         - name: jnlp
@@ -359,6 +363,7 @@ jenkinsKubernetesAgents:
 jenkinsAuthenticationEnabled: false
 
 # JenkinsAuthentication configuration
+# It is not available in the free plan and requires a valid license.
 # For authentication creation tutorial, check https://virtuslabrnd.github.io/operator-service-docs/operator-service-for-jenkins/latest/getting-started/authentication/
 jenkinsAuthentication:
   # name of resource
