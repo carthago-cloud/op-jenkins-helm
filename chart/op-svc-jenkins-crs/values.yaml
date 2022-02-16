@@ -283,11 +283,11 @@ jenkinsConfigurationsAsCode:
 jenkinsKubernetesAgentEnabled: true
 
 # JenkinsKubernetesAgent instances configuration
-# In the free plan, only 1 jenkinsKubernetesAgent can be configured, and its name must be equal to operator-agent
+# In the free plan, only 1 jenkinsKubernetesAgent can be configured, and its name must be equal to seed-job-agent
 # For configuration as code creation tutorial, check https://virtuslabrnd.github.io/operator-service-docs/operator-service-for-jenkins/latest/getting-started/seedjob-configuration/
 jenkinsKubernetesAgents:
   # name of resource
-  # in the free plan, name must be equal to operator-agent
+  # in the free plan, it must be equal to seed-job-agent
   - name: first-agent
 
     # labels are injected into metadata labels field. Each JenkinsKubernetesAgent Custom Resource need to reference corresponding
