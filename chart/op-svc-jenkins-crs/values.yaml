@@ -507,3 +507,40 @@ jenkinsAuthentication:
 
     # (optional)
     escapeHatchGroup: ""
+
+# JenkinsAuthorizationEnabled can enable or disable the jenkinsAuthorization instance
+# Set to true if you want to deploy the resource, set to false if have configured CR(s) already and/or you want to deploy an operator only
+jenkinsAuthorizationEnabled: false
+
+# JenkinsAuthorization configuration
+# For authorization creation tutorial, check https://virtuslabrnd.github.io/operator-service-docs/operator-service-for-jenkins/latest/getting-started/authorization/
+jenkinsAuthorization:
+  # name of resource
+  name: authorization
+
+  # labels are injected into metadata labels field. Each JenkinsAuthorization Custom Resource need to reference corresponding
+  # Jenkins Custom Resource via labels field
+  labels:
+    operator-service.com/jenkins: jenkins
+
+  # annotations are injected into metadata annotations field
+  annotations: {}
+
+  # type indicates which authorization provider is set
+  type: "matrix"
+
+  # matrix is configuration for Matrix Authorization Strategy
+  matrix:
+    users:
+      - name: "user-example"
+        permissions:
+          - Overall/Read
+
+  # roleBased is configuration for Role-Based Authorization Strategy
+  roleBased:
+    roles:
+      - name: "reader"
+        permissions:
+          - Overall/Read
+        usersOrGroups:
+          - anonymous
