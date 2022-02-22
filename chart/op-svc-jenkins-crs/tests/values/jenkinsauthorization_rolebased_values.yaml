@@ -1,0 +1,15 @@
+jenkinsAuthorizationEnabled: true
+jenkinsAuthorization:
+  name: authorization
+  namespace: default
+  labels:
+    operator-service.com/jenkins: jenkins
+  annotations: {}
+  type: "roleBased"
+  roleBased:
+    roles:
+      - name: "reader"
+        permissions:
+          - Overall/Read
+        usersOrGroups:
+          - anonymous
