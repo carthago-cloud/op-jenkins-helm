@@ -529,14 +529,14 @@ jenkinsAuthorization:
   # type indicates which authorization provider is set
   type: "matrix"
 
-  # matrix is configuration for Matrix Authorization Strategy
+  # Matrix Authorization Strategy
   matrix:
     users:
       - name: "user-example"
         permissions:
           - Overall/Read
 
-  # roleBased is configuration for Role-Based Authorization Strategy
+  # Role-Based Authorization Strategy
   roleBased:
     roles:
       - name: "reader"
