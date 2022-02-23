@@ -1,6 +1,7 @@
 apiVersion: v2
 appVersion: "0.11.1"
-description: Custom Resources for Operator Service for Jenkins
-name: op-svc-jenkins-crs
+description: Custom Resources for Carthago Operator for Jenkins
+name: carthago-op-jenkins-crs
 version: 0.3.1
+# todo: change
 icon: https://raw.githubusercontent.com/jenkinsci/kubernetes-operator/master/assets/jenkins-operator-icon.png
