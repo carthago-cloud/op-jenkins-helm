@@ -1,0 +1,42 @@
+{{- if .Values.jenkinsAuthorizationEnabled }}
+  {{- $apiVersion := .Values.apiVersion }}
+  {{- $jenkinsAuthorization := .Values.jenkinsAuthorization}}
+---
+apiVersion: {{ $apiVersion }}
+kind: JenkinsAuthorization
+metadata:
+  name: {{ $jenkinsAuthorization.name }}
+  {{- with $jenkinsAuthorization.labels }}
+  labels: {{ toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with $jenkinsAuthorization.annotations }}
+  annotations: {{ toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: {{ $jenkinsAuthorization.type }}
+  {{- if eq $jenkinsAuthorization.type "matrix" }}
+  matrix:
+    users:
+    {{- range $jenkinsAuthorization.matrix.users }}
+      - name: {{ .name }}
+        permissions:
+        {{- range .permissions }}
+          - {{ . }}
+        {{- end }}
+    {{- end }}
+  {{- else if eq $jenkinsAuthorization.type "roleBased" }}
+  roleBased:
+    roles:
+    {{- range $jenkinsAuthorization.roleBased.roles }}
+      - name: {{ .name }}
+        permissions:
+        {{- range .permissions }}
+          - {{ . }}
+        {{- end }}
+        usersOrGroups:
+        {{- range .usersOrGroups }}
+          - {{ . }}
+        {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
