@@ -15,21 +15,21 @@ endif
 .PHONY: helm-lint
 helm-lint: helm-install
 	@echo "+ $@"
-	bin/helm lint chart/op-svc-jenkins
-	bin/helm lint chart/op-svc-jenkins-crs
+	bin/helm lint chart/carthago-op-jenkins
+	bin/helm lint chart/carthago-op-jenkins-crs
 
 .PHONE: change-chart-version
 change-chart-version: bump-version
 	@echo "+ $@"
 	$(eval VERSION=$(shell cat VERSION.txt))
-	sed -i "/version:/c\version: $(VERSION)" chart/op-svc-jenkins/Chart.yaml
+	sed -i "/version:/c\version: $(VERSION)" chart/carthago-op-jenkins/Chart.yaml
 	@if [ $(APP_VERSION) != $(OLD_APP_VERSION) ] ; then \
-		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" chart/op-svc-jenkins/Chart.yaml ;\
+		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" chart/carthago-op-jenkins/Chart.yaml ;\
 	fi
 
-	sed -i "/version:/c\version: $(VERSION)" chart/op-svc-jenkins-crs/Chart.yaml
+	sed -i "/version:/c\version: $(VERSION)" chart/carthago-op-jenkins-crs/Chart.yaml
 	@if [ $(APP_VERSION) != $(OLD_APP_VERSION) ] ; then \
-		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" chart/op-svc-jenkins-crs/Chart.yaml ;\
+		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" chart/carthago-op-jenkins-crs/Chart.yaml ;\
 		echo $(APP_VERSION) > APP_VERSION.txt ;\
 	fi
 
@@ -37,8 +37,8 @@ change-chart-version: bump-version
 .PHONY: helm-package-latest
 helm-package-latest: helm-install
 	@echo "+ $@"
-	bin/helm package chart/op-svc-jenkins
-	bin/helm package chart/op-svc-jenkins-crs
+	bin/helm package chart/carthago-op-jenkins
+	bin/helm package chart/carthago-op-jenkins-crs
 
 .PHONY: helm-save-local
 helm-save-local: helm-install
@@ -79,7 +79,7 @@ unit-test-plugin:
 .PHONY: unit-test
 unit-test:
 	@echo "+ $@"
-	bin/helm unittest chart/op-svc-jenkins-crs/ -3 --debug
+	bin/helm unittest chart/carthago-op-jenkins-crs/ -3 --debug
 
 .PHONY: minikube
 HAS_MINIKUBE := $(shell which $(PROJECT_DIR)/bin/minikube)

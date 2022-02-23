@@ -64,7 +64,7 @@ jobs:
         run: |
           git config --global user.email "mkajzik@virtuslab.com"
           git config --global user.name "Mateusz Kajzik"
-          git add APP_VERSION.txt VERSION.txt chart/op-svc-jenkins/Chart.yaml chart/op-svc-jenkins-crs/Chart.yaml
+          git add APP_VERSION.txt VERSION.txt chart/carthago-op-jenkins/Chart.yaml chart/carthago-op-jenkins-crs/Chart.yaml
           git commit -m "Helm Chart Release"
           git push
 

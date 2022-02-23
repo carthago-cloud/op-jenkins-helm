@@ -2,7 +2,7 @@
 Carthago Operator for Jenkins – helm chart
 
 ### Turn on debug mode
-Add: --debug=true in chart/op-svc-jenkins/values.yaml
+Add: --debug=true in chart/carthago-op-jenkins/values.yaml
 
 ```yaml
   args:
