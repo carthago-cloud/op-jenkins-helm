@@ -1,7 +1,7 @@
 # Operator Service for Jenkins Custom Resources Helm chart
 
 # apiVersion is the version of the Custom Resources manifests
-apiVersion: operator-service.com/v1beta1
+apiVersion: carthago.com/v1beta1
 
 # Jenkins instance configuration
 jenkins:
@@ -138,7 +138,7 @@ jenkinsGroovyScripts:
     # labels are injected into metadata labels field. Each JenkinsSeedJob Custom Resource need to reference corresponding
     # Jenkins Custom Resource via labels field
     labels:
-      operator-service.com/jenkins: jenkins
+      carthago.com/jenkins: jenkins
 
     # annotations are injected into metadata annotations field
     annotations: {}
