@@ -1,4 +1,4 @@
-# Operator Service for Jenkins Helm chart
+# Carthago Operator for Jenkins Helm chart
 
 # apiVersion is the version of the Custom Resources manifests
 apiVersion: carthago.com/v1beta1
@@ -9,7 +9,7 @@ operator:
   replicaCount: 1
 
   # todo: change to new reg
-  # image is the name (and tag) of the Operator Service for Jenkins image
+  # image is the name (and tag) of the Carthago Operator for Jenkins image
   image: operatorservice.azurecr.io/op-svc-jenkins:0.11.1
 
   # imagePullPolicy defines policy for pulling images
@@ -33,11 +33,11 @@ operator:
   # fullnameOverride overrides the deployment name
   fullnameOverride: ""
 
-  # Resource limit/request for Operator Service
+  # Resource limit/request for Carthago Operator
   # See https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/ for details
   resources: {}
 
-  # NodeSelector for Operator Service
+  # NodeSelector for Carthago Operator
   # For more details see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
   nodeSelector: {}
 
@@ -49,5 +49,5 @@ operator:
   # For more details see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity
   affinity: {}
 
-  # JenkinsNamespace is used by Operator Service to watch namespace where Jenkins will be deployed
+  # JenkinsNamespace is used by Carthago Operator to watch namespace where Jenkins will be deployed
   jenkinsNamespace: "jenkins"

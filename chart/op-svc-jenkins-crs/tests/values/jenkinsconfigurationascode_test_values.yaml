@@ -9,7 +9,7 @@ jenkinsConfigurationsAsCode:
     data: |
       jenkins:
         systemMessage: |
-          Welcome to your CI/CD server managed by Operator Service for Jenkins!
+          Welcome to your CI/CD server managed by Carthago Operator for Jenkins!
         numExecutors: 1
     secretRef:
       name: secret
@@ -23,5 +23,5 @@ jenkinsConfigurationsAsCode:
     data: |
       jenkins:
         systemMessage: |
-          Welcome to your CI/CD server managed by Operator Service for Jenkins!
+          Welcome to your CI/CD server managed by Carthago Operator for Jenkins!
         numExecutors: 1

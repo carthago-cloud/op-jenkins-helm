@@ -1,5 +1,5 @@
 # op-svc-jenkins-helm
-Operator Service for Jenkins – helm chart
+Carthago Operator for Jenkins – helm chart
 
 ### Turn on debug mode
 Add: --debug=true in chart/op-svc-jenkins/values.yaml
