@@ -1,4 +1,4 @@
-apiVersion: operator-service.com/v1beta1
+apiVersion: carthago.com/v1beta1
 jenkins:
   enabled: true
   name: jenkins

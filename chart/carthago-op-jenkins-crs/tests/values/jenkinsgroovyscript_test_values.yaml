@@ -3,7 +3,7 @@ jenkinsGroovyScripts:
   - name: groovy1
     namespace: default
     labels:
-      operator-service.com/jenkins: jenkins
+      carthago.com/jenkins: jenkins
     annotations:
       annotationsTestKey: annotationsTestValue
     data: |
@@ -25,7 +25,7 @@ jenkinsGroovyScripts:
   - name: groovy2
     namespace: default
     labels:
-      operator-service.com/jenkins: jenkins
+      carthago.com/jenkins: jenkins
     annotations:
       annotationsTestKey: annotationsTestValue
     data: |
@@ -41,7 +41,7 @@ jenkinsGroovyScripts:
       - name: groovy2
         namespace: default
         labels:
-          operator-service.com/jenkins: jenkins
+          carthago.com/jenkins: jenkins
         annotations:
           annotationsTestKey: annotationsTestValue
         data: |

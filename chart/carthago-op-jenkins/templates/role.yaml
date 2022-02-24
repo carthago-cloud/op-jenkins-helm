@@ -112,7 +112,7 @@ rules:
       - list
       - watch
   - apiGroups:
-      - operator-service.com
+      - carthago.com
     resources:
       - '*'
     verbs:
@@ -255,7 +255,7 @@ rules:
       - list
       - watch
   - apiGroups:
-      - operator-service.com
+      - carthago.com
     resources:
       - '*'
     verbs:

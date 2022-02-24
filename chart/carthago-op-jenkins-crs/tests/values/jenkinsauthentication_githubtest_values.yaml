@@ -3,7 +3,7 @@ jenkinsAuthentication:
   name: authentication
   namespace: default
   labels:
-    operator-service.com/jenkins: jenkins
+    carthago.com/jenkins: jenkins
   annotations:
     annotationsTestKey: annotationsTestValue
   type: githubOAuth

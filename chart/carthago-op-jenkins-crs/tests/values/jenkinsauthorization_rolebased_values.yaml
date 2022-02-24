@@ -3,7 +3,7 @@ jenkinsAuthorization:
   name: authorization
   namespace: default
   labels:
-    operator-service.com/jenkins: jenkins
+    carthago.com/jenkins: jenkins
   annotations: {}
   type: "roleBased"
   roleBased:

@@ -8,7 +8,7 @@ tests:
     documentIndex: 0
     asserts:
       - isAPIVersion:
-          of: operator-service.com/v1beta1
+          of: carthago.com/v1beta1
       - isKind:
           of: JenkinsConfigurationAsCode
       - equal:
@@ -20,7 +20,7 @@ tests:
       - equal:
           path: metadata.labels
           value:
-            operator-service.com/jenkins: jenkins
+            carthago.com/jenkins: jenkins
       - equal:
           path: metadata.annotations
           value:
