@@ -6,7 +6,7 @@ env:
   OP_CHART_DIRECTORY: chart/carthago-op-jenkins # should match repo's directory structure
   CRS_CHART_DIRECTORY: chart/carthago-op-jenkins-crs # should match repo's directory structure
   OPERATOR_NAMESPACE: operator
-  JENKINS_NAMESPACE: jenkins # should match 'jenkinsNamespace' field value in operator-service values.yaml
+  JENKINS_NAMESPACE: jenkins # should match 'jenkinsNamespace' field value in carthago-op-jenkins values.yaml
   OPERATOR_TEST_SCRIPT: scripts/test-operator-gets-up.sh
   JENKINS_TEST_SCRIPT: scripts/test-jenkins-gets-up.sh
 
@@ -65,9 +65,9 @@ jobs:
               licenseKey: ${{ secrets.DEPLOYMENT_TEST_WORKFLOW_LICENSE_SECRET_KEY }}
             EOF
 
-        - name: Install operator-service chart
+        - name: Install carthago-op-jenkins chart
           run: |
-            helm install operator-service ${{ env.OP_CHART_DIRECTORY }} -f ${{ env.OP_CHART_DIRECTORY }}/values.yaml -n ${{ env.OPERATOR_NAMESPACE }}
+            helm install carthago-op-jenkins ${{ env.OP_CHART_DIRECTORY }} -f ${{ env.OP_CHART_DIRECTORY }}/values.yaml -n ${{ env.OPERATOR_NAMESPACE }}
 
         - name: Verify that Operator is up and running
           run: |
@@ -76,7 +76,7 @@ jobs:
 
         - name: Install crs chart
           run: |
-            helm install operator-service-crs ${{ env.CRS_CHART_DIRECTORY }} -f ${{ env.CRS_CHART_DIRECTORY }}/values.yaml -n ${{ env.JENKINS_NAMESPACE }}
+            helm install carthago-op-jenkins-crs ${{ env.CRS_CHART_DIRECTORY }} -f ${{ env.CRS_CHART_DIRECTORY }}/values.yaml -n ${{ env.JENKINS_NAMESPACE }}
 
         - name: Verify that Jenkins is running and ready
           run: |
