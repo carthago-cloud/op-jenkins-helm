@@ -1,4 +1,4 @@
-# op-svc-jenkins-helm
+# carthago-op-jenkins-helm
 Carthago Operator for Jenkins – helm chart
 
 ### Turn on debug mode
@@ -22,5 +22,5 @@ A few major changes were made to the experimental OCI feature:
 
 To pull helm chart from OCI registry you need to provide `--version <version>`
 ```bash
-helm pull oci://operatorservice.azurece.io/charts/op-svc-jenkins --version 0.1.2
+helm pull oci://operatorservice.azurece.io/charts/carthago-op-jenkins --version 0.1.2
 ```

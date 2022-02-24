@@ -51,7 +51,7 @@ else
   kubectl logs -n "$JENKINS_NAMESPACE" -l carthago.com/kind=Jenkins -c jenkins-controller
 
   echo "Here are the logs from operator:"
-  kubectl logs -n operator -l app.kubernetes.io/name=op-svc-jenkins
+  kubectl logs -n operator -l app.kubernetes.io/name=carthago-op-jenkins
 
   echo "Here are the events from Jenkins namespace:"
   kubectl get events -n "$JENKINS_NAMESPACE" --sort-by='.lastTimestamp'

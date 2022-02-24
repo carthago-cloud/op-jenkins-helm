@@ -43,10 +43,10 @@ helm-package-latest: helm-install
 .PHONY: helm-save-local
 helm-save-local: helm-install
 	@echo "+ $@"
-	bin/helm chart save op-svc-jenkins-$(VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins:$(VERSION)
-	bin/helm chart save op-svc-jenkins-crs-$(VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins-crs:$(VERSION)
-	bin/helm chart save op-svc-jenkins-$(VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins:latest
-	bin/helm chart save op-svc-jenkins-crs-$(VERSION).tgz operatorservice.azurecr.io/helm/op-svc-jenkins-crs:latest
+	bin/helm chart save carthago-op-jenkins-$(VERSION).tgz operatorservice.azurecr.io/helm/carthago-op-jenkins:$(VERSION)
+	bin/helm chart save carthago-op-jenkins-crs-$(VERSION).tgz operatorservice.azurecr.io/helm/carthago-op-jenkins-crs:$(VERSION)
+	bin/helm chart save carthago-op-jenkins-$(VERSION).tgz operatorservice.azurecr.io/helm/carthago-op-jenkins:latest
+	bin/helm chart save carthago-op-jenkins-crs-$(VERSION).tgz operatorservice.azurecr.io/helm/carthago-op-jenkins-crs:latest
 
 
 .PHONY: sembump

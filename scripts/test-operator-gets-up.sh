@@ -20,8 +20,8 @@ fi
 for (( i = 0; i <= NUMBER_OF_RETRIES; i++)); do
   sleep $CHECK_INTERVAL
 
-  PHASE=$(kubectl get pod -n "$OPERATOR_NAMESPACE" -l app.kubernetes.io/name=op-svc-jenkins -o jsonpath="{.items[0].status.phase}" --ignore-not-found)
-  READY=$(kubectl get pod -n "$OPERATOR_NAMESPACE" -l app.kubernetes.io/name=op-svc-jenkins -o jsonpath="{.items[0].status.containerStatuses[0].ready}" --ignore-not-found)
+  PHASE=$(kubectl get pod -n "$OPERATOR_NAMESPACE" -l app.kubernetes.io/name=carthago-op-jenkins -o jsonpath="{.items[0].status.phase}" --ignore-not-found)
+  READY=$(kubectl get pod -n "$OPERATOR_NAMESPACE" -l app.kubernetes.io/name=carthago-op-jenkins -o jsonpath="{.items[0].status.containerStatuses[0].ready}" --ignore-not-found)
 
   if [ -z "$PHASE" ]; then
     echo "Operator pod hasn't yet been created, waiting another 2 secs"
@@ -37,12 +37,12 @@ done
 
 if [[ $PHASE == Running && $READY == true ]]; then
   echo "Operator should be fully up and running! Here are the logs from the Operator pod:"
-  kubectl logs -n operator -l app.kubernetes.io/name=op-svc-jenkins
+  kubectl logs -n operator -l app.kubernetes.io/name=carthago-op-jenkins
 else
   echo "Operator didn't get Running and Ready within 3 minutes. Good luck with troubleshooting."
 
   echo "Here are the logs from Operator pod:"
-  kubectl logs -n operator -l app.kubernetes.io/name=op-svc-jenkins
+  kubectl logs -n operator -l app.kubernetes.io/name=carthago-op-jenkins
 
   echo "Here are the events from Operator namespace:"
   kubectl get events -n "$OPERATOR_NAMESPACE" --sort-by='.lastTimestamp'
