@@ -6,9 +6,9 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.4.1
   creationTimestamp: null
-  name: jenkinsseedjobs.carthago.com
+  name: jenkinsseedjobs.carthago.cloud
 spec:
-  group: carthago.com
+  group: carthago.cloud
   names:
     kind: JenkinsSeedJob
     listKind: JenkinsSeedJobList

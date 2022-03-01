@@ -3,7 +3,7 @@ jenkinsSeedJobs:
   - name: seedjob1
     namespace: default
     labels:
-      carthago.com/jenkins: jenkins
+      carthago.cloud/jenkins: jenkins
     annotations:
       annotationsTestKey: annotationsTestValue
     repository:
@@ -30,7 +30,7 @@ jenkinsSeedJobs:
   - name: seedjob2
     namespace: default
     labels:
-      carthago.com/jenkins: jenkins
+      carthago.cloud/jenkins: jenkins
     annotations:
       annotationsTestKey: annotationsTestValue
     repository:

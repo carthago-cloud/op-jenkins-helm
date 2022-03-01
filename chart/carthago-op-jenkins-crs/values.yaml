@@ -1,7 +1,7 @@
 # Carthago Operator for Jenkins Custom Resources Helm chart
 
 # apiVersion is the version of the Custom Resources manifests
-apiVersion: carthago.com/v1beta1
+apiVersion: carthago.cloud/v1beta1
 
 # Jenkins instance configuration
 jenkins:
@@ -138,7 +138,7 @@ jenkinsGroovyScripts:
     # labels are injected into metadata labels field. Each JenkinsSeedJob Custom Resource need to reference corresponding
     # Jenkins Custom Resource via labels field
     labels:
-      carthago.com/jenkins: jenkins
+      carthago.cloud/jenkins: jenkins
 
     # annotations are injected into metadata annotations field
     annotations: {}
@@ -178,7 +178,7 @@ jenkinsSeedJobs:
     # labels are injected into metadata labels field. Each JenkinsSeedJob Custom Resource need to reference corresponding
     # Jenkins Custom Resource via labels field
     labels:
-      carthago.com/jenkins: jenkins
+      carthago.cloud/jenkins: jenkins
 
     # annotations are injected into metadata annotations field
     annotations: {}
@@ -261,7 +261,7 @@ jenkinsConfigurationsAsCode:
     # labels are injected into metadata labels field. Each JenkinsConfigurationAsCode Custom Resource need to reference corresponding
     # Jenkins Custom Resource via labels field
     labels:
-      carthago.com/jenkins: jenkins
+      carthago.cloud/jenkins: jenkins
 
     # annotations are injected into metadata annotations field
     annotations: {}
@@ -293,7 +293,7 @@ jenkinsKubernetesAgents:
     # labels are injected into metadata labels field. Each JenkinsKubernetesAgent Custom Resource need to reference corresponding
     # Jenkins Custom Resource via labels field
     labels:
-      carthago.com/jenkins: jenkins
+      carthago.cloud/jenkins: jenkins
 
     # annotations are injected into metadata annotations field
     annotations: {}
@@ -371,7 +371,7 @@ jenkinsAuthentication:
   # labels are injected into metadata labels field. Each JenkinsAuthentication Custom Resource need to reference corresponding
   # Jenkins Custom Resource via labels field
   labels:
-    carthago.com/jenkins: jenkins
+    carthago.cloud/jenkins: jenkins
 
   # annotations are injected into metadata annotations field
   annotations: {}
@@ -520,7 +520,7 @@ jenkinsAuthorization:
   # labels are injected into metadata labels field. Each JenkinsAuthorization Custom Resource need to reference corresponding
   # Jenkins Custom Resource via labels field
   labels:
-    carthago.com/jenkins: jenkins
+    carthago.cloud/jenkins: jenkins
 
   # annotations are injected into metadata annotations field
   annotations: {}

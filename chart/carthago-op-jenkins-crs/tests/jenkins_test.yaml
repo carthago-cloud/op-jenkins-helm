@@ -7,7 +7,7 @@ tests:
       - values/jenkins_test_values.yaml
     asserts:
       - isAPIVersion:
-          of: carthago.com/v1beta1
+          of: carthago.cloud/v1beta1
       - isKind:
           of: Jenkins
       - equal:

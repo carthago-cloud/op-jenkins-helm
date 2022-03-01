@@ -7,7 +7,7 @@ tests:
       - values/jenkinsauthorization_matrix_values.yaml
     asserts:
       - isAPIVersion:
-          of: carthago.com/v1beta1
+          of: carthago.cloud/v1beta1
       - isKind:
           of: JenkinsAuthorization
       - equal:
@@ -19,7 +19,7 @@ tests:
       - equal:
           path: metadata.labels
           value:
-            carthago.com/jenkins: jenkins
+            carthago.cloud/jenkins: jenkins
       - equal:
           path: metadata.annotations
           value: null

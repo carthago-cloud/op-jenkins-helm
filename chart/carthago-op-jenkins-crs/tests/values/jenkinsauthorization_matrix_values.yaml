@@ -3,7 +3,7 @@ jenkinsAuthorization:
   name: authorization
   namespace: default
   labels:
-    carthago.com/jenkins: jenkins
+    carthago.cloud/jenkins: jenkins
   annotations: {}
   type: "matrix"
   matrix:

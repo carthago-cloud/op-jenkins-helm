@@ -1,4 +1,4 @@
-apiVersion: carthago.com/v1beta1
+apiVersion: carthago.cloud/v1beta1
 jenkins:
   enabled: true
   name: jenkins

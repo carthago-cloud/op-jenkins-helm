@@ -1,7 +1,7 @@
 # Carthago Operator for Jenkins Helm chart
 
 # apiVersion is the version of the Custom Resources manifests
-apiVersion: carthago.com/v1beta1
+apiVersion: carthago.cloud/v1beta1
 
 # operator is section for configuring operator deployment
 operator:

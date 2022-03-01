@@ -3,7 +3,7 @@ jenkinsAuthentication:
   name: authentication
   namespace: default
   labels:
-    carthago.com/jenkins: jenkins
+    carthago.cloud/jenkins: jenkins
   annotations:
     annotationsTestKey: annotationsTestValue
   type: githubOAuth

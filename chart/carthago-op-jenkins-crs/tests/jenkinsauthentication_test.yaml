@@ -7,7 +7,7 @@ tests:
       - values/jenkinsauthentication_githubtest_values.yaml
     asserts:
       - isAPIVersion:
-          of: carthago.com/v1beta1
+          of: carthago.cloud/v1beta1
       - isKind:
           of: JenkinsAuthentication
       - equal:
@@ -19,7 +19,7 @@ tests:
       - equal:
           path: metadata.labels
           value:
-            carthago.com/jenkins: jenkins
+            carthago.cloud/jenkins: jenkins
       - equal:
           path: metadata.annotations
           value:

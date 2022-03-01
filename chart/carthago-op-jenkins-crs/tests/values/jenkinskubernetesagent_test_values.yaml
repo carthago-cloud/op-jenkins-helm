@@ -3,7 +3,7 @@ jenkinsKubernetesAgents:
   - name: first-agent
     namespace: default
     labels:
-      carthago.com/jenkins: jenkins
+      carthago.cloud/jenkins: jenkins
     annotations:
       annotationsTestKey: annotationsTestValue
     podSpec:
@@ -35,7 +35,7 @@ jenkinsKubernetesAgents:
   - name: second-agent
     namespace: default
     labels:
-      carthago.com/jenkins: jenkins
+      carthago.cloud/jenkins: jenkins
     annotations:
       annotationsTestKey: annotationsTestValue
     podSpec:

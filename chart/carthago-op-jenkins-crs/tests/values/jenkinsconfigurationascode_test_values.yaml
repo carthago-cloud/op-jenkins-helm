@@ -3,7 +3,7 @@ jenkinsConfigurationsAsCode:
   - name: casc1
     namespace: default
     labels:
-      carthago.com/jenkins: jenkins
+      carthago.cloud/jenkins: jenkins
     annotations:
       annotationsTestKey: annotationsTestValue
     data: |
@@ -17,7 +17,7 @@ jenkinsConfigurationsAsCode:
   - name: casc2
     namespace: default
     labels:
-      carthago.com/jenkins: jenkins
+      carthago.cloud/jenkins: jenkins
     annotations:
       annotationsTestKey: annotationsTestValue
     data: |
