@@ -1,5 +1,5 @@
 # carthago-op-jenkins-helm
-Carthago Operator for Jenkins – helm chart
+Carthago Operator for Jenkins – Helm chart
 
 ### Turn on debug mode
 Add: --debug=true in chart/carthago-op-jenkins/values.yaml

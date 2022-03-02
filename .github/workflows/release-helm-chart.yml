@@ -23,20 +23,13 @@ jobs:
           fetch-depth: 0
         name: checkout repo
 
-      - name: install helm
+      - name: Install helm
         env:
           HELM_VERSION_TO_INSTALL: 3.6.3
         run: |
           make helm-install HELM_VERSION=$HELM_VERSION_TO_INSTALL
 
-      - name: login to acr using helm
-        env:
-          ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
-          ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
-        run: |
-          bin/helm registry login operatorservice.azurecr.io -u $ACR_USERNAME -p $ACR_PASSWORD
-
-      - name: Create Helm Chart package
+      - name: Create Helm chart package
         run: |
           if [ ${{ github.event.inputs.appVersion }} ] ; then
             make change-chart-version BUMP=${{ github.event.inputs.Bump }} APP_VERSION=${{ github.event.inputs.appVersion }}
@@ -46,19 +39,12 @@ jobs:
 
           make helm-package-latest
 
-      - name: Save Charts to local helm registry
+      - name: Save Charts to local Helm registry
         run: |
           make helm-save-local
 
       - name: Set env
         run: echo "CHART_VERSION=$(cat VERSION.txt)" >> $GITHUB_ENV
-
-      - name: Push saved charts to ACR registry
-        run: |
-          bin/helm chart push operatorservice.azurecr.io/helm/carthago-op-jenkins:$CHART_VERSION
-          bin/helm chart push operatorservice.azurecr.io/helm/carthago-op-jenkins-crs:$CHART_VERSION
-          bin/helm chart push operatorservice.azurecr.io/helm/carthago-op-jenkins:latest
-          bin/helm chart push operatorservice.azurecr.io/helm/carthago-op-jenkins-crs:latest
 
       - name: Commit changes to repository
         run: |
@@ -83,7 +69,7 @@ jobs:
           tag_name: ${{ env.CHART_VERSION }}
 
   publish-with-new-helm:
-    name: publish helm charts to ACR with Helm 3.7.0
+    name: Publish helm charts to ACR with Helm 3.7.0
     runs-on: ubuntu-latest
     env:
       HELM_EXPERIMENTAL_OCI: 1
@@ -94,20 +80,13 @@ jobs:
           fetch-depth: 0
         name: checkout repo
 
-      - name: install helm
+      - name: Install Helm
         env:
           HELM_VERSION_TO_INSTALL: 3.7.0
         run: |
           make helm-install HELM_VERSION=$HELM_VERSION_TO_INSTALL
 
-      - name: login to acr using helm
-        env:
-          ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
-          ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
-        run: |
-          bin/helm registry login operatorservice.azurecr.io -u $ACR_USERNAME -p $ACR_PASSWORD
-
-      - name: Create Helm Chart package
+      - name: Create Helm chart package
         run: |
           if [ ${{ github.event.inputs.appVersion }} ] ; then
             make change-chart-version BUMP=${{ github.event.inputs.Bump }} APP_VERSION=${{ github.event.inputs.appVersion }}
@@ -119,8 +98,3 @@ jobs:
 
       - name: Set env
         run: echo "CHART_VERSION=$(cat VERSION.txt)" >> $GITHUB_ENV
-
-      - name: Push saved charts to ACR registry
-        run: |
-          bin/helm push carthago-op-jenkins-$CHART_VERSION.tgz oci://operatorservice.azurecr.io/charts/
-          bin/helm push carthago-op-jenkins-crs-$CHART_VERSION.tgz oci://operatorservice.azurecr.io/charts/
