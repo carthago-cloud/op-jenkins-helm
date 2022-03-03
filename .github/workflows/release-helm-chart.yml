@@ -7,7 +7,7 @@ on:
         description: "Set BUMP to [ patch | major | minor ]"
         required: true
       appVersion:
-        description: "Operator app version without quotes, eg. 0.8.1 If not provided, app version already present in Chart.yaml files will be used."
+        description: "Operator app version without quotes, eg. 0.8.1. If not provided, app version already present in Chart.yaml files will be used."
         required: false
 
 jobs:
