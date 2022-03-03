@@ -3,78 +3,37 @@ name: Package and release the charts
 on:
   workflow_dispatch:
     inputs:
-      Bump:
+      bump:
         description: "Set BUMP to [ patch | major | minor ]"
         required: true
       appVersion:
-        description: "Operator app version without quotes, eg. 0.8.1 . If not provided, the one in Chart.yaml won't be overwritten."
+        description: "Operator app version without quotes, eg. 0.8.1 If not provided, app version already present in Chart.yaml files will be used."
         required: false
-
-env:
-  HELM_VERSION_TO_INSTALL: 3.8.0
 
 jobs:
   release-charts:
     name: Package and release the charts
     runs-on: ubuntu-latest
-    env:
-      HELM_EXPERIMENTAL_OCI: 1
     steps:
-
-      - uses: actions/checkout@v2
+      - name: Checkout repo
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
-        name: checkout repo
-
-      - name: Install Helm
-        run: |
-          make helm-install HELM_VERSION=$HELM_VERSION_TO_INSTALL
-
-      - name: Set chart version env
-        run: echo "CHART_VERSION=$(cat VERSION.txt)" >> $GITHUB_ENV
 
       - name: Bump versions
         run: |
           if [ ${{ github.event.inputs.appVersion }} ] ; then
-            make change-chart-version BUMP=${{ github.event.inputs.Bump }} APP_VERSION=${{ github.event.inputs.appVersion }}
+            make change-chart-version BUMP=${{ github.event.inputs.bump }} APP_VERSION=${{ github.event.inputs.appVersion }}
           else
-            make change-chart-version BUMP=${{ github.event.inputs.Bump }}
+            make change-chart-version BUMP=${{ github.event.inputs.bump }}
           fi
 
-          make helm-package-latest
-
-      - name: Release the charts
-        uses: softprops/action-gh-release@v1
-        with:
-          body_path: CHANGELOG.txt
-          files: |
-            carthago-op-jenkins-${{ env.CHART_VERSION }}.tgz
-            carthago-op-jenkins-crs-${{ env.CHART_VERSION }}.tgz
-          tag_name: ${{ env.CHART_VERSION }}
-
-      - name: Add new charts to repo index
+      - name: Configure Git
         run: |
-          cd chart
-          helm repo index . --merge  --url https://github.com/carthago-cloud/op-jenkins-helm/releases/download/${{ env.CHART_VERSION }}/
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - name: Commit changes to repository
-        run: |
-          git config --global user.email "mkajzik@virtuslab.com"
-          git config --global user.name "Mateusz Kajzik"
-          git add .
-          git commit -m "Release Helm chart v${{ env.CHART_VERSION }}"
-          git push
-
-      - name: Create Tag
-        run: |
-          git tag $CHART_VERSION
-          git push origin main $CHART_VERSION
-
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          body_path: CHANGELOG.txt
-          files: |
-            carthago-op-jenkins-${{ env.CHART_VERSION }}.tgz
-            carthago-op-jenkins-crs-${{ env.CHART_VERSION }}.tgz
-          tag_name: ${{ env.CHART_VERSION }}
+      - name: Release the charts with chart releaser
+        uses: helm/chart-releaser-action@v1.3.0
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
