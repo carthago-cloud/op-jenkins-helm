@@ -1,4 +1,4 @@
-name: Build a Helm package and Push it to ACR
+name: Package and release the charts
 
 on:
   workflow_dispatch:
@@ -10,9 +10,12 @@ on:
         description: "Operator app version without quotes, eg. 0.8.1 . If not provided, the one in Chart.yaml won't be overwritten."
         required: false
 
+env:
+  HELM_VERSION_TO_INSTALL: 3.8.0
+
 jobs:
-  publish-with-old-helm:
-    name: publish helm charts to ACR with Helm 3.6.3
+  release-charts:
+    name: Package and release the charts
     runs-on: ubuntu-latest
     env:
       HELM_EXPERIMENTAL_OCI: 1
@@ -23,13 +26,14 @@ jobs:
           fetch-depth: 0
         name: checkout repo
 
-      - name: Install helm
-        env:
-          HELM_VERSION_TO_INSTALL: 3.6.3
+      - name: Install Helm
         run: |
           make helm-install HELM_VERSION=$HELM_VERSION_TO_INSTALL
 
-      - name: Create Helm chart package
+      - name: Set chart version env
+        run: echo "CHART_VERSION=$(cat VERSION.txt)" >> $GITHUB_ENV
+
+      - name: Bump versions
         run: |
           if [ ${{ github.event.inputs.appVersion }} ] ; then
             make change-chart-version BUMP=${{ github.event.inputs.Bump }} APP_VERSION=${{ github.event.inputs.appVersion }}
@@ -39,19 +43,26 @@ jobs:
 
           make helm-package-latest
 
-      - name: Save Charts to local Helm registry
-        run: |
-          make helm-save-local
+      - name: Release the charts
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: CHANGELOG.txt
+          files: |
+            carthago-op-jenkins-${{ env.CHART_VERSION }}.tgz
+            carthago-op-jenkins-crs-${{ env.CHART_VERSION }}.tgz
+          tag_name: ${{ env.CHART_VERSION }}
 
-      - name: Set env
-        run: echo "CHART_VERSION=$(cat VERSION.txt)" >> $GITHUB_ENV
+      - name: Add new charts to repo index
+        run: |
+          cd chart
+          helm repo index . --merge  --url https://github.com/carthago-cloud/op-jenkins-helm/releases/download/${{ env.CHART_VERSION }}/
 
       - name: Commit changes to repository
         run: |
           git config --global user.email "mkajzik@virtuslab.com"
           git config --global user.name "Mateusz Kajzik"
-          git add APP_VERSION.txt VERSION.txt chart/carthago-op-jenkins/Chart.yaml chart/carthago-op-jenkins-crs/Chart.yaml
-          git commit -m "Helm Chart Release"
+          git add .
+          git commit -m "Release Helm chart v${{ env.CHART_VERSION }}"
           git push
 
       - name: Create Tag
@@ -67,34 +78,3 @@ jobs:
             carthago-op-jenkins-${{ env.CHART_VERSION }}.tgz
             carthago-op-jenkins-crs-${{ env.CHART_VERSION }}.tgz
           tag_name: ${{ env.CHART_VERSION }}
-
-  publish-with-new-helm:
-    name: Publish helm charts to ACR with Helm 3.7.0
-    runs-on: ubuntu-latest
-    env:
-      HELM_EXPERIMENTAL_OCI: 1
-    steps:
-
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-        name: checkout repo
-
-      - name: Install Helm
-        env:
-          HELM_VERSION_TO_INSTALL: 3.7.0
-        run: |
-          make helm-install HELM_VERSION=$HELM_VERSION_TO_INSTALL
-
-      - name: Create Helm chart package
-        run: |
-          if [ ${{ github.event.inputs.appVersion }} ] ; then
-            make change-chart-version BUMP=${{ github.event.inputs.Bump }} APP_VERSION=${{ github.event.inputs.appVersion }}
-          else
-            make change-chart-version BUMP=${{ github.event.inputs.Bump }}
-          fi
-
-          make helm-package-latest
-
-      - name: Set env
-        run: echo "CHART_VERSION=$(cat VERSION.txt)" >> $GITHUB_ENV
