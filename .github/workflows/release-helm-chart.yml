@@ -4,10 +4,16 @@ on:
   workflow_dispatch:
     inputs:
       bump:
-        description: "Set BUMP to [ patch | major | minor ]"
+        type: choice
         required: true
+        description: How to bump the chart version. Setting it to disabled will make the workflow release the charts with versions from chart.yaml files.
+        options:
+          - disabled
+          - major
+          - minor
+          - patch
       appVersion:
-        description: "Operator app version without quotes, eg. 0.8.1. If not provided, app version already present in Chart.yaml files will be used."
+        description: "Operator app version without quotes, eg. 0.8.1. If not provided, app version already present in Chart.yaml files will be used. If bump was disabled, appVersion won't be changed too."
         required: false
 
 jobs:
@@ -21,6 +27,7 @@ jobs:
           fetch-depth: 0
 
       - name: Bump versions
+        if: github.event.inputs.bump != 'disabled'
         run: |
           if [ ${{ github.event.inputs.appVersion }} ] ; then
             make change-chart-version BUMP=${{ github.event.inputs.bump }} APP_VERSION=${{ github.event.inputs.appVersion }}
