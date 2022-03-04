@@ -1,0 +1,94 @@
+suite: test JenkinsKubernetesAgent
+templates:
+  - jenkins_kubernetes_agent.yaml
+tests:
+  - it: should propagate all the declared metadata fields
+    values:
+      - ./values/jenkinskubernetesagent_test_values.yaml
+    documentIndex: 0
+    asserts:
+      - isAPIVersion:
+          of: carthago.cloud/v1beta1
+      - isKind:
+          of: JenkinsKubernetesAgent
+      - equal:
+          path: metadata.name
+          value: first-agent
+      - equal:
+          path: metadata.namespace
+          value: null
+      - equal:
+          path: metadata.labels
+          value:
+            carthago.cloud/jenkins: jenkins
+      - equal:
+          path: metadata.annotations
+          value:
+            annotationsTestKey: annotationsTestValue
+  - it: should propagate all the declared podSpec fields
+    values:
+      - ./values/jenkinskubernetesagent_test_values.yaml
+    documentIndex: 0
+    asserts:
+      - contains:
+          path: spec.podSpec.containers
+          content:
+            name: jnlp
+            image: quay.io/openshift/origin-jenkins-agent-base:4.9.0
+            imagePullPolicy: IfNotPresent
+      - equal:
+          path: spec.properties.description
+          value: "This is a specified Kubernetes Agent"
+      - equal:
+          path: spec.properties.executors
+          value: 1
+      - equal:
+          path: spec.properties.remoteRootDirectory
+          value: D:\
+      - equal:
+          path: spec.properties.usage
+          value: withLabelsMatchingNode
+      - equal:
+          path: spec.properties.launchMethod
+          value: connectToMaster
+      - equal:
+          path: spec.properties.disableWorkDir
+          value: false
+      - equal:
+          path: spec.properties.customWorkDirPath
+          value: D:/Workspace/${ITEM_FULL_NAME}
+      - equal:
+          path: spec.properties.internalDataDirectory
+          value: "remoting"
+      - equal:
+          path: spec.properties.failIfWorkplaceIsMissing
+          value: false
+      - equal:
+          path: spec.properties.useWebSocket
+          value: false
+      - equal:
+          path: spec.properties.tunnelConnectionThrough
+          value: ":50001"
+      - equal:
+          path: spec.properties.jvmOptions
+          value: "-Djava.awt.headless=true"
+      - equal:
+          path: spec.properties.availability
+          value: scheduled
+      - contains:
+          path: spec.properties.toolLocations
+          content:
+            name: JDK
+            home: java.exe
+      - contains:
+          path: spec.roleRef
+          content:
+            apiGroup: "rbac.authorization.k8s.io"
+            kind: "Role"
+            name: first-agent-role
+  - it: should render multiple JenkinsKubernetesAgent Custom Resources
+    values:
+      - ./values/jenkinskubernetesagent_test_values.yaml
+    asserts:
+      - hasDocuments:
+          count: 2

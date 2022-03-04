@@ -1,0 +1,51 @@
+suite: test JenkinsConfigurationAsCode
+templates:
+  - jenkins_configuration_as_code.yaml
+tests:
+  - it: should propagate all the declared metadata fields
+    values:
+      - ./values/jenkinsconfigurationascode_test_values.yaml
+    documentIndex: 0
+    asserts:
+      - isAPIVersion:
+          of: carthago.cloud/v1beta1
+      - isKind:
+          of: JenkinsConfigurationAsCode
+      - equal:
+          path: metadata.name
+          value: casc1
+      - equal:
+          path: metadata.namespace
+          value: null
+      - equal:
+          path: metadata.labels
+          value:
+            carthago.cloud/jenkins: jenkins
+      - equal:
+          path: metadata.annotations
+          value:
+            annotationsTestKey: annotationsTestValue
+  - it: should propagate all the declared spec fields
+    values:
+      - ./values/jenkinsconfigurationascode_test_values.yaml
+    documentIndex: 0
+    asserts:
+      - equal:
+          path: spec.data
+          value: |
+            jenkins:
+              systemMessage: |
+                Welcome to your CI/CD server managed by Carthago Operator for Jenkins!
+              numExecutors: 1
+      - equal:
+          path: spec.secretRef.name
+          value: secret
+      - equal:
+          path: spec.secretRef.namespace
+          value: default
+  - it: should render multiple CaSC Custom Resources
+    values:
+      - ./values/jenkinsconfigurationascode_test_values.yaml
+    asserts:
+      - hasDocuments:
+          count: 2

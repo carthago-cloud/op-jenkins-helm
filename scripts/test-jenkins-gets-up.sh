@@ -20,8 +20,8 @@ fi
 for (( i = 0; i <= NUMBER_OF_RETRIES; i++)); do
   sleep $CHECK_INTERVAL
 
-  PHASE=$(kubectl get pod -n "$JENKINS_NAMESPACE" -l operator-service.com/kind=Jenkins -o jsonpath="{.items[0].status.phase}" --ignore-not-found)
-  READY=$(kubectl get pod -n "$JENKINS_NAMESPACE" -l operator-service.com/kind=Jenkins -o jsonpath="{.items[0].status.containerStatuses[0].ready}" --ignore-not-found)
+  PHASE=$(kubectl get pod -n "$JENKINS_NAMESPACE" -l carthago.cloud/kind=Jenkins -o jsonpath="{.items[0].status.phase}" --ignore-not-found)
+  READY=$(kubectl get pod -n "$JENKINS_NAMESPACE" -l carthago.cloud/kind=Jenkins -o jsonpath="{.items[0].status.containerStatuses[0].ready}" --ignore-not-found)
 
   if [ -z "$PHASE" ]; then
     echo "Jenkins pod hasn't yet been created, waiting another 5 secs"
@@ -37,21 +37,21 @@ done
 
 if [[ $PHASE == Running && $READY == true ]]; then
   echo "Jenkins should be fully up and running! Here are the logs from Jenkins pod:"
-  kubectl logs -n "$JENKINS_NAMESPACE" -l operator-service.com/kind=Jenkins
+  kubectl logs -n "$JENKINS_NAMESPACE" -l carthago.cloud/kind=Jenkins
 else
   echo "Jenkins didn't get Running and Ready within 5 minutes. Good luck with troubleshooting."
 
   echo "Here are the logs from Jenkins pod:"
-  kubectl logs -n "$JENKINS_NAMESPACE" -l operator-service.com/kind=Jenkins
+  kubectl logs -n "$JENKINS_NAMESPACE" -l carthago.cloud/kind=Jenkins
 
   echo "Here are the logs from initial-config container:"
-  kubectl logs -n "$JENKINS_NAMESPACE" -l operator-service.com/kind=Jenkins -c initial-config
+  kubectl logs -n "$JENKINS_NAMESPACE" -l carthago.cloud/kind=Jenkins -c initial-config
 
   echo "Here are the logs from jenkins-controller container:"
-  kubectl logs -n "$JENKINS_NAMESPACE" -l operator-service.com/kind=Jenkins -c jenkins-controller
+  kubectl logs -n "$JENKINS_NAMESPACE" -l carthago.cloud/kind=Jenkins -c jenkins-controller
 
   echo "Here are the logs from operator:"
-  kubectl logs -n operator -l app.kubernetes.io/name=op-svc-jenkins
+  kubectl logs -n operator -l app.kubernetes.io/name=carthago-op-jenkins
 
   echo "Here are the events from Jenkins namespace:"
   kubectl get events -n "$JENKINS_NAMESPACE" --sort-by='.lastTimestamp'

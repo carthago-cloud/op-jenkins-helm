@@ -1,0 +1,13 @@
+jenkinsAuthorizationEnabled: true
+jenkinsAuthorization:
+  name: authorization
+  namespace: default
+  labels:
+    carthago.cloud/jenkins: jenkins
+  annotations: {}
+  type: "matrix"
+  matrix:
+    users:
+      - name: "user-example"
+        permissions:
+          - Overall/Read

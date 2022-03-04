@@ -1,0 +1,2 @@
+Now deploy Jenkins with second chart named carthago-op-jenkins-crs.
+Change values.yaml in carthago-op-jenkins-crs to configure Jenkins.

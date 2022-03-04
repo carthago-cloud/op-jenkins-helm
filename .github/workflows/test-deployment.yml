@@ -2,11 +2,10 @@ name: Verify that the current chart can be deployed locally on minikube
 
 env:
   HELM_VERSION: 3.7.0
-  IMAGE_REGISTRY: operatorservice.azurecr.io
-  OP_CHART_DIRECTORY: chart/op-svc-jenkins # should match repo's directory structure
-  CRS_CHART_DIRECTORY: chart/op-svc-jenkins-crs # should match repo's directory structure
+  OP_CHART_DIRECTORY: chart/carthago-op-jenkins # should match repo's directory structure
+  CRS_CHART_DIRECTORY: chart/carthago-op-jenkins-crs # should match repo's directory structure
   OPERATOR_NAMESPACE: operator
-  JENKINS_NAMESPACE: jenkins # should match 'jenkinsNamespace' field value in operator-service values.yaml
+  JENKINS_NAMESPACE: jenkins # should match 'jenkinsNamespace' field value in carthago-op-jenkins values.yaml
   OPERATOR_TEST_SCRIPT: scripts/test-operator-gets-up.sh
   JENKINS_TEST_SCRIPT: scripts/test-jenkins-gets-up.sh
 
@@ -27,7 +26,7 @@ jobs:
         - uses: actions/checkout@v2
           name: checkout repo
 
-        - name: Install helm
+        - name: Install Helm
           run: |
             make helm-install HELM_VERSION=${{ env.HELM_VERSION }}
 
@@ -44,30 +43,9 @@ jobs:
             kubectl create ns ${{ env.JENKINS_NAMESPACE }}
             kubectl create ns ${{ env.OPERATOR_NAMESPACE }}
 
-        - name: Create secret with data for accessing the image registry
+        - name: Install carthago-op-jenkins chart
           run: |
-            kubectl create secret docker-registry token \
-            --namespace ${{ env.OPERATOR_NAMESPACE }} \
-            --docker-server=${{ env.IMAGE_REGISTRY }} \
-            --docker-username=${{ secrets.DEPLOYMENT_TEST_WORKFLOW_CUSTOMER_NAME }} \
-            --docker-password=${{ secrets.DEPLOYMENT_TEST_WORKFLOW_ACR_PASSWORD }}
-
-        - name: Create license secret
-          run: |
-            cat <<EOF | kubectl apply -f -
-            apiVersion: v1
-            kind: Secret
-            metadata:
-              name: license
-              namespace: ${{ env.OPERATOR_NAMESPACE }}
-            stringData:
-              clientName: ${{ secrets.DEPLOYMENT_TEST_WORKFLOW_CUSTOMER_NAME }}
-              licenseKey: ${{ secrets.DEPLOYMENT_TEST_WORKFLOW_LICENSE_SECRET_KEY }}
-            EOF
-
-        - name: Install operator-service chart
-          run: |
-            helm install operator-service ${{ env.OP_CHART_DIRECTORY }} -f ${{ env.OP_CHART_DIRECTORY }}/values.yaml -n ${{ env.OPERATOR_NAMESPACE }}
+            helm install carthago-op-jenkins ${{ env.OP_CHART_DIRECTORY }} -f ${{ env.OP_CHART_DIRECTORY }}/values.yaml -n ${{ env.OPERATOR_NAMESPACE }}
 
         - name: Verify that Operator is up and running
           run: |
@@ -76,7 +54,7 @@ jobs:
 
         - name: Install crs chart
           run: |
-            helm install operator-service-crs ${{ env.CRS_CHART_DIRECTORY }} -f ${{ env.CRS_CHART_DIRECTORY }}/values.yaml -n ${{ env.JENKINS_NAMESPACE }}
+            helm install carthago-op-jenkins-crs ${{ env.CRS_CHART_DIRECTORY }} -f ${{ env.CRS_CHART_DIRECTORY }}/values.yaml -n ${{ env.JENKINS_NAMESPACE }}
 
         - name: Verify that Jenkins is running and ready
           run: |

@@ -1,0 +1,25 @@
+jenkinsAuthenticationEnabled: true
+jenkinsAuthentication:
+  name: authentication
+  namespace: default
+  labels:
+    carthago.cloud/jenkins: jenkins
+  annotations:
+    annotationsTestKey: annotationsTestValue
+  type: googleOAuth
+  githubOAuth:
+    clientID: "testClientID"
+    clientSecretRef:
+      name: secret
+      namespace: default
+    webUri: "https://github.com"
+    apiUri: "https://api.github.com"
+    scopes:
+      - read:org
+      - user:email
+  googleOAuth:
+    clientID: testClientID
+    clientSecretRef:
+      name: secret
+      namespace: default
+    domain: myTestDomain

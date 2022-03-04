@@ -1,0 +1,147 @@
+apiVersion: carthago.cloud/v1beta1
+jenkins:
+  enabled: true
+  name: jenkins
+  namespace: default
+  labels:
+    labelTestKey: labelTestValue
+  annotations:
+    annotationsTestKey: annotationsTestValue
+  podLabels:
+    podLabelTestKey: podLabelTestValue
+  podSpec:
+    initContainers:
+      - name: init-container-name
+        image: busybox:1.28
+        imagePullPolicy: IfNotPresent
+    sidecars:
+    - name: sidecar-container-name
+      image: busybox:1.28
+      imagePullPolicy: IfNotPresent
+      command: ['sh', '-c', 'echo The app is running! && sleep 3600']
+      livenessProbe:
+        failureThreshold: 12
+        httpGet:
+          path: /login
+          port: http
+          scheme: HTTP
+        initialDelaySeconds: 100
+        periodSeconds: 20
+        successThreshold: 1
+        timeoutSeconds: 6
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /login
+          port: http
+          scheme: HTTP
+        initialDelaySeconds: 40
+        periodSeconds: 20
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          cpu: 1500m
+          memory: 3Gi
+        requests:
+          cpu: 1
+          memory: 500Mi
+      volumeMounts:
+        - name: sidecar-volume
+          mountPath: /var/jenkins/sidecar
+    jenkinsController:
+      name: jenkins-controller
+      image: jenkins/jenkins:2.302.2-lts-alpine
+      imagePullPolicy: IfNotPresent
+      command: ["-bash", "-sh", "/scripts/init.sh"]
+      livenessProbe:
+        failureThreshold: 12
+        httpGet:
+          path: /login
+          port: http
+          scheme: HTTP
+        initialDelaySeconds: 80
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /login
+          port: http
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          cpu: 1500m
+          memory: 3Gi
+        requests:
+          cpu: 1
+          memory: 500Mi
+      env:
+        - name: JENKINS_HOME
+          value: "/var/lib/jenkins"
+      envFrom:
+        - configMapRef:
+            name: test-config
+      volumeMounts:
+        - mountPath: /home/user/bin/backup.sh
+          name: backup-scripts
+          subPath: backup.sh
+          readOnly: true
+    volumes:
+      - name: backup-scripts
+        configMap:
+          defaultMode: 0754
+          name: jenkins-operator-backup-s3
+    restartPolicy: OnFailure
+    imagePullSecrets:
+      - secret
+    hostAliases: []
+    podSecurityContext:
+      runAsUser: 1000
+      fsGroup: 1000
+    affinity: {}
+    priorityClassName: ""
+    tolerations:
+      - key: "key1"
+        operator: "Equal"
+        value: "value1"
+        effect: "NoSchedule"
+  homePVC:
+    accessMode: "ReadWriteOnce"
+    resourceStorage: "20Gi"
+  pluginsCache:
+    accessMode: "ReadWriteOnce"
+    resourceStorage: "1Gi"
+  plugins:
+    - name: jacoco
+      version: 3.1.1
+  roles:
+    - apiGroup: "rbac.authorization.k8s.io"
+      kind: "Role"
+      name: role
+  services:
+    http:
+      labels:
+        my-http-key: "my-http-value"
+      spec:
+        type: NodePort
+        ports:
+          protocol: TCP
+          port: 8080
+          targetPort: 8080
+    agent:
+      labels:
+        my-agent-key: "my-agent-value"
+      spec:
+        type: ClusterIP
+        ports:
+          protocol: TCP
+          port: 50000
+          targetPort: 50000
+  authorizationStrategy: createUser
+  disableCSRFProtection: false
