@@ -507,6 +507,21 @@ jenkinsAuthentication:
     # (optional)
     escapeHatchGroup: ""
 
+  samlAuth:
+    IdPMetadata:
+    IdPMetadataURL:
+    RefreshPeriod:
+    DisplayNameAttribute:
+    GroupAttribute:
+    MaximumAuthenitcationLifetime:
+    UsernameAttribute:
+    EmailAttribute:
+    UsernameCaseConversion:
+    DataBindingMethod:
+    LogoutURL:
+    AdvancedConfiguration:
+    EncryptionConfiguration:
+
 # JenkinsAuthorizationEnabled can enable or disable the jenkinsAuthorization instance
 # Set to true if you want to deploy the resource, set to false if have configured CR(s) already and/or you want to deploy an operator only
 jenkinsAuthorizationEnabled: false
