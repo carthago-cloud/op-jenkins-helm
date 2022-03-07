@@ -62,9 +62,15 @@ spec:
     escapeHatchGroup: {{ $jenkinsAuthentication.openIDConnectAuth.escapeHatchGroup }}
   {{- else if eq $jenkinsAuthentication.type "samlAuth" }}
   samlAuth:
+    {{ if $jenkinsAuthentication.samlAuth.IdPMetadata}}
     idpMetadata: {{ $jenkinsAuthentication.samlAuth.IdPMetadata }}
+    {{ end }}
+    {{ if $jenkinsAuthentication.samlAuth.IdPMetadataURL}}
     idpMetadataURL: {{ $jenkinsAuthentication.samlAuth.IdPMetadataURL}}
+    {{ end }}
+    {{ if $jenkinsAuthentication.samlAuth.RefreshPeriod}}
     refreshPeriod: {{ $jenkinsAuthentication.samlAuth.RefreshPeriod}}
+    {{ end }}
     displayNameAttribute: {{ $jenkinsAuthentication.samlAuth.DisplayNameAttribute }}
     groupAttribute: {{ $jenkinsAuthentication.samlAuth.GroupAttribute }}
     maximumAuthenticationLifetime: {{ $jenkinsAuthentication.samlAuth.MaximumAuthenitcationLifetime }}
