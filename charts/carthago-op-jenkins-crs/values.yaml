@@ -288,7 +288,7 @@ jenkinsKubernetesAgentEnabled: true
 jenkinsKubernetesAgents:
   # name of resource
   # in the free plan, it must be equal to seed-job-agent
-  - name: first-agent
+  - name: seed-job-agent
 
     # labels are injected into metadata labels field. Each JenkinsKubernetesAgent Custom Resource need to reference corresponding
     # Jenkins Custom Resource via labels field
