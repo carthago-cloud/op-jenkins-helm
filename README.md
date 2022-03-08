@@ -29,7 +29,7 @@ To customize Operator or Jenkins and other Custom Resources this way, edit the `
 by appending `-f <path-to-values.yaml-file>` to your `helm install` command.
 
 ## Turn on debug mode
-Add: --debug=true in chart/carthago-op-jenkins/values.yaml
+Add: --debug=true in charts/carthago-op-jenkins/values.yaml
 
 ```yaml
   args:

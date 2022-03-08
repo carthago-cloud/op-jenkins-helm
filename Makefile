@@ -15,8 +15,8 @@ endif
 .PHONY: helm-lint
 helm-lint: helm-install
 	@echo "+ $@"
-	bin/helm lint chart/carthago-op-jenkins
-	bin/helm lint chart/carthago-op-jenkins-crs
+	bin/helm lint charts/carthago-op-jenkins
+	bin/helm lint charts/carthago-op-jenkins-crs
 
 .PHONY: sembump
 HAS_SEMBUMP := $(shell which $(PROJECT_DIR)/bin/sembump)
@@ -42,14 +42,14 @@ bump-version: sembump ## Bump the version in the version file. Set BUMP to [ pat
 change-chart-version: bump-version
 	@echo "+ $@"
 	$(eval VERSION=$(shell cat VERSION.txt))
-	sed -i "/version:/c\version: $(VERSION)" chart/carthago-op-jenkins/Chart.yaml
+	sed -i "/version:/c\version: $(VERSION)" charts/carthago-op-jenkins/Chart.yaml
 	@if [ $(APP_VERSION) != $(OLD_APP_VERSION) ] ; then \
-		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" chart/carthago-op-jenkins/Chart.yaml ;\
+		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" charts/carthago-op-jenkins/Chart.yaml ;\
 	fi
 
-	sed -i "/version:/c\version: $(VERSION)" chart/carthago-op-jenkins-crs/Chart.yaml
+	sed -i "/version:/c\version: $(VERSION)" charts/carthago-op-jenkins-crs/Chart.yaml
 	@if [ $(APP_VERSION) != $(OLD_APP_VERSION) ] ; then \
-		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" chart/carthago-op-jenkins-crs/Chart.yaml ;\
+		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" charts/carthago-op-jenkins-crs/Chart.yaml ;\
 		echo $(APP_VERSION) > APP_VERSION.txt ;\
 	fi
 
@@ -62,7 +62,7 @@ unit-test-plugin:
 .PHONY: unit-test
 unit-test:
 	@echo "+ $@"
-	bin/helm unittest chart/carthago-op-jenkins-crs/ -3 --debug
+	bin/helm unittest charts/carthago-op-jenkins-crs/ -3 --debug
 
 .PHONY: minikube
 HAS_MINIKUBE := $(shell which $(PROJECT_DIR)/bin/minikube)
