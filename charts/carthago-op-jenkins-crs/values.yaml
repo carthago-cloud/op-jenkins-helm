@@ -28,7 +28,7 @@ jenkins:
     sidecars: []
     jenkinsController:
       name: jenkins-controller
-      image: jenkins/jenkins:2.319.1-lts
+      image: jenkins/jenkins:2.332.1-lts
       imagePullPolicy: IfNotPresent
       command: []
       livenessProbe: {}
@@ -302,7 +302,7 @@ jenkinsKubernetesAgents:
     podSpec:
       containers:
         - name: jnlp
-          image: jenkins/inbound-agent:4.10-3-alpine
+          image: jenkins/inbound-agent:4.11.2-4
           imagePullPolicy: IfNotPresent
 
     properties:
