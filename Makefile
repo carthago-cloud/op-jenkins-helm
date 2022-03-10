@@ -63,6 +63,7 @@ unit-test-plugin:
 unit-test:
 	@echo "+ $@"
 	bin/helm unittest charts/carthago-op-jenkins-crs/ -3 --debug
+	bin/helm unittest charts/carthago-op-jenkins/ -3 --debug
 
 .PHONY: minikube
 HAS_MINIKUBE := $(shell which $(PROJECT_DIR)/bin/minikube)
