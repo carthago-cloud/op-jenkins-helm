@@ -45,7 +45,7 @@ change-chart-version: bump-version
 	sed -i "/version:/c\version: $(VERSION)" charts/carthago-op-jenkins/Chart.yaml
 	@if [ $(APP_VERSION) != $(OLD_APP_VERSION) ] ; then \
 		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" charts/carthago-op-jenkins/Chart.yaml ;\
-		sed -i "s/$(OLD_APP_VERSION)/$(APP_VERSION)/" charts/carthago-op-jenkins/values.yaml ;\
+		sed -i "s/$(DOCKER_ORGANIZATION)\/$(DOCKER_REGISTRY):$(OLD_APP_VERSION)/$(DOCKER_ORGANIZATION)\/$(DOCKER_REGISTRY):$(APP_VERSION)/" charts/carthago-op-jenkins/values.yaml ;\
 	fi
 
 	sed -i "/version:/c\version: $(VERSION)" charts/carthago-op-jenkins-crs/Chart.yaml
