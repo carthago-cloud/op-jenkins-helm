@@ -41,7 +41,7 @@ operator:
   nodeSelector: {}
 
   # Tolerations are applied to pods, and allow the pods to schedule onto nodes with matching taints.
-  # See https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/ fore more details
+  # See https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/ for more details
   tolerations: []
 
   # Affinity allows you to constrain which nodes your pod is eligible to be scheduled on, based on labels on the node.
@@ -50,3 +50,8 @@ operator:
 
   # JenkinsNamespace is used by Carthago Operator to watch namespace where Jenkins will be deployed
   jenkinsNamespace: "jenkins"
+
+  # licenseSecretName specifies a name for the secret with license key. For paid plan features to be available,
+  # a secret with this name containing valid information must be present in the same namespace as Carthago Operator
+  # is deployed in.
+  licenseSecretName: ""
