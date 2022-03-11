@@ -52,6 +52,6 @@ operator:
   jenkinsNamespace: "jenkins"
 
   # licenseSecretName specifies a name for the secret with license key. For paid plan features to be available,
-  # a secret with this name containing valid information must be present in the same namespace Carthago Operator
+  # a secret with this name containing valid information must be present in the same namespace as Carthago Operator
   # is deployed in.
   licenseSecretName: ""
