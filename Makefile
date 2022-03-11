@@ -38,13 +38,14 @@ bump-version: sembump ## Bump the version in the version file. Set BUMP to [ pat
 	@echo "Updating version from $(VERSION) to $(NEW_VERSION) in README.md"
 	perl -i -pe 's/$(VERSION)/$(NEW_VERSION)/g' README.md
 
-.PHONE: change-chart-version
+.PHONY: change-chart-version
 change-chart-version: bump-version
 	@echo "+ $@"
 	$(eval VERSION=$(shell cat VERSION.txt))
 	sed -i "/version:/c\version: $(VERSION)" charts/carthago-op-jenkins/Chart.yaml
 	@if [ $(APP_VERSION) != $(OLD_APP_VERSION) ] ; then \
 		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" charts/carthago-op-jenkins/Chart.yaml ;\
+		sed -i "s/$(DOCKER_ORGANIZATION)\/$(DOCKER_REGISTRY):$(OLD_APP_VERSION)/$(DOCKER_ORGANIZATION)\/$(DOCKER_REGISTRY):$(APP_VERSION)/" charts/carthago-op-jenkins/values.yaml ;\
 	fi
 
 	sed -i "/version:/c\version: $(VERSION)" charts/carthago-op-jenkins-crs/Chart.yaml
