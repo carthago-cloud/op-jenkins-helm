@@ -57,10 +57,10 @@ jenkins:
   # homePVC allows setting PersistentVolumeClaim properties for Jenkins home
   homePVC: {}
 
-  # accessMode specifies the way the plugins cache can be mounted
+  # accessMode specifies the way Jenkins home Volume can be mounted
   # accessMode: ""
 
-  # resourceStorage is the plugins cache volume size
+  # resourceStorage is the volume size of Jenkins home Volume
   # resourceStorage: ""
 
   # storageClassName is the name of the StorageClass required by the claim
