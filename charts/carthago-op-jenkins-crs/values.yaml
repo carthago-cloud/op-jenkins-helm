@@ -170,7 +170,7 @@ jenkinsGroovyScripts:
 jenkinsSeedJobsEnabled: true
 
 # JenkinsSeedJobs instances configuration
-# See https://carthago-cloud.github.io/op-jenkins-docs/carthago-operator-for-jenkins/latest/getting-started/seedjob-configuration/ for additional info
+# See https://carthago-cloud.github.io/op-jenkins-docs/technical-documentation/latest/getting-started/seedjob-configuration/ for additional info
 jenkinsSeedJobs:
   # name of resource
   - name: example
@@ -253,7 +253,7 @@ jenkinsSeedJobs:
 jenkinsConfigurationsAsCodeEnabled: true
 
 # JenkinsConfigurationAsCode instances configuration
-# For configuration as code creation tutorial, check https://carthago-cloud.github.io/op-jenkins-docs/carthago-operator-for-jenkins/latest/getting-started/customization/
+# For configuration as code creation tutorial, check https://carthago-cloud.github.io/op-jenkins-docs/technical-documentation/latest/getting-started/customization/
 jenkinsConfigurationsAsCode:
   # name of resource
   - name: casc
@@ -283,7 +283,7 @@ jenkinsKubernetesAgentEnabled: true
 
 # JenkinsKubernetesAgent instances configuration
 # In the free plan, only 1 jenkinsKubernetesAgent can be configured, and its name must be equal to seed-job-agent
-# For configuration as code creation tutorial, check https://carthago-cloud.github.io/op-jenkins-docs/carthago-operator-for-jenkins/latest/getting-started/seedjob-configuration/
+# For configuration as code creation tutorial, check https://carthago-cloud.github.io/op-jenkins-docs/technical-documentation/latest/getting-started/seedjob-configuration/
 jenkinsKubernetesAgents:
   # name of resource
   # in the free plan, it must be equal to seed-job-agent
@@ -362,7 +362,7 @@ jenkinsAuthenticationEnabled: false
 
 # JenkinsAuthentication configuration
 # It is not available in the free plan and requires a valid license.
-# For authentication creation tutorial, check https://carthago-cloud.github.io/op-jenkins-docs/carthago-operator-for-jenkins/latest/getting-started/authentication/
+# For authentication creation tutorial, check https://carthago-cloud.github.io/op-jenkins-docs/technical-documentation/latest/getting-started/authentication/
 jenkinsAuthentication:
   # name of resource
   name: authentication
@@ -511,7 +511,7 @@ jenkinsAuthentication:
 jenkinsAuthorizationEnabled: false
 
 # JenkinsAuthorization configuration
-# For authorization creation tutorial, check https://carthago-cloud.github.io/op-jenkins-docs/carthago-operator-for-jenkins/latest/getting-started/authorization/
+# For authorization creation tutorial, check https://carthago-cloud.github.io/op-jenkins-docs/technical-documentation/latest/getting-started/authorization/
 jenkinsAuthorization:
   # name of resource
   name: authorization
