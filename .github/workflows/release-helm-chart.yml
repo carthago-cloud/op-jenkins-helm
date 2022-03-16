@@ -47,6 +47,6 @@ jobs:
 
       - name: Commit changes to repository
         run: |
-          git add APP_VERSION.txt VERSION.txt charts/carthago-op-jenkins/Chart.yaml charts/carthago-op-jenkins-crs/Chart.yaml
+          git add APP_VERSION.txt VERSION.txt charts/carthago-op-jenkins/Chart.yaml charts/carthago-op-jenkins-crs/Chart.yaml charts/carthago-op-jenkins/values.yaml
           git commit -m "Update versions of charts and Operator image"
           git push
