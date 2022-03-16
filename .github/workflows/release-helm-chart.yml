@@ -40,13 +40,13 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - name: Release the charts with chart releaser
-        uses: helm/chart-releaser-action@v1.3.0
-        env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-
       - name: Commit changes to repository
         run: |
           git add APP_VERSION.txt VERSION.txt charts/carthago-op-jenkins/Chart.yaml charts/carthago-op-jenkins-crs/Chart.yaml charts/carthago-op-jenkins/values.yaml
           git commit -m "Update versions of charts and Operator image"
           git push
+
+      - name: Release the charts with chart releaser
+        uses: helm/chart-releaser-action@v1.3.0
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
