@@ -129,7 +129,7 @@ jenkins:
 #    restoreEnabled: false
 #
 #    snapshotConfigMapRef:
-#      name: "configMapName"
+#      name: "config-map-name"
 #
 #    snapshotHistoryLength: 3
 
