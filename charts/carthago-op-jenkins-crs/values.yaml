@@ -125,6 +125,14 @@ jenkins:
   # See https://github.com/jenkinsci/kubernetes-operator/pull/193 for more info
   disableCSRFProtection: false
 
+  pluginSnapshot: {}
+#    restoreEnabled: false
+#
+#    snapshotConfigMapRef:
+#      name: "configMapName"
+#
+#    snapshotHistoryLength: 3
+
 # jenkinsGroovyScriptsEnabled can enable or disable the JenkinsGroovyScript instances
 # Set to false if you have configured CR(s) already and/or you want to deploy an operator only
 jenkinsGroovyScriptsEnabled: true
@@ -542,3 +550,4 @@ jenkinsAuthorization:
           - Overall/Read
         usersOrGroups:
           - anonymous
+
