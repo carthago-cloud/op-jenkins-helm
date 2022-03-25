@@ -125,13 +125,16 @@ jenkins:
   # See https://github.com/jenkinsci/kubernetes-operator/pull/193 for more info
   disableCSRFProtection: false
 
-  # todo: describe pluginSnapshot and its fields
+  # pluginSnapshot creates a configMap containing all the plugins in Jenkins at a particular moment and allows to keep a history of changes and restore
   pluginSnapshot: {}
+#    restoreEnabled makes Jenkins use plugins specified in snapshotConfigMapRef
 #    restoreEnabled: false
 #
+#    snapshotConfigMapRef specifies which configMap to use for restore if restoreEnabled is set. Otherwise it will overwrite the configMap whenever plugins change
 #    snapshotConfigMapRef:
 #      name: "config-map-name"
 #
+#    snapshotHistoryLength specifies, how many historical snapshots are to be kept. Has no effect if snapshotConfigMapRef is specified
 #    snapshotHistoryLength: 3
 
 # jenkinsGroovyScriptsEnabled can enable or disable the JenkinsGroovyScript instances
