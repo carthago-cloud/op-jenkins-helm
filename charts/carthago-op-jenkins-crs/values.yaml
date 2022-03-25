@@ -554,4 +554,3 @@ jenkinsAuthorization:
           - Overall/Read
         usersOrGroups:
           - anonymous
-
