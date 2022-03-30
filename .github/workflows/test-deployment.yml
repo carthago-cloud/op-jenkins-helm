@@ -5,7 +5,7 @@ env:
   OP_CHART_DIRECTORY: charts/carthago-op-jenkins # should match repo's directory structure
   CRS_CHART_DIRECTORY: charts/carthago-op-jenkins-crs # should match repo's directory structure
   OPERATOR_NAMESPACE: operator
-  JENKINS_NAMESPACE: jenkins # should match 'jenkinsNamespace' field value in carthago-op-jenkins values.yaml
+  JENKINS_NAMESPACE: jenkins # should match 'watchedNamespaces' field value in carthago-op-jenkins values.yaml
   OPERATOR_TEST_SCRIPT: scripts/test-operator-gets-up.sh
   JENKINS_TEST_SCRIPT: scripts/test-jenkins-gets-up.sh
 

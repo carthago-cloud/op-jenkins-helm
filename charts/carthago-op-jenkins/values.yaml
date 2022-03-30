@@ -48,8 +48,9 @@ operator:
   # For more details see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity
   affinity: {}
 
-  # JenkinsNamespace is used by Carthago Operator to watch namespace where Jenkins will be deployed
-  jenkinsNamespace: "jenkins"
+  # watchedNamespaces specifies namespaces that will be watched by the operator
+  watchedNamespaces:
+    - jenkins
 
   # licenseSecretName specifies a name for the secret with license key. For paid plan features to be available,
   # a secret with this name containing valid information must be present in the same namespace as Carthago Operator

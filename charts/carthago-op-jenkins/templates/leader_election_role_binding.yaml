@@ -10,13 +10,15 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: service-account
+
+{{- range .Values.operator.watchedNamespaces }}
+{{- if ne . $.Release.Namespace }}
 ---
-{{- if ne .Values.operator.jenkinsNamespace .Release.Namespace }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: leader-election-rolebinding
-  namespace: {{.Values.operator.jenkinsNamespace}}
+  namespace: {{ . }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -24,5 +26,6 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: service-account
-    namespace: {{.Release.Namespace}}
+    namespace: {{ $.Release.Namespace }}
+{{- end }}
 {{- end }}

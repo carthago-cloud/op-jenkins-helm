@@ -36,14 +36,15 @@ rules:
     verbs:
       - create
       - patch
+{{- range .Values.operator.watchedNamespaces }}
+{{- if ne . $.Release.Namespace }}
 ---
-{{- if ne .Values.operator.jenkinsNamespace .Release.Namespace }}
 # permissions to do leader election.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: leader-election-role
-  namespace: {{.Values.operator.jenkinsNamespace}}
+  namespace: {{ . }}
 rules:
   - apiGroups:
       - ""
@@ -76,4 +77,5 @@ rules:
     verbs:
       - create
       - patch
-  {{- end }}
+{{- end }}
+{{- end }}

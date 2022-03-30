@@ -140,14 +140,16 @@ rules:
       - update
       - watch
 
+
+{{- range .Values.operator.watchedNamespaces }}
+{{- if ne . $.Release.Namespace }}
 ---
-{{- if ne .Values.operator.jenkinsNamespace .Release.Namespace }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   creationTimestamp: null
   name: manager-role
-  namespace: {{.Values.operator.jenkinsNamespace}}
+  namespace: {{ . }}
 rules:
   - apiGroups:
       - apps
@@ -282,4 +284,5 @@ rules:
       - list
       - update
       - watch
+{{- end }}
 {{- end }}
