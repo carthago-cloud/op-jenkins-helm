@@ -128,4 +128,7 @@ spec:
   services: {{ toYaml . | nindent 4 }}
   {{- end }}
   authorizationStrategy: {{ .Values.jenkins.authorizationStrategy }}
+  {{- with .Values.jenkins.pluginSnapshot }}
+  pluginSnapshot: {{ toYaml . | nindent 4 }}
+  {{- end }}
 {{- end }}

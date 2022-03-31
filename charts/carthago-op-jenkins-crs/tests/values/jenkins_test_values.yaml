@@ -145,3 +145,8 @@ jenkins:
           targetPort: 50000
   authorizationStrategy: createUser
   disableCSRFProtection: false
+  pluginSnapshot:
+    restoreEnabled: false
+    snapshotConfigMapRef:
+      name: "config-map-name"
+    snapshotHistoryLength: 3
