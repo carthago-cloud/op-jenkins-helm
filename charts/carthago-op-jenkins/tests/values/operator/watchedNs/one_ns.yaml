@@ -1,0 +1,4 @@
+apiVersion: carthago.cloud/v1beta1
+operator:
+  watchedNamespaces:
+    - one
