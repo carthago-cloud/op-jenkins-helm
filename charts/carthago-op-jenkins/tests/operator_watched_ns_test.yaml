@@ -4,7 +4,7 @@ templates:
 tests:
   - it: should propagate `jenkins` namespace correctly to WATCH_NAMESPACE if there is one present in values.yaml
     values:
-      - values/operator/watchedNs/default.yaml
+      - values/operator/default.yaml
     asserts:
       - contains:
           path: spec.template.spec.containers[0].env
