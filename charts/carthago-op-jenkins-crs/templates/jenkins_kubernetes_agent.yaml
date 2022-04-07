@@ -17,7 +17,7 @@ spec:
   podSpec: {{- toYaml . | nindent 4 }}
   {{- end }}
   {{- with $jenkinsKubernetesAgent.properties }}
-  properties: {{- toYaml . | nindent 4 }}
+  properties: {{- toYaml . | nindent 5 }}
   {{- end }}
   {{- with $jenkinsKubernetesAgent.roleRef }}
   roleRef: {{- toYaml . | nindent 4}}
