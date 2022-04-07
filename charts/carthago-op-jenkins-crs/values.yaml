@@ -348,7 +348,7 @@ jenkinsKubernetesAgents:
       failIfWorkplaceIsMissing: false
 
       # UseWebSocket uses websocket to connect to the Jenkins Controller rather than the TCP port
-      useWebSocket: false
+      useWebSocket: true
 
       # TunnelConnectionThrough allows to route connection to another host
       # Field allowed values: "HOST:PORT", ":PORT" and "HOST:"
