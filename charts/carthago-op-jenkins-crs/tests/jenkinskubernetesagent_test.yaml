@@ -25,7 +25,7 @@ tests:
           path: metadata.annotations
           value:
             annotationsTestKey: annotationsTestValue
-  - it: should propagate all the declared podSpec fields
+  - it: should propagate all the declared spec fields
     values:
       - ./values/jenkinskubernetesagent_test_values.yaml
     documentIndex: 0
@@ -37,51 +37,25 @@ tests:
             image: quay.io/openshift/origin-jenkins-agent-base:4.9.0
             imagePullPolicy: IfNotPresent
       - equal:
-          path: spec.properties.description
+          path: spec.description
           value: "This is a specified Kubernetes Agent"
       - equal:
-          path: spec.properties.executors
+          path: spec.executors
           value: 1
       - equal:
-          path: spec.properties.remoteRootDirectory
+          path: spec.remoteRootDirectory
           value: D:\
       - equal:
-          path: spec.properties.usage
+          path: spec.usage
           value: withLabelsMatchingNode
       - equal:
-          path: spec.properties.launchMethod
-          value: connectToMaster
-      - equal:
-          path: spec.properties.disableWorkDir
-          value: false
-      - equal:
-          path: spec.properties.customWorkDirPath
-          value: D:/Workspace/${ITEM_FULL_NAME}
-      - equal:
-          path: spec.properties.internalDataDirectory
-          value: "remoting"
-      - equal:
-          path: spec.properties.failIfWorkplaceIsMissing
-          value: false
-      - equal:
-          path: spec.properties.useWebSocket
-          value: false
-      - equal:
-          path: spec.properties.tunnelConnectionThrough
+          path: spec.tunnelConnectionThrough
           value: ":50001"
       - equal:
-          path: spec.properties.jvmOptions
+          path: spec.jvmOptions
           value: "-Djava.awt.headless=true"
-      - equal:
-          path: spec.properties.availability
-          value: scheduled
       - contains:
-          path: spec.properties.toolLocations
-          content:
-            name: JDK
-            home: java.exe
-      - contains:
-          path: spec.roleRef
+          path: spec.roles
           content:
             apiGroup: "rbac.authorization.k8s.io"
             kind: "Role"
