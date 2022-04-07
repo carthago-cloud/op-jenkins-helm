@@ -16,12 +16,27 @@ spec:
   {{- with $jenkinsKubernetesAgent.podSpec }}
   podSpec: {{- toYaml . | nindent 4 }}
   {{- end }}
-  {{- with $jenkinsKubernetesAgent.properties }}
-  properties: {{- toYaml . | nindent 5 }}
+  {{- with $jenkinsKubernetesAgent.description }}
+  description: {{- toYaml . | nindent 4 }}
   {{- end }}
-  {{- with $jenkinsKubernetesAgent.roleRef }}
-  roleRef: {{- toYaml . | nindent 4}}
+  {{- with $jenkinsKubernetesAgent.executors }}
+  executors: {{- toYaml . | nindent 4 }}
   {{- end }}
+  {{- with $jenkinsKubernetesAgent.remoteRootDirectory }}
+  remoteRootDirectory: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with $jenkinsKubernetesAgent.usage }}
+  usage: {{- toYaml . | nindent 4}}
+  {{- end }}
+  { { - with $jenkinsKubernetesAgent.tunnelConnectionThrough } }
+  tunnelConnectionThrough: { { - toYaml . | nindent 4 } }
+  { { - end } }
+  { { - with $jenkinsKubernetesAgent.jvmOptions } }
+  jvmOptions: { { - toYaml . | nindent 4 } }
+  { { - end } }
+  { { - with $jenkinsKubernetesAgent.roles } }
+  roles: { { - toYaml . | nindent 4 } }
+  { { - end } }
   {{- end }}
 {{- end }}
 

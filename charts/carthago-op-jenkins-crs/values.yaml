@@ -309,14 +309,13 @@ jenkinsKubernetesAgents:
     # annotations are injected into metadata annotations field
     annotations: {}
 
-    # PodSpec allows setting Jenkins Kubernetes Agent specific pod properties
-    podSpec:
-      containers:
-        - name: jnlp
-          image: jenkins/inbound-agent:4.11.2-4
-          imagePullPolicy: IfNotPresent
-
-    properties:
+    spec:
+      # PodSpec allows setting Jenkins Kubernetes Agent specific pod properties
+      podSpec:
+        containers:
+          - name: jnlp
+            image: jenkins/inbound-agent:4.11.2-4
+            imagePullPolicy: IfNotPresent
       # Description of Jenkins Agent
       description: ""
 
@@ -330,26 +329,6 @@ jenkinsKubernetesAgents:
       # Available usage options are defined by AgentUsage enum
       usage: ""
 
-      # LaunchMethod controls how Jenkins starts this agent.
-      # AgentLaunchMethod is enum that defines the available launch methods
-      launchMethod: ""
-
-      # DisableWorkDir allows disabling Remoting Work Directory for the agent.
-      disableWorkDir: false
-
-      # CustomWorkDirPath is a custom Remoting work directory will be used instead of the Agent Root Directory
-      customWorkDirPath: ""
-
-      # InternalDataDirectory defines a storage directory for the internal data
-      # By default it's "remoting"
-      internalDataDirectory: ""
-
-      # FailIfWorkspaceIsMissing if true, remoting will fail at startup if the target work directory is missing
-      failIfWorkplaceIsMissing: false
-
-      # UseWebSocket uses websocket to connect to the Jenkins Controller rather than the TCP port
-      useWebSocket: true
-
       # TunnelConnectionThrough allows to route connection to another host
       # Field allowed values: "HOST:PORT", ":PORT" and "HOST:"
       tunnelConnectionThrough: ""
@@ -357,16 +336,8 @@ jenkinsKubernetesAgents:
       # JVMOptions are additional startup arguments for Java Virtual Machine which runs agent
       jvmOptions: ""
 
-      # Availability controls when Jenkins starts and stops this agent.
-      availability: ""
-
-      # ToolLocations is list of tools location
-      toolLocations:
-        - name: ""
-          home: ""
-
-    # RoleRef defines list of extra RBAC roles for the Jenkins Kubernetes Agent pod service account
-    roleRef: []
+      # Roles defines list of extra RBAC roles for the Jenkins Kubernetes Agent pod service account
+      roles: []
 
 # JenkinsAuthenticationEnabled can enable or disable the JenkinsAuthentication instance
 # Set to true if you want to deploy the resource, set to false if have configured CR(s) already and/or you want to deploy an operator only

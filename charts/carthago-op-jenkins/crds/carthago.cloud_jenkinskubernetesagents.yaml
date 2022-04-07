@@ -40,21 +40,17 @@ spec:
                 to Jenkins Controller. In the free plan, user can only have 1 JenkinsKubernetesAgent
                 and it must have a name of operator-agent
               properties:
-                annotations:
-                  additionalProperties:
-                    type: string
-                  description: 'Annotations is an unstructured key value map stored
-                  with a resource that may be set by external tools to store and retrieve
-                  arbitrary metadata. They are not queryable and should be preserved
-                  when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
-                  type: object
-                labels:
-                  additionalProperties:
-                    type: string
-                  description: 'Map of string keys and values that can be used to organize
-                  and categorize (scope and select) objects. May match selectors of
-                  replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
-                  type: object
+                description:
+                  description: Description of Jenkins Agent
+                  type: string
+                executors:
+                  description: Executors defines the maximum number of concurrent builds
+                    that Jenkins may perform on this node.
+                  type: integer
+                jvmOptions:
+                  description: JVMOptions are additional startup arguments for Java
+                    Virtual Machine which runs agent
+                  type: string
                 podSpec:
                   description: PodSpec allows to set Jenkins Kubernetes Agent specific
                     pod properties
@@ -6050,79 +6046,10 @@ spec:
                   required:
                     - containers
                   type: object
-                properties:
-                  description: Properties configures the Jenkins agent
-                  properties:
-                    availability:
-                      description: Availability controls when Jenkins starts and stops
-                        this agent.
-                      type: string
-                    customWorkDirPath:
-                      description: CustomWorkDirPath is a custom Remoting work directory
-                        will be used instead of the Agent Root Directory
-                      type: string
-                    description:
-                      description: Description of Jenkins Agent
-                      type: string
-                    disableWorkDir:
-                      description: DisableWorkDir allows disabling Remoting Work Directory
-                        for the agent.
-                      type: boolean
-                    executors:
-                      description: Executors defines the maximum number of concurrent
-                        builds that Jenkins may perform on this node.
-                      type: integer
-                    failIfWorkplaceIsMissing:
-                      description: FailIfWorkspaceIsMissing if true, remoting will fail
-                        at startup if the target work directory is missing
-                      type: boolean
-                    internalDataDirectory:
-                      description: InternalDataDirectory defines a storage directory
-                        for the internal data By default it's "remoting"
-                      type: string
-                    jvmOptions:
-                      description: JVMOptions are additional startup arguments for Java
-                        Virtual Machine which runs agent
-                      type: string
-                    launchMethod:
-                      description: LaunchMethod controls how Jenkins starts this agent.
-                        AgentLaunchMethod is enum that defines the available launch
-                        methods
-                      type: string
-                    remoteRootDirectory:
-                      description: RemoteRootDirectory is directory dedicated to Jenkins
-                        for temporary files storage purposes.
-                      type: string
-                    toolLocations:
-                      description: ToolLocations is list of tools location
-                      items:
-                        description: ToolLocation defines the location of development
-                          tools
-                        properties:
-                          home:
-                            description: Name of tool
-                            type: string
-                          name:
-                            description: Home defines where the tool is located
-                            type: string
-                        type: object
-                      type: array
-                    tunnelConnectionThrough:
-                      description: 'TunnelConnectionThrough allows to route connection
-                      to another host Field allowed values: "HOST:PORT", ":PORT" and
-                      "HOST:"'
-                      type: string
-                    usage:
-                      description: Usage controls how Jenkins schedules builds on this
-                        node. Available usage options are defined by AgentUsage enum
-                      type: string
-                    useWebSocket:
-                      description: UseWebSocket uses websocket to connect to the Jenkins
-                        Controller rather than the TCP port
-                      type: boolean
-                  required:
-                    - remoteRootDirectory
-                  type: object
+                remoteRootDirectory:
+                  description: RemoteRootDirectory is directory dedicated to Jenkins
+                    for temporary files storage purposes.
+                  type: string
                 roles:
                   description: Roles defines list of extra RBAC roles for the Jenkins
                     Kubernetes Agent pod service account
@@ -6145,6 +6072,14 @@ spec:
                       - name
                     type: object
                   type: array
+                tunnelConnectionThrough:
+                  description: 'TunnelConnectionThrough allows to route connection to
+                  another host Field allowed values: "HOST:PORT", ":PORT" and "HOST:"'
+                  type: string
+                usage:
+                  description: Usage controls how Jenkins schedules builds on this node.
+                    Available usage options are defined by AgentUsage enum
+                  type: string
               type: object
             status:
               description: JenkinsKubernetesAgentStatus defines the observed state of
