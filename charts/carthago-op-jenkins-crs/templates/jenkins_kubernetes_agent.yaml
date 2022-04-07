@@ -28,15 +28,15 @@ spec:
   {{- with $jenkinsKubernetesAgent.usage }}
   usage: {{- toYaml . | nindent 4}}
   {{- end }}
-  { { - with $jenkinsKubernetesAgent.tunnelConnectionThrough } }
-  tunnelConnectionThrough: { { - toYaml . | nindent 4 } }
-  { { - end } }
-  { { - with $jenkinsKubernetesAgent.jvmOptions } }
-  jvmOptions: { { - toYaml . | nindent 4 } }
-  { { - end } }
-  { { - with $jenkinsKubernetesAgent.roles } }
-  roles: { { - toYaml . | nindent 4 } }
-  { { - end } }
+  {{- with $jenkinsKubernetesAgent.tunnelConnectionThrough }}
+  tunnelConnectionThrough: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with $jenkinsKubernetesAgent.jvmOptions }}
+  jvmOptions: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with $jenkinsKubernetesAgent.roles }}
+  roles: {{- toYaml . | nindent 4 }}
+  {{- end }}
   {{- end }}
 {{- end }}
 
