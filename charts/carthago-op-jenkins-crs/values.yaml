@@ -309,35 +309,34 @@ jenkinsKubernetesAgents:
     # annotations are injected into metadata annotations field
     annotations: {}
 
-    spec:
-      # PodSpec allows setting Jenkins Kubernetes Agent specific pod properties
-      podSpec:
-        containers:
-          - name: jnlp
-            image: jenkins/inbound-agent:4.11.2-4
-            imagePullPolicy: IfNotPresent
-      # Description of Jenkins Agent
-      description: ""
+    # PodSpec allows setting Jenkins Kubernetes Agent specific pod properties
+    podSpec:
+      containers:
+        - name: jnlp
+          image: jenkins/inbound-agent:4.11.2-4
+          imagePullPolicy: IfNotPresent
+    # Description of Jenkins Agent
+    description: ""
 
-      # Executors defines the maximum number of concurrent builds that Jenkins may perform on this node.
-      executors:
+    # Executors defines the maximum number of concurrent builds that Jenkins may perform on this node.
+    executors:
 
-      # RemoteRootDirectory is directory dedicated to Jenkins for temporary files storage purposes.
-      remoteRootDirectory: ""
+    # RemoteRootDirectory is directory dedicated to Jenkins for temporary files storage purposes.
+    remoteRootDirectory: ""
 
-      # Usage controls how Jenkins schedules builds on this node.
-      # Available usage options are defined by AgentUsage enum
-      usage: ""
+    # Usage controls how Jenkins schedules builds on this node.
+    # Available usage options are defined by AgentUsage enum
+    usage: ""
 
-      # TunnelConnectionThrough allows to route connection to another host
-      # Field allowed values: "HOST:PORT", ":PORT" and "HOST:"
-      tunnelConnectionThrough: ""
+    # TunnelConnectionThrough allows to route connection to another host
+    # Field allowed values: "HOST:PORT", ":PORT" and "HOST:"
+    tunnelConnectionThrough: ""
 
-      # JVMOptions are additional startup arguments for Java Virtual Machine which runs agent
-      jvmOptions: ""
+    # JVMOptions are additional startup arguments for Java Virtual Machine which runs agent
+    jvmOptions: ""
 
-      # Roles defines list of extra RBAC roles for the Jenkins Kubernetes Agent pod service account
-      roles: []
+    # Roles defines list of extra RBAC roles for the Jenkins Kubernetes Agent pod service account
+    roles: []
 
 # JenkinsAuthenticationEnabled can enable or disable the JenkinsAuthentication instance
 # Set to true if you want to deploy the resource, set to false if have configured CR(s) already and/or you want to deploy an operator only
