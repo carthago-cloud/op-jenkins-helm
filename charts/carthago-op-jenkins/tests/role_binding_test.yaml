@@ -17,7 +17,7 @@ tests:
       - equal:
           path: roleRef.name
           value: manager-role
-  - it: by default it should create a role binding jenkins ns
+  - it: by default it should create a role binding in jenkins ns
     documentIndex: 1
     asserts:
       - hasDocuments:
