@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   carthago-op-jenkins:
   - apiVersion: v2
+    appVersion: 0.14.0
+    created: "2022-04-07T13:02:30.506773715Z"
+    description: Carthago Operator for Jenkins
+    digest: 123ce81c83c071286df4e6159abfe1569a8ef51765bd7d8f9685a5b329817542
+    icon: https://raw.githubusercontent.com/carthago-cloud/carthago-op-jenkins-helm/master/assets/jenkins-operator-icon.png
+    name: carthago-op-jenkins
+    urls:
+    - https://github.com/carthago-cloud/op-jenkins-helm/releases/download/carthago-op-jenkins-0.3.0/carthago-op-jenkins-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
     appVersion: 0.13.0
     created: "2022-03-31T11:32:01.970013119Z"
     description: Carthago Operator for Jenkins
@@ -63,6 +73,16 @@ entries:
     version: 0.1.0
   carthago-op-jenkins-crs:
   - apiVersion: v2
+    appVersion: 0.14.0
+    created: "2022-04-07T13:02:30.712351115Z"
+    description: Custom Resources for Carthago Operator for Jenkins
+    digest: c922bea6577faa3141ee0a128d2766c1be40370a28b3ed90664d55cbe87d343c
+    icon: https://raw.githubusercontent.com/carthago-cloud/carthago-op-jenkins-helm/master/assets/jenkins-operator-icon.png
+    name: carthago-op-jenkins-crs
+    urls:
+    - https://github.com/carthago-cloud/op-jenkins-helm/releases/download/carthago-op-jenkins-crs-0.3.0/carthago-op-jenkins-crs-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
     appVersion: 0.13.0
     created: "2022-03-31T11:32:02.199148414Z"
     description: Custom Resources for Carthago Operator for Jenkins
@@ -122,4 +142,4 @@ entries:
     urls:
     - https://github.com/carthago-cloud/op-jenkins-helm/releases/download/carthago-op-jenkins-crs-0.1.0/carthago-op-jenkins-crs-0.1.0.tgz
     version: 0.1.0
-generated: "2022-03-31T11:32:02.199210316Z"
+generated: "2022-04-07T13:02:30.712663513Z"
