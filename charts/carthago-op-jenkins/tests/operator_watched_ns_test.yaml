@@ -1,10 +1,10 @@
 suite: test Jenkins
 templates:
   - operator.yaml
+values:
+  - values/operator/default.yaml
 tests:
   - it: should propagate `jenkins` namespace correctly to WATCH_NAMESPACE if there is one present in values.yaml
-    values:
-      - values/operator/watchedNs/default.yaml
     asserts:
       - contains:
           path: spec.template.spec.containers[0].env
@@ -12,8 +12,8 @@ tests:
             name: WATCH_NAMESPACE
             value: jenkins
   - it: should propagate one namespace correctly to WATCH_NAMESPACE if there is one present in values.yaml
-    values:
-      - values/operator/watchedNs/one_ns.yaml
+    set:
+      operator.watchedNamespaces: [one]
     asserts:
       - contains:
           path: spec.template.spec.containers[0].env
@@ -21,8 +21,8 @@ tests:
             name: WATCH_NAMESPACE
             value: one
   - it: should propagate more than one namespace correctly to WATCH_NAMESPACE if there are multiple present in values.yaml
-    values:
-      - values/operator/watchedNs/multi_ns.yaml
+    set:
+      operator.watchedNamespaces: [one, two]
     asserts:
       - contains:
           path: spec.template.spec.containers[0].env
