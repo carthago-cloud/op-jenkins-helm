@@ -61,7 +61,7 @@ unit-test-plugin:
 	bin/helm plugin install https://github.com/quintush/helm-unittest
 
 .PHONY: unit-test
-unit-test:
+unit-test: helm-install
 	@echo "+ $@"
 	bin/helm unittest charts/carthago-op-jenkins-crs/ -3 --debug
 	bin/helm unittest charts/carthago-op-jenkins/ -3 --debug
