@@ -55,11 +55,10 @@ change-chart-version: bump-version
 	fi
 
 .PHONY: unit-test-plugin
-HAS_UNITTEST_PLUGIN := $(shell $(PROJECT_DIR)/bin/helm plugin list | grep unittest))
 unit-test-plugin: helm-install
 	@echo "+ $@"
-ifndef HAS_UNITTEST_PLUGIN
-	$(PROJECT_DIR)/bin/helm plugin install https://github.com/quintush/helm-unittest
+ifeq ($(shell helm plugin list | grep -c unittest),0)
+	helm plugin install https://github.com/quintush/helm-unittest
 endif
 
 .PHONY: unit-test
