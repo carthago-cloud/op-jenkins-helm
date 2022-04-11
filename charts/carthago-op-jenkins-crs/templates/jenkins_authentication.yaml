@@ -4,7 +4,7 @@
 ---
 apiVersion: {{ $apiVersion }}
 kind: JenkinsAuthentication
-metadata:
+metadata
   name: {{ $jenkinsAuthentication.name }}
   {{- with $jenkinsAuthentication.labels }}
   labels: {{ toYaml . | nindent 4 }}
