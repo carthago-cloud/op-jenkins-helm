@@ -5,7 +5,7 @@ kind: Role
 metadata:
   name: leader-election-role
 rules:
-  - apiGroups
+  - apiGroups:
       - ""
     resources:
       - configmaps
