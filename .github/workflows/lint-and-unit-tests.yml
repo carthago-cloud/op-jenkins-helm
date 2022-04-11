@@ -20,6 +20,7 @@ jobs:
         run: make unit-test-plugin
 
       - name: Lint
+        continue-on-error: true
         run: make helm-lint
 
       - name: Run unit tests
