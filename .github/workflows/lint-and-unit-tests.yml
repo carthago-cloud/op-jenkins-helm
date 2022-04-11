@@ -1,4 +1,4 @@
-name: Run unit tests
+name: Run Helm lint and unit tests
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
     types: [opened, synchronize, ready_for_review, reopened]
 
 jobs:
-  run-unit-tests:
+  lint-and-unit-tests:
     name: Run unit tests
     runs-on: ubuntu-latest
 
@@ -17,9 +17,10 @@ jobs:
         name: checkout repo
 
       - name: Install Helm and unittest plugin
-        run: |
-          make unit-test-plugin
+        run: make unit-test-plugin
+
+      - name: Lint
+        run: make helm-lint
 
       - name: Run unit tests
-        run: |
-          make unit-test
+        run: make unit-test

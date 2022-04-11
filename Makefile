@@ -15,8 +15,8 @@ endif
 .PHONY: helm-lint
 helm-lint: helm-install
 	@echo "+ $@"
-	bin/helm lint charts/carthago-op-jenkins
-	bin/helm lint charts/carthago-op-jenkins-crs
+	-$(PROJECT_DIR)/bin/helm lint charts/carthago-op-jenkins --values charts/carthago-op-jenkins/values.yaml
+	-$(PROJECT_DIR)/bin/helm lint charts/carthago-op-jenkins-crs --values charts/carthago-op-jenkins-crs/values.yaml
 
 .PHONY: sembump
 HAS_SEMBUMP := $(shell which $(PROJECT_DIR)/bin/sembump)
