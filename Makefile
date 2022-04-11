@@ -55,18 +55,18 @@ change-chart-version: bump-version
 	fi
 
 .PHONY: unit-test-plugin
-HAS_UNITTEST_PLUGIN := $(shell $(PROJECT_DIR)/bin/helm plugin list | grep unittest)
+HAS_UNITTEST_PLUGIN := $(shell $(PROJECT_DIR)/bin/helm plugin list | grep unittest))
 unit-test-plugin: helm-install
 	@echo "+ $@"
 ifndef HAS_UNITTEST_PLUGIN
-	bin/helm plugin install https://github.com/quintush/helm-unittest
+	$(PROJECT_DIR)/bin/helm plugin install https://github.com/quintush/helm-unittest
 endif
 
 .PHONY: unit-test
 unit-test: unit-test-plugin
 	@echo "+ $@"
-	bin/helm unittest charts/carthago-op-jenkins-crs/ -3 --debug
-	bin/helm unittest charts/carthago-op-jenkins/ -3 --debug
+	$(PROJECT_DIR)/bin/helm unittest charts/carthago-op-jenkins-crs/ -3 --debug
+	$(PROJECT_DIR)/bin/helm unittest charts/carthago-op-jenkins/ -3 --debug
 
 .PHONY: minikube
 HAS_MINIKUBE := $(shell which $(PROJECT_DIR)/bin/minikube)
