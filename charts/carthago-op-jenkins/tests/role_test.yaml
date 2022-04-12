@@ -1,4 +1,4 @@
-suite: test Jenkins
+suite: automatically created Roles
 templates:
   - role.yaml
 release:

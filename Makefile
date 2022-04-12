@@ -54,6 +54,7 @@ change-chart-version: bump-version
 		echo $(APP_VERSION) > APP_VERSION.txt ;\
 	fi
 
+# todo: refactor
 .PHONY: unit-test-plugin
 unit-test-plugin: helm-install
 	@echo "+ $@"

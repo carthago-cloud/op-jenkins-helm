@@ -1,4 +1,4 @@
-suite: test Jenkins
+suite: automatically created RoleBindings
 templates:
   - role_binding.yaml
 release:

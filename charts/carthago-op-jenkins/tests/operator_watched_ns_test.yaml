@@ -1,4 +1,4 @@
-suite: test Jenkins
+suite: Jenkins namespaces propagation to WATCH_NAMESPACE env
 templates:
   - operator.yaml
 values:
