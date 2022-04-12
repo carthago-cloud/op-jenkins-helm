@@ -54,12 +54,12 @@ change-chart-version: bump-version
 		echo $(APP_VERSION) > APP_VERSION.txt ;\
 	fi
 
-# todo: refactor
+HAS_UNITTEST_PLUGIN := $(shell which $(PROJECT_DIR)/bin/helm unittest)
 .PHONY: unit-test-plugin
 unit-test-plugin: helm-install
 	@echo "+ $@"
-ifeq ($(shell helm plugin list | grep -c unittest),0)
-	helm plugin install https://github.com/quintush/helm-unittest
+ifndef HAS_UNITTEST_PLUGIN
+		$(PROJECT_DIR)/bin/helm plugin install https://github.com/quintush/helm-unittest
 endif
 
 .PHONY: unit-test
