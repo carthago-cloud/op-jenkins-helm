@@ -15,8 +15,8 @@ endif
 .PHONY: helm-lint
 helm-lint: helm-install
 	@echo "+ $@"
-	bin/helm lint charts/carthago-op-jenkins
-	bin/helm lint charts/carthago-op-jenkins-crs
+	$(PROJECT_DIR)/bin/helm lint charts/carthago-op-jenkins --values charts/carthago-op-jenkins/values.yaml
+	$(PROJECT_DIR)/bin/helm lint charts/carthago-op-jenkins-crs --values charts/carthago-op-jenkins-crs/values.yaml
 
 .PHONY: sembump
 HAS_SEMBUMP := $(shell which $(PROJECT_DIR)/bin/sembump)
@@ -54,17 +54,19 @@ change-chart-version: bump-version
 		echo $(APP_VERSION) > APP_VERSION.txt ;\
 	fi
 
+HAS_UNITTEST_PLUGIN := $(shell which $(PROJECT_DIR)/bin/helm unittest)
 .PHONY: unit-test-plugin
-HELM_PLUGINS := $(PROJECT_DIR)/bin
-unit-test-plugin:
+unit-test-plugin: helm-install
 	@echo "+ $@"
-	bin/helm plugin install https://github.com/quintush/helm-unittest
+ifndef HAS_UNITTEST_PLUGIN
+		$(PROJECT_DIR)/bin/helm plugin install https://github.com/quintush/helm-unittest
+endif
 
 .PHONY: unit-test
-unit-test:
+unit-test: unit-test-plugin
 	@echo "+ $@"
-	bin/helm unittest charts/carthago-op-jenkins-crs/ -3 --debug
-	bin/helm unittest charts/carthago-op-jenkins/ -3 --debug
+	$(PROJECT_DIR)/bin/helm unittest charts/carthago-op-jenkins-crs/ -3 --debug
+	$(PROJECT_DIR)/bin/helm unittest charts/carthago-op-jenkins/ -3 --debug
 
 .PHONY: minikube
 HAS_MINIKUBE := $(shell which $(PROJECT_DIR)/bin/minikube)
