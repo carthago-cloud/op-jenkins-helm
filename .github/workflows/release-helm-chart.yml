@@ -41,6 +41,7 @@ jobs:
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Commit changes to repository
+        if: github.event.inputs.bump != 'disabled'
         run: |
           git add APP_VERSION.txt VERSION.txt charts/carthago-op-jenkins/Chart.yaml charts/carthago-op-jenkins-crs/Chart.yaml charts/carthago-op-jenkins/values.yaml
           git commit -m "Update versions of charts and Operator image"
