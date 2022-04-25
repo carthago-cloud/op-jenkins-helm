@@ -182,7 +182,7 @@ jenkinsGroovyScripts:
 jenkinsSeedJobsEnabled: true
 
 # JenkinsSeedJobs instances configuration
-# See https://docs.carthago.cloud/latest-version/getting-started/seedjob-configuration/ for additional info
+# To learn more about JenkinsSeedJobs, visit https://docs.carthago.cloud/latest-version/getting-started/seedjob-configuration/
 jenkinsSeedJobs:
   # name of resource
   - name: example
@@ -262,10 +262,10 @@ jenkinsSeedJobs:
 
 # jenkinsConfigurationsAsCodeEnabled can enable or disable the JenkinsConfigurationAsCode instances
 # Set to false if you have configured CR(s) already and/or you want to deploy an operator only
-jenkinsConfigurationsAsCodeEnabled: true
+jenkinsConfigurationsAsCodeEnabled: false
 
 # JenkinsConfigurationAsCode instances configuration
-# For configuration as code creation tutorial, check https://docs.carthago.cloud/latest-version/getting-started/customization/
+# For configuration as code creation tutorial, check https://docs.carthago.cloud/latest-version/getting-started/customization/casc/
 jenkinsConfigurationsAsCode:
   # name of resource
   - name: casc
@@ -290,12 +290,15 @@ jenkinsConfigurationsAsCode:
       #namespace: ""
 
 # jenkinsKubernetesAgentEnabled can enable or disable the JenkinsKubernetesAgent instances
-# Set to false if you have configured CR(s) already and/or you want to deploy an operator only
+# Set to false if you don't want to deploy any Agents with this Helm chart.
+# Visit https://docs.carthago.cloud/latest-version/getting-started/agents/ to learn more about JenkinsKubernetesAgents
+# that you can configure here.
 jenkinsKubernetesAgentEnabled: true
 
 # JenkinsKubernetesAgent instances configuration
 # In the free plan, only 1 jenkinsKubernetesAgent can be configured, and its name must be equal to seed-job-agent
-# For configuration as code creation tutorial, check https://docs.carthago.cloud/latest-version/getting-started/seedjob-configuration/
+# To learn more about JenkinsKubernetesAgents, visit
+# https://docs.carthago.cloud/latest-version/getting-started/agents/
 jenkinsKubernetesAgents:
   # name of resource
   # in the free plan, it must be equal to seed-job-agent
