@@ -1,0 +1,27 @@
+name: Run Helm lint and unit tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, ready_for_review, reopened]
+
+jobs:
+  lint-and-unit-tests:
+    name: Run unit tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        name: checkout repo
+
+      - name: Install Helm and unittest plugin
+        run: make unit-test-plugin
+
+      - name: Lint
+        continue-on-error: true
+        run: make helm-lint
+
+      - name: Run unit tests
+        run: make unit-test

@@ -15,8 +15,8 @@ endif
 .PHONY: helm-lint
 helm-lint: helm-install
 	@echo "+ $@"
-	bin/helm lint chart/carthago-op-jenkins
-	bin/helm lint chart/carthago-op-jenkins-crs
+	$(PROJECT_DIR)/bin/helm lint charts/carthago-op-jenkins --values charts/carthago-op-jenkins/values.yaml
+	$(PROJECT_DIR)/bin/helm lint charts/carthago-op-jenkins-crs --values charts/carthago-op-jenkins-crs/values.yaml
 
 .PHONY: sembump
 HAS_SEMBUMP := $(shell which $(PROJECT_DIR)/bin/sembump)
@@ -37,33 +37,36 @@ bump-version: sembump ## Bump the version in the version file. Set BUMP to [ pat
 	echo $(NEW_VERSION) > VERSION.txt
 	@echo "Updating version from $(VERSION) to $(NEW_VERSION) in README.md"
 	perl -i -pe 's/$(VERSION)/$(NEW_VERSION)/g' README.md
-	git log  --pretty=format:' * %s' $(VERSION)...HEAD > CHANGELOG.txt
 
-.PHONE: change-chart-version
+.PHONY: change-chart-version
 change-chart-version: bump-version
 	@echo "+ $@"
 	$(eval VERSION=$(shell cat VERSION.txt))
-	sed -i "/version:/c\version: $(VERSION)" chart/carthago-op-jenkins/Chart.yaml
+	sed -i "/version:/c\version: $(VERSION)" charts/carthago-op-jenkins/Chart.yaml
 	@if [ $(APP_VERSION) != $(OLD_APP_VERSION) ] ; then \
-		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" chart/carthago-op-jenkins/Chart.yaml ;\
+		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" charts/carthago-op-jenkins/Chart.yaml ;\
+		sed -i "s/$(DOCKER_ORGANIZATION)\/$(DOCKER_REGISTRY):$(OLD_APP_VERSION)/$(DOCKER_ORGANIZATION)\/$(DOCKER_REGISTRY):$(APP_VERSION)/" charts/carthago-op-jenkins/values.yaml ;\
 	fi
 
-	sed -i "/version:/c\version: $(VERSION)" chart/carthago-op-jenkins-crs/Chart.yaml
+	sed -i "/version:/c\version: $(VERSION)" charts/carthago-op-jenkins-crs/Chart.yaml
 	@if [ $(APP_VERSION) != $(OLD_APP_VERSION) ] ; then \
-		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" chart/carthago-op-jenkins-crs/Chart.yaml ;\
+		sed -i "/appVersion:/c\appVersion: \"$(APP_VERSION)\"" charts/carthago-op-jenkins-crs/Chart.yaml ;\
 		echo $(APP_VERSION) > APP_VERSION.txt ;\
 	fi
 
+HAS_UNITTEST_PLUGIN := $(shell which $(PROJECT_DIR)/bin/helm unittest)
 .PHONY: unit-test-plugin
-HELM_PLUGINS := $(PROJECT_DIR)/bin
-unit-test-plugin:
+unit-test-plugin: helm-install
 	@echo "+ $@"
-	bin/helm plugin install https://github.com/quintush/helm-unittest
+ifndef HAS_UNITTEST_PLUGIN
+		$(PROJECT_DIR)/bin/helm plugin install https://github.com/quintush/helm-unittest
+endif
 
 .PHONY: unit-test
-unit-test:
+unit-test: unit-test-plugin
 	@echo "+ $@"
-	bin/helm unittest chart/carthago-op-jenkins-crs/ -3 --debug
+	$(PROJECT_DIR)/bin/helm unittest charts/carthago-op-jenkins-crs/ -3 --debug
+	$(PROJECT_DIR)/bin/helm unittest charts/carthago-op-jenkins/ -3 --debug
 
 .PHONY: minikube
 HAS_MINIKUBE := $(shell which $(PROJECT_DIR)/bin/minikube)

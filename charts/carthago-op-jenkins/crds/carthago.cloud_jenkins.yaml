@@ -37,14 +37,6 @@ spec:
               description: JenkinsSpec defines the desired state of Jenkins. It's used
                 for Jenkins Controller and Kubernetes pod configuration
               properties:
-                annotations:
-                  additionalProperties:
-                    type: string
-                  description: 'Annotations is an unstructured key value map stored
-                  with a resource that may be set by external tools to store and retrieve
-                  arbitrary metadata. They are not queryable and should be preserved
-                  when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
-                  type: object
                 authorizationStrategy:
                   description: AuthorizationStrategy specifies the authorization strategy
                     used by the Operator for the Jenkins API.
@@ -53,20 +45,38 @@ spec:
                   description: DisableCSRFProtection allows you to toggle CSRF Protection
                     on Jenkins
                   type: boolean
-                labels:
-                  additionalProperties:
-                    type: string
-                  description: 'Map of string keys and values that can be used to organize
-                  and categorize (scope and select) objects. May match selectors of
-                  replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+                pluginSnapshot:
+                  description: PluginSnapshot allows you to create snapshots of plugins
+                    and restore from them
+                  properties:
+                    restoreEnabled:
+                      description: RestoreEnabled allows you to restore plugins from
+                        particular snapshot
+                      type: boolean
+                    snapshotConfigMapRef:
+                      description: SnapshotConfigMapRef is the reference to the ConfigMap
+                        for the snapshot to use
+                      properties:
+                        name:
+                          description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                          TODO: Add other useful fields. apiVersion, kind, uid?'
+                          type: string
+                        optional:
+                          description: Specify whether the ConfigMap must be defined
+                          type: boolean
+                      type: object
+                    snapshotHistoryLength:
+                      description: SnapshotHistoryLength specifies amount of historical
+                        snapshots to keep
+                      type: integer
                   type: object
                 plugins:
                   description: 'Plugins contains plugins required by user Can be overridden
                   Defaults plugins: - name: kubernetes version: 1.31.1 - name: workflow-job
                   version: "1145.v7f2433caa07f" - name: workflow-aggregator version:
                   "2.6" - name: git version: 4.10.1 - name: job-dsl version: "1.78.1"
-                  - name: configuration-as-code version: "1.55" - name: kubernetes-credentials-provider
-                  version: 0.20'
+                  - name: configuration-as-code version: "1414.v878271fc496f" - name:
+                  kubernetes-credentials-provider version: 0.20'
                   items:
                     properties:
                       downloadURL:

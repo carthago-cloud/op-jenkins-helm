@@ -35,9 +35,12 @@ spec:
           {{- with .Values.operator.args }}
           args: {{ toYaml . | nindent 10 }}
           {{- end }}
+          {{- if .Values.operator.licenseSecretName }}
+          - --license-secret={{ .Values.operator.licenseSecretName }}
+          {{- end}}
           env:
             - name: WATCH_NAMESPACE
-              value: {{ .Values.operator.jenkinsNamespace }}
+              value: {{ join "," .Values.operator.watchedNamespaces }}
             - name: OPERATOR_NAME
               value: "carthago-op-jenkins"
           resources:

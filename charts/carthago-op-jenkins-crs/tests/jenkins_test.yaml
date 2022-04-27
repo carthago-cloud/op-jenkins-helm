@@ -24,7 +24,7 @@ tests:
           path: metadata.annotations
           value:
             annotationsTestKey: annotationsTestValue
-  - it: should propagate all the declared podSpec fields
+  - it: should propagate all the declared spec fields
     values:
       - values/jenkins_test_values.yaml
     asserts:
@@ -191,3 +191,12 @@ tests:
       - equal:
           path: spec.disableCSRFProtection
           value: false
+      - equal:
+          path: spec.pluginSnapshot.restoreEnabled
+          value: false
+      - equal:
+          path: spec.pluginSnapshot.snapshotConfigMapRef.name
+          value: "config-map-name"
+      - equal:
+          path: spec.pluginSnapshot.snapshotHistoryLength
+          value: 3

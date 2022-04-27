@@ -28,7 +28,7 @@ jenkins:
     sidecars: []
     jenkinsController:
       name: jenkins-controller
-      image: jenkins/jenkins:2.319.1-lts
+      image: jenkins/jenkins:2.332.1-lts
       imagePullPolicy: IfNotPresent
       command: []
       livenessProbe: {}
@@ -57,10 +57,10 @@ jenkins:
   # homePVC allows setting PersistentVolumeClaim properties for Jenkins home
   homePVC: {}
 
-  # accessMode specifies the way the plugins cache can be mounted
+  # accessMode specifies the way Jenkins home Volume can be mounted
   # accessMode: ""
 
-  # resourceStorage is the plugins cache volume size
+  # resourceStorage is the volume size of Jenkins home Volume
   # resourceStorage: ""
 
   # storageClassName is the name of the StorageClass required by the claim
@@ -125,6 +125,18 @@ jenkins:
   # See https://github.com/jenkinsci/kubernetes-operator/pull/193 for more info
   disableCSRFProtection: false
 
+  # pluginSnapshot creates a configMap containing all the plugins in Jenkins at a particular moment and allows to keep a history of changes and restore
+  pluginSnapshot: {}
+#    restoreEnabled makes Jenkins use plugins specified in snapshotConfigMapRef
+#    restoreEnabled: false
+#
+#    snapshotConfigMapRef specifies which configMap to use for restore if restoreEnabled is set. Otherwise it will overwrite the configMap whenever plugins change
+#    snapshotConfigMapRef:
+#      name: "config-map-name"
+#
+#    snapshotHistoryLength specifies, how many historical snapshots are to be kept. Has no effect if snapshotConfigMapRef is specified
+#    snapshotHistoryLength: 3
+
 # jenkinsGroovyScriptsEnabled can enable or disable the JenkinsGroovyScript instances
 # Set to false if you have configured CR(s) already and/or you want to deploy an operator only
 jenkinsGroovyScriptsEnabled: true
@@ -170,7 +182,7 @@ jenkinsGroovyScripts:
 jenkinsSeedJobsEnabled: true
 
 # JenkinsSeedJobs instances configuration
-# See https://carthago-cloud.github.io/op-jenkins-docs/carthago-operator-for-jenkins/latest/getting-started/seedjob-configuration/ for additional info
+# See https://docs.carthago.cloud/latest-version/getting-started/seedjob-configuration/ for additional info
 jenkinsSeedJobs:
   # name of resource
   - name: example
@@ -253,7 +265,7 @@ jenkinsSeedJobs:
 jenkinsConfigurationsAsCodeEnabled: true
 
 # JenkinsConfigurationAsCode instances configuration
-# For configuration as code creation tutorial, check https://carthago-cloud.github.io/op-jenkins-docs/carthago-operator-for-jenkins/latest/getting-started/customization/
+# For configuration as code creation tutorial, check https://docs.carthago.cloud/latest-version/getting-started/customization/
 jenkinsConfigurationsAsCode:
   # name of resource
   - name: casc
@@ -271,7 +283,6 @@ jenkinsConfigurationsAsCode:
       jenkins:
         systemMessage: |
           Welcome to your CI/CD server managed by Carthago Operator for Jenkins!
-        numExecutors: 1
 
     # secretRef is secret reference which allows to inject the secrets into Configuration As Code script
     #secretRef:
@@ -284,11 +295,11 @@ jenkinsKubernetesAgentEnabled: true
 
 # JenkinsKubernetesAgent instances configuration
 # In the free plan, only 1 jenkinsKubernetesAgent can be configured, and its name must be equal to seed-job-agent
-# For configuration as code creation tutorial, check https://carthago-cloud.github.io/op-jenkins-docs/carthago-operator-for-jenkins/latest/getting-started/seedjob-configuration/
+# For configuration as code creation tutorial, check https://docs.carthago.cloud/latest-version/getting-started/seedjob-configuration/
 jenkinsKubernetesAgents:
   # name of resource
   # in the free plan, it must be equal to seed-job-agent
-  - name: first-agent
+  - name: seed-job-agent
 
     # labels are injected into metadata labels field. Each JenkinsKubernetesAgent Custom Resource need to reference corresponding
     # Jenkins Custom Resource via labels field
@@ -302,60 +313,30 @@ jenkinsKubernetesAgents:
     podSpec:
       containers:
         - name: jnlp
-          image: jenkins/inbound-agent:4.10-3-alpine
+          image: jenkins/inbound-agent:4.11.2-4
           imagePullPolicy: IfNotPresent
+    # Description of Jenkins Agent
+    description: ""
 
-    properties:
-      # Description of Jenkins Agent
-      description: ""
+    # Executors defines the maximum number of concurrent builds that Jenkins may perform on this node.
+    executors:
 
-      # Executors defines the maximum number of concurrent builds that Jenkins may perform on this node.
-      executors:
+    # RemoteRootDirectory is directory dedicated to Jenkins for temporary files storage purposes.
+    remoteRootDirectory: ""
 
-      # RemoteRootDirectory is directory dedicated to Jenkins for temporary files storage purposes.
-      remoteRootDirectory: ""
+    # Usage controls how Jenkins schedules builds on this node.
+    # Available usage options are defined by AgentUsage enum
+    usage: ""
 
-      # Usage controls how Jenkins schedules builds on this node.
-      # Available usage options are defined by AgentUsage enum
-      usage: ""
+    # TunnelConnectionThrough allows to route connection to another host
+    # Field allowed values: "HOST:PORT", ":PORT" and "HOST:"
+    tunnelConnectionThrough: ""
 
-      # LaunchMethod controls how Jenkins starts this agent.
-      # AgentLaunchMethod is enum that defines the available launch methods
-      launchMethod: ""
+    # JVMOptions are additional startup arguments for Java Virtual Machine which runs agent
+    jvmOptions: ""
 
-      # DisableWorkDir allows disabling Remoting Work Directory for the agent.
-      disableWorkDir: false
-
-      # CustomWorkDirPath is a custom Remoting work directory will be used instead of the Agent Root Directory
-      customWorkDirPath: ""
-
-      # InternalDataDirectory defines a storage directory for the internal data
-      # By default it's "remoting"
-      internalDataDirectory: ""
-
-      # FailIfWorkspaceIsMissing if true, remoting will fail at startup if the target work directory is missing
-      failIfWorkplaceIsMissing: false
-
-      # UseWebSocket uses websocket to connect to the Jenkins Controller rather than the TCP port
-      useWebSocket: false
-
-      # TunnelConnectionThrough allows to route connection to another host
-      # Field allowed values: "HOST:PORT", ":PORT" and "HOST:"
-      tunnelConnectionThrough: ""
-
-      # JVMOptions are additional startup arguments for Java Virtual Machine which runs agent
-      jvmOptions: ""
-
-      # Availability controls when Jenkins starts and stops this agent.
-      availability: ""
-
-      # ToolLocations is list of tools location
-      toolLocations:
-        - name: ""
-          home: ""
-
-    # RoleRef defines list of extra RBAC roles for the Jenkins Kubernetes Agent pod service account
-    roleRef: []
+    # Roles defines list of extra RBAC roles for the Jenkins Kubernetes Agent pod service account
+    roles: []
 
 # JenkinsAuthenticationEnabled can enable or disable the JenkinsAuthentication instance
 # Set to true if you want to deploy the resource, set to false if have configured CR(s) already and/or you want to deploy an operator only
@@ -363,7 +344,7 @@ jenkinsAuthenticationEnabled: false
 
 # JenkinsAuthentication configuration
 # It is not available in the free plan and requires a valid license.
-# For authentication creation tutorial, check https://carthago-cloud.github.io/op-jenkins-docs/carthago-operator-for-jenkins/latest/getting-started/authentication/
+# For authentication creation tutorial, check https://docs.carthago.cloud/latest-version/getting-started/authentication/
 jenkinsAuthentication:
   # name of resource
   name: authentication
@@ -527,7 +508,7 @@ jenkinsAuthentication:
 jenkinsAuthorizationEnabled: false
 
 # JenkinsAuthorization configuration
-# For authorization creation tutorial, check https://carthago-cloud.github.io/op-jenkins-docs/carthago-operator-for-jenkins/latest/getting-started/authorization/
+# For authorization creation tutorial, check https://docs.carthago.cloud/latest-version/getting-started/authorization/
 jenkinsAuthorization:
   # name of resource
   name: authorization

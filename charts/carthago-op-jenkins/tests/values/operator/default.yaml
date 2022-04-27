@@ -1,0 +1,3 @@
+apiVersion: carthago.cloud/v1beta1
+operator:
+  image: carthago.azurecr.io/carthago-op-jenkins:0.12.1
