@@ -62,27 +62,27 @@ spec:
     escapeHatchGroup: {{ $jenkinsAuthentication.openIDConnectAuth.escapeHatchGroup }}
   {{- else if eq $jenkinsAuthentication.type "samlAuth" }}
   samlAuth:
-    {{ if $jenkinsAuthentication.samlAuth.IdPMetadata}}
-    idpMetadata: {{ $jenkinsAuthentication.samlAuth.IdPMetadata }}
+    {{ if $jenkinsAuthentication.samlAuth.idpMetadata }}
+    idpMetadata: {{ $jenkinsAuthentication.samlAuth.idpMetadata }}
     {{ end }}
-    {{ if $jenkinsAuthentication.samlAuth.IdPMetadataURL}}
-    idpMetadataURL: {{ $jenkinsAuthentication.samlAuth.IdPMetadataURL}}
+    {{ if $jenkinsAuthentication.samlAuth.idpMetadataURL }}
+    idpMetadataURL: {{ $jenkinsAuthentication.samlAuth.idpMetadataURL }}
     {{ end }}
-    {{ if $jenkinsAuthentication.samlAuth.RefreshPeriod}}
-    refreshPeriod: {{ $jenkinsAuthentication.samlAuth.RefreshPeriod}}
+    {{ if $jenkinsAuthentication.samlAuth.refreshPeriod }}
+    refreshPeriod: {{ $jenkinsAuthentication.samlAuth.refreshPeriod }}
     {{ end }}
-    displayNameAttribute: {{ $jenkinsAuthentication.samlAuth.DisplayNameAttribute }}
-    groupAttribute: {{ $jenkinsAuthentication.samlAuth.GroupAttribute }}
-    maximumAuthenticationLifetime: {{ $jenkinsAuthentication.samlAuth.MaximumAuthenitcationLifetime }}
-    usernameAttribute: {{ $jenkinsAuthentication.samlAuth.UsernameCaseConversion }}
-    emailAttribute: {{ $jenkinsAuthentication.samlAuth.EmailAttribute }}
-    usernameCaseConversion: {{ $jenkinsAuthentication.samlAuth.UsernameCaseConversion }}
-    dataBindingMethod: {{ $jenkinsAuthentication.samlAuth.DataBindingMethod }}
-    logoutURL: {{ $jenkinsAuthentication.samlAuth.LogoutURL }}
-    {{- with $jenkinsAuthentication.samlAuth.AdvancedConfiguration }}
+    displayNameAttribute: {{ $jenkinsAuthentication.samlAuth.displayNameAttribute }}
+    groupAttribute: {{ $jenkinsAuthentication.samlAuth.groupAttribute }}
+    maximumAuthenticationLifetime: {{ $jenkinsAuthentication.samlAuth.maximumAuthenticationLifetime }}
+    usernameAttribute: {{ $jenkinsAuthentication.samlAuth.usernameAttribute }}
+    emailAttribute: {{ $jenkinsAuthentication.samlAuth.emailAttribute }}
+    usernameCaseConversion: {{ $jenkinsAuthentication.samlAuth.usernameCaseConversion }}
+    dataBindingMethod: {{ $jenkinsAuthentication.samlAuth.dataBindingMethod }}
+    logoutURL: {{ $jenkinsAuthentication.samlAuth.logoutURL }}
+    {{- with $jenkinsAuthentication.samlAuth.advancedConfiguration }}
     advancedConfiguration: {{- toYaml . | nindent 6 }}
     {{- end }}
-    {{- with $jenkinsAuthentication.samlAuth.EncryptionConfiguration }}
+    {{- with $jenkinsAuthentication.samlAuth.encryptionConfiguration }}
     encryptionConfiguration: {{- toYaml . | nindent 6 }}
     {{- end }}
   {{- end }}

@@ -164,4 +164,80 @@ tests:
           path: spec.githubOAuth
       - isNull:
           path: spec.googleOAuth
-
+  - it: should propagate all the declared SAMLAuth spec fields
+    values:
+      - values/jenkinsauthentication_samltest_values.yaml
+    asserts:
+      - equal:
+          path: spec.type
+          value: samlAuth
+      - equal:
+          path: spec.samlAuth.idpMetadataURL
+          value: https://samlauth.com/saml.xml
+      - equal:
+          path: spec.samlAuth.refreshPeriod
+          value: 1
+      - equal:
+          path: spec.samlAuth.displayNameAttribute
+          value: groups.name
+      - equal:
+          path: spec.samlAuth.groupAttribute
+          value: groups.group
+      - equal:
+          path: spec.samlAuth.maximumAuthenticationLifetime
+          value: 86401
+      - equal:
+          path: spec.samlAuth.usernameAttribute
+          value: groups.username
+      - equal:
+          path: spec.samlAuth.emailAttribute
+          value: groups.email
+      - equal:
+          path: spec.samlAuth.usernameCaseConversion
+          value: none
+      - equal:
+          path: spec.samlAuth.dataBindingMethod
+          value: http-post
+      - equal:
+          path: spec.samlAuth.logoutURL
+          value: https://samlauth.com/logout
+      - equal:
+          path: spec.samlAuth.advancedConfiguration.forceAuthentication
+          value: true
+      - equal:
+          path: spec.samlAuth.advancedConfiguration.authenticationContext
+          value: context
+      - equal:
+          path: spec.samlAuth.advancedConfiguration.SPEntityID
+          value: EntityID
+      - equal:
+          path: spec.samlAuth.advancedConfiguration.nameIDPolicyFormat
+          value: policyFormat
+      - equal:
+          path: spec.samlAuth.encryptionConfiguration.keystorePath
+          value: key
+      - equal:
+          path: spec.samlAuth.encryptionConfiguration.keystorePasswordRef.name
+          value: secret
+      - equal:
+          path: spec.samlAuth.encryptionConfiguration.keystorePasswordRef.namespace
+          value: default
+      - equal:
+          path: spec.samlAuth.encryptionConfiguration.privateKeyAlias
+          value: keyAlias
+      - equal:
+          path: spec.samlAuth.encryptionConfiguration.privateKeyPasswordRef.name
+          value: secret-two
+      - equal:
+          path: spec.samlAuth.encryptionConfiguration.privateKeyPasswordRef.namespace
+          value: default
+      - equal:
+          path: spec.samlAuth.encryptionConfiguration.authRequestSignature
+          value: true
+      - equal:
+          path: spec.samlAuth.encryptionConfiguration.wantsAssertionSigned
+          value: true
+      - isNull:
+          path: spec.githubOAuth
+      - isNull:
+          path: spec.googleOAuth
