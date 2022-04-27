@@ -526,9 +526,9 @@ jenkinsAuthentication:
 
     # advancedConfiguration:
 
-      # forceAuthentication specifies whether to request the SAML IdP to force (re)authentication of the user,
-	    # rather than allowing an existing session with the IdP to be reused.
-	    # (optional) bool
+      # forceAuthentication specifies whether to request the SAML IdP to force reauthentication of the user,
+      # rather than allowing an existing session with the IdP to be reused.
+      # (optional) bool
       # forceAuthentication:
 
       # authenticationContext makes SAML IdP use a specific authentication context instead of its default one.
@@ -562,7 +562,7 @@ jenkinsAuthentication:
       # privateKeyPasswordRef:
 
       # authRequestSignature enables signature of the Redirect Binding Auth Request.
-	    # If you enable it the encryption and signing key would available in the SP metadata file and URL (JENKINS_URL/securityRealm/metadata).
+      # If you enable it the encryption and signing key would available in the SP metadata file and URL (JENKINS_URL/securityRealm/metadata).
       # (optional) bool
       # authRequestSignature:
 
