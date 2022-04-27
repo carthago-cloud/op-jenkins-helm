@@ -489,19 +489,45 @@ jenkinsAuthentication:
     escapeHatchGroup: ""
 
   samlAuth:
-    #IdPMetadata:
-    IdPMetadataURL:
-    RefreshPeriod:
-    DisplayNameAttribute:
-    GroupAttribute:
-    MaximumAuthenitcationLifetime:
-    UsernameAttribute:
-    EmailAttribute:
-    UsernameCaseConversion:
-    DataBindingMethod:
-    LogoutURL:
-    #AdvancedConfiguration:
-   # EncryptionConfiguration:
+    # idpMetadata is Identity Provider Metadata in XML format.
+    # idpMetadata:
+
+    # idpMetadataURL The Identity Provider metadata file source URL. If you provide idpMetadataURL please add refreshPeriod.
+    idpMetadataURL:
+
+    # refreshPeriod in minutes between Identity Provider metadata refreshes. Setting it to 0 disables refreshing metadata.
+    refreshPeriod:
+
+    # displayNameAttribute is the name of the attribute that carries the display name (optional)
+    displayNameAttribute:
+
+    # groupAttribute is the name of the attribute that carries user groups (optional)
+    groupAttribute:
+
+    # maximumAuthenticationLifetime is the number of seconds since the user was authenticated in IdP for which his authentication is considering as active.
+    maximumAuthenitcationLifetime:
+
+    # usernameAttribute is the name of the attribute that carries user name which will be used as the Jenkins ID (optional).
+    usernameAttribute:
+
+    # emailAttribute is the field name of email attribute in SAML response. (optional)
+    emailAttribute:
+
+    # usernameCaseConversion specifies how ID returned from SAML will be converted to the username for Authorization.
+    usernameCaseConversion:
+
+    # dataBindingMethod SAML specifies the method of redirection binding that will be used by SAML plugin.
+    # The plugin supports HTTP-Redirect and HTTP-POST and by default it uses HTTP-Redirect.
+    # Enum: http-post ; http-redirect
+    dataBindingMethod:
+
+    # logoutURL is the logout URL of your Identity Provider. Users will be redirected there on logout.
+    logoutURL:
+
+    # advancedConfiguration:
+
+    # encryptionConfiguration can be used to specify the keystore details if your provider requires encryption or signing.
+    # encryptionConfiguration:
 
 # JenkinsAuthorizationEnabled can enable or disable the jenkinsAuthorization instance
 # Set to true if you want to deploy the resource, set to false if have configured CR(s) already and/or you want to deploy an operator only
