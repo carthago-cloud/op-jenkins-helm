@@ -60,5 +60,30 @@ spec:
     escapeHatchSecretRef: {{- toYaml . | nindent 6 }}
     {{- end }}
     escapeHatchGroup: {{ $jenkinsAuthentication.openIDConnectAuth.escapeHatchGroup }}
+  {{- else if eq $jenkinsAuthentication.type "samlAuth" }}
+  samlAuth:
+    {{ if $jenkinsAuthentication.samlAuth.idpMetadata }}
+    idpMetadata: {{ $jenkinsAuthentication.samlAuth.idpMetadata }}
+    {{ end }}
+    {{ if $jenkinsAuthentication.samlAuth.idpMetadataURL }}
+    idpMetadataURL: {{ $jenkinsAuthentication.samlAuth.idpMetadataURL }}
+    {{ end }}
+    {{ if $jenkinsAuthentication.samlAuth.refreshPeriod }}
+    refreshPeriod: {{ $jenkinsAuthentication.samlAuth.refreshPeriod }}
+    {{ end }}
+    displayNameAttribute: {{ $jenkinsAuthentication.samlAuth.displayNameAttribute }}
+    groupAttribute: {{ $jenkinsAuthentication.samlAuth.groupAttribute }}
+    maximumAuthenticationLifetime: {{ $jenkinsAuthentication.samlAuth.maximumAuthenticationLifetime }}
+    usernameAttribute: {{ $jenkinsAuthentication.samlAuth.usernameAttribute }}
+    emailAttribute: {{ $jenkinsAuthentication.samlAuth.emailAttribute }}
+    usernameCaseConversion: {{ $jenkinsAuthentication.samlAuth.usernameCaseConversion }}
+    dataBindingMethod: {{ $jenkinsAuthentication.samlAuth.dataBindingMethod }}
+    logoutURL: {{ $jenkinsAuthentication.samlAuth.logoutURL }}
+    {{- with $jenkinsAuthentication.samlAuth.advancedConfiguration }}
+    advancedConfiguration: {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with $jenkinsAuthentication.samlAuth.encryptionConfiguration }}
+    encryptionConfiguration: {{- toYaml . | nindent 6 }}
+    {{- end }}
   {{- end }}
 {{- end }}

@@ -488,6 +488,88 @@ jenkinsAuthentication:
     # (optional)
     escapeHatchGroup: ""
 
+  samlAuth:
+    # idpMetadata is Identity Provider Metadata in XML format.
+    # idpMetadata:
+
+    # idpMetadataURL The Identity Provider metadata file source URL. If you provide idpMetadataURL please add refreshPeriod.
+    idpMetadataURL:
+
+    # refreshPeriod in minutes between Identity Provider metadata refreshes. Setting it to 0 disables refreshing metadata.
+    refreshPeriod:
+
+    # displayNameAttribute is the name of the attribute that carries the display name (optional)
+    displayNameAttribute:
+
+    # groupAttribute is the name of the attribute that carries user groups (optional)
+    groupAttribute:
+
+    # maximumAuthenticationLifetime is the number of seconds since the user was authenticated in IdP for which his authentication is considering as active.
+    maximumAuthenitcationLifetime:
+
+    # usernameAttribute is the name of the attribute that carries user name which will be used as the Jenkins ID (optional).
+    usernameAttribute:
+
+    # emailAttribute is the field name of email attribute in SAML response. (optional)
+    emailAttribute:
+
+    # usernameCaseConversion specifies how ID returned from SAML will be converted to the username for Authorization.
+    usernameCaseConversion:
+
+    # dataBindingMethod SAML specifies the method of redirection binding that will be used by SAML plugin.
+    # The plugin supports HTTP-Redirect and HTTP-POST and by default it uses HTTP-Redirect.
+    # Enum: http-post ; http-redirect
+    dataBindingMethod:
+
+    # logoutURL is the logout URL of your Identity Provider. Users will be redirected there on logout.
+    logoutURL:
+
+    # advancedConfiguration:
+
+      # forceAuthentication specifies whether to request the SAML IdP to force reauthentication of the user,
+      # rather than allowing an existing session with the IdP to be reused.
+      # (optional) bool
+      # forceAuthentication:
+
+      # authenticationContext makes SAML IdP use a specific authentication context instead of its default one.
+      # If left empty, default authentication context will be used.
+      # (optional)
+      # authenticationContext:
+
+      # SPEntityID it overrides the default Entity ID for this Service Provider.
+      # (optional)
+      # SPEntityID:
+
+      # nameIDPolicyFormat:
+
+    # encryptionConfiguration can be used to specify the keystore details if your provider requires encryption or signing.
+    # encryptionConfiguration:
+
+      # keystorePath is the path to the keystore file created with the keygen command.
+      # (optional)
+      # keystorePath:
+
+      # keystorePassword is the password used in the -storepass argument of the keytool command.
+      # (optional)
+      # keystorePasswordRef: 
+
+      # privateKeyAlias is the alias used in the -alias argument of the keytool< command.
+      # (optional)
+      # privateKeyAlias:
+
+      # privateKeyPassword is the password used in the -keypass argument of keytool.
+      # (optional)
+      # privateKeyPasswordRef:
+
+      # authRequestSignature enables signature of the Redirect Binding Auth Request.
+      # If you enable it the encryption and signing key would available in the SP metadata file and URL (JENKINS_URL/securityRealm/metadata).
+      # (optional) bool
+      # authRequestSignature:
+
+      # wantsAssertionSigned makes authentication accept only signed assertion sent by the IdP.
+      # (optional) bool
+      # wantsAssertionSigned:
+
 # JenkinsAuthorizationEnabled can enable or disable the jenkinsAuthorization instance
 # Set to true if you want to deploy the resource, set to false if have configured CR(s) already and/or you want to deploy an operator only
 jenkinsAuthorizationEnabled: false

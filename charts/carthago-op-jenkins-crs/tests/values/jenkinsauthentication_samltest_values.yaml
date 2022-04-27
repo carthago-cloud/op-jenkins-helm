@@ -1,0 +1,53 @@
+jenkinsAuthenticationEnabled: true
+jenkinsAuthentication:
+  name: authentication
+  namespace: default
+  labels:
+    carthago.cloud/jenkins: jenkins
+  annotations:
+    annotationsTestKey: annotationsTestValue
+  type: samlAuth
+  samlAuth:
+    idpMetadataURL: "https://samlauth.com/saml.xml"
+    refreshPeriod: 1
+    displayNameAttribute: groups.name
+    groupAttribute: "groups.group"
+    maximumAuthenticationLifetime: 86401
+    usernameAttribute: "groups.username"
+    emailAttribute: "groups.email"
+    usernameCaseConversion: "none"
+    dataBindingMethod: "http-post"
+    logoutURL: "https://samlauth.com/logout"
+    advancedConfiguration:
+      forceAuthentication: true
+      authenticationContext: "context"
+      SPEntityID: "EntityID"
+      nameIDPolicyFormat: "policyFormat"
+    encryptionConfiguration:
+      keystorePath: "key"
+      keystorePasswordRef:
+        name: "secret"
+        namespace: "default"
+      privateKeyAlias: "keyAlias"
+      privateKeyPasswordRef:
+        name: "secret-two"
+        namespace: "default"
+      authRequestSignature: true
+      wantsAssertionSigned: true
+
+  githubOAuth:
+    clientID: "testClientID"
+    clientSecretRef:
+      name: secret
+      namespace: default
+    webUri: "https://github.com"
+    apiUri: "https://api.github.com"
+    scopes:
+      - read:org
+      - user:email
+  googleOAuth:
+    clientID: testClientID
+    clientSecretRef:
+      name: secret
+      namespace: default
+    domain: myTestDomain
