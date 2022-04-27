@@ -526,8 +526,49 @@ jenkinsAuthentication:
 
     # advancedConfiguration:
 
+      # forceAuthentication specifies whether to request the SAML IdP to force (re)authentication of the user,
+	    # rather than allowing an existing session with the IdP to be reused.
+	    # (optional) bool
+      # forceAuthentication:
+
+      # authenticationContext makes SAML IdP use a specific authentication context instead of its default one.
+      # If left empty, default authentication context will be used.
+      # (optional)
+      # authenticationContext:
+
+      # SPEntityID it overrides the default Entity ID for this Service Provider.
+      # (optional)
+      # SPEntityID:
+
+      # nameIDPolicyFormat:
+
     # encryptionConfiguration can be used to specify the keystore details if your provider requires encryption or signing.
     # encryptionConfiguration:
+
+      # keystorePath is the path to the keystore file created with the keygen command.
+      # (optional)
+      # keystorePath:
+
+      # keystorePassword is the password used in the -storepass argument of the keytool command.
+      # (optional)
+      # keystorePasswordRef: 
+
+      # privateKeyAlias is the alias used in the -alias argument of the keytool< command.
+      # (optional)
+      # privateKeyAlias:
+
+      # privateKeyPassword is the password used in the -keypass argument of keytool.
+      # (optional)
+      # privateKeyPasswordRef:
+
+      # authRequestSignature enables signature of the Redirect Binding Auth Request.
+	    # If you enable it the encryption and signing key would available in the SP metadata file and URL (JENKINS_URL/securityRealm/metadata).
+      # (optional) bool
+      # authRequestSignature:
+
+      # wantsAssertionSigned makes authentication accept only signed assertion sent by the IdP.
+      # (optional) bool
+      # wantsAssertionSigned:
 
 # JenkinsAuthorizationEnabled can enable or disable the jenkinsAuthorization instance
 # Set to true if you want to deploy the resource, set to false if have configured CR(s) already and/or you want to deploy an operator only
