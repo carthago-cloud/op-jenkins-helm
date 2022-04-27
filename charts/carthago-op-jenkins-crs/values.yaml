@@ -265,20 +265,21 @@ jenkinsSeedJobs:
 jenkinsConfigurationsAsCodeEnabled: false
 
 # JenkinsConfigurationAsCode instances configuration
-# For configuration as code creation tutorial, check https://docs.carthago.cloud/latest-version/getting-started/customization/casc/
+# To learn more about JenkinsConfigurationAsCode, visit https://docs.carthago.cloud/latest-version/getting-started/customization/casc/
+# Users can only have 1 JenkinsConfigurationAsCode per Jenkins instance.
 jenkinsConfigurationsAsCode:
   # name of resource
   - name: casc
 
-    # labels are injected into metadata labels field. Each JenkinsConfigurationAsCode Custom Resource need to reference corresponding
-    # Jenkins Custom Resource via labels field
+    # labels are injected into metadata labels field.
+    # Each JenkinsConfigurationAsCode Custom Resource need to reference corresponding Jenkins Custom Resource via labels field
     labels:
       carthago.cloud/jenkins: jenkins
 
     # annotations are injected into metadata annotations field
     annotations: {}
 
-    # data is inline Groovy script
+    # data is inline configuration
     data: |
       jenkins:
         systemMessage: |
