@@ -60,3 +60,8 @@ jobs:
           run: |
             chmod +x ${{ env.JENKINS_TEST_SCRIPT }}
             ${{ env.JENKINS_TEST_SCRIPT }} ${{ env.JENKINS_NAMESPACE }}
+
+        - name: Delete minikube
+          if: always()
+          working-directory: ${{ env.OPERATOR_REPO_PATH }}
+          run: make minikube-delete
