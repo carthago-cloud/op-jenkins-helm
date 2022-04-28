@@ -267,6 +267,7 @@ jenkinsConfigurationsAsCodeEnabled: false
 # JenkinsConfigurationAsCode instances configuration
 # To learn more about JenkinsConfigurationAsCode, visit https://docs.carthago.cloud/latest-version/getting-started/customization/casc/
 # Users can only have 1 JenkinsConfigurationAsCode per Jenkins instance.
+# todo: stop treating it as list since there can only be 1 CasC
 jenkinsConfigurationsAsCode:
   # name of resource
   - name: casc
@@ -290,6 +291,7 @@ jenkinsConfigurationsAsCode:
       #name: ""
       #namespace: ""
 
+# todo: unify comments on these
 # jenkinsKubernetesAgentEnabled can enable or disable the JenkinsKubernetesAgent instances
 # Set to false if you don't want to deploy any Agents with this Helm chart.
 # Visit https://docs.carthago.cloud/latest-version/getting-started/agents/ to learn more about JenkinsKubernetesAgents
@@ -575,7 +577,7 @@ jenkinsAuthentication:
       # wantsAssertionSigned:
 
 # JenkinsAuthorizationEnabled can enable or disable the jenkinsAuthorization instance
-# Set to true if you want to deploy the resource, set to false if have configured CR(s) already and/or you want to deploy an operator only
+# Set to true if you want to deploy the resource
 jenkinsAuthorizationEnabled: false
 
 # JenkinsAuthorization configuration
