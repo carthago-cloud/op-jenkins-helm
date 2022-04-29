@@ -258,36 +258,36 @@ jenkinsSeedJobs:
       # unstableOnDeprecation is setting for Job DSL API plugin that sets build status as unstable if build using deprecated features (optional)
       unstableOnDeprecation: false
 
-# jenkinsConfigurationsAsCodeEnabled can enable or disable the JenkinsConfigurationAsCode instances
-# Set to false if you have configured CR(s) already and/or you want to deploy an operator only
+# jenkinsConfigurationsAsCodeEnabled enables or disables JenkinsConfigurationAsCode.
+# If you set it to true, Operator will create JenkinsConfigurationAsCode CR according
+# to configuration below.
 jenkinsConfigurationsAsCodeEnabled: false
 
-# JenkinsConfigurationAsCode instances configuration
+# JenkinsConfigurationAsCode configuration.
 # To learn more about JenkinsConfigurationAsCode, visit https://docs.carthago.cloud/latest-version/getting-started/customization/casc/
 # Users can only have 1 JenkinsConfigurationAsCode per Jenkins instance.
-# todo: stop treating it as list since there can only be 1 CasC
 jenkinsConfigurationsAsCode:
-  # name of resource
-  - name: casc
+# name of resource
+  name: casc
 
-    # labels are injected into metadata labels field.
-    # Each JenkinsConfigurationAsCode Custom Resource need to reference corresponding Jenkins Custom Resource via labels field
-    labels:
-      carthago.cloud/jenkins: jenkins
+  # labels are injected into metadata labels field.
+  # Each JenkinsConfigurationAsCode Custom Resource need to reference corresponding Jenkins Custom Resource via labels field
+  labels:
+    carthago.cloud/jenkins: jenkins
 
-    # annotations are injected into metadata annotations field
-    annotations: {}
+  # annotations are injected into metadata annotations field
+  annotations: {}
 
-    # data is inline configuration
-    data: |
-      jenkins:
-        systemMessage: |
-          Welcome to your CI/CD server managed by Carthago Operator for Jenkins!
+  # data is inline configuration
+  data: |
+    jenkins:
+      systemMessage: |
+        Welcome to your CI/CD server managed by Carthago Operator for Jenkins!
 
-    # secretRef is secret reference which allows to inject the secrets into Configuration As Code script
-    #secretRef:
-      #name: ""
-      #namespace: ""
+  # secretRef is secret reference which allows to inject the secrets into Configuration As Code script
+  #secretRef:
+    #name: ""
+    #namespace: ""
 
 # todo: unify comments on these
 # jenkinsKubernetesAgentEnabled can enable or disable the JenkinsKubernetesAgent instances
