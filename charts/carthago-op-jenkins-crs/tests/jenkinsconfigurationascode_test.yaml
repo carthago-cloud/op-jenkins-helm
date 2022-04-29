@@ -43,9 +43,3 @@ tests:
       - equal:
           path: spec.secretRef.namespace
           value: default
-  - it: should render multiple CaSC Custom Resources
-    values:
-      - ./values/jenkinsconfigurationascode_test_values.yaml
-    asserts:
-      - hasDocuments:
-          count: 2

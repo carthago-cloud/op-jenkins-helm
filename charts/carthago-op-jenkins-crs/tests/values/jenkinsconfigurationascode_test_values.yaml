@@ -1,27 +1,16 @@
 jenkinsConfigurationsAsCodeEnabled: true
 jenkinsConfigurationsAsCode:
-  - name: casc1
+  name: casc
+  namespace: default
+  labels:
+    carthago.cloud/jenkins: jenkins
+  annotations:
+    annotationsTestKey: annotationsTestValue
+  data: |
+    jenkins:
+      systemMessage: |
+        Welcome to your CI/CD server managed by Carthago Operator for Jenkins!
+      numExecutors: 1
+  secretRef:
+    name: secret
     namespace: default
-    labels:
-      carthago.cloud/jenkins: jenkins
-    annotations:
-      annotationsTestKey: annotationsTestValue
-    data: |
-      jenkins:
-        systemMessage: |
-          Welcome to your CI/CD server managed by Carthago Operator for Jenkins!
-        numExecutors: 1
-    secretRef:
-      name: secret
-      namespace: default
-  - name: casc2
-    namespace: default
-    labels:
-      carthago.cloud/jenkins: jenkins
-    annotations:
-      annotationsTestKey: annotationsTestValue
-    data: |
-      jenkins:
-        systemMessage: |
-          Welcome to your CI/CD server managed by Carthago Operator for Jenkins!
-        numExecutors: 1
