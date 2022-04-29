@@ -1,6 +1,6 @@
 {{- if .Values.jenkinsConfigurationsAsCodeEnabled }}
   {{- $apiVersion := .Values.apiVersion }}
-  {{- range $jenkinsConfigurationAsCode := .Values.jenkinsConfigurationsAsCode}}
+  {{- $jenkinsConfigurationAsCode := .Values.jenkinsConfigurationsAsCode}}
 ---
 apiVersion: {{ $apiVersion }}
 kind: JenkinsConfigurationAsCode
@@ -18,6 +18,5 @@ spec:
   {{- end }}
   {{- with $jenkinsConfigurationAsCode.secretRef }}
   secretRef: {{- toYaml . | nindent 4 }}
-  {{- end }}
   {{- end }}
   {{- end }}
