@@ -139,7 +139,7 @@ jenkins:
 
 # jenkinsGroovyScriptsEnabled can enable or disable the JenkinsGroovyScript instances
 # Set to false if you have configured CR(s) already and/or you want to deploy an operator only
-jenkinsGroovyScriptsEnabled: true
+jenkinsGroovyScriptsEnabled: false
 
 # JenkinsGroovyScripts instances configuration
 # JenkinsGroovyScriptSpec defines the desired state of JenkinsGroovyScript. It allows to write Groovy Scripts to modify the Jenkins.
@@ -164,8 +164,6 @@ jenkinsGroovyScripts:
       Jenkins jenkins = Jenkins.getInstance()
       jenkins.setSystemMessage(systemMessage)
       jenkins.save()
-
-      println "Hello world!"
 
     # secretRef is secret reference which allows to inject the secrets into Groovy script code
     #secretRef:
