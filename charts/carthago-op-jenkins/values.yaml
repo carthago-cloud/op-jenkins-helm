@@ -21,6 +21,8 @@ operator:
   # args is used to specify flags
   args:
     - --leader-elect=true
+    # uncomment the line below to enable logging DEBUG level logs
+    #- --debug=true
 
   # nameOverride overrides the app name
   nameOverride: ""
