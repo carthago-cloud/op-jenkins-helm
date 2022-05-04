@@ -37,9 +37,32 @@ tests:
       - equal:
           path: metadata.namespace
           value: null
+      - equal:
+          path: kind
+          value: RoleBinding
   - it: creates roles in all watched namespaces and the operator one
     set:
       operator.watchedNamespaces: [one, two]
     asserts:
       - hasDocuments:
           count: 3
+  - it: creates one ClusterRoleBinding when useClusterRBAC is set to true and multiple ns specified
+    set:
+      operator.watchedNamespaces: [one, two]
+      operator.useClusterRBAC: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: kind
+          value: ClusterRoleBinding
+  - it: creates one ClusterRoleBinding when useClusterRBAC is set to true and watching all ns
+    set:
+      operator.watchedNamespaces: ""
+      operator.useClusterRBAC: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: kind
+          value: ClusterRoleBinding

@@ -51,6 +51,10 @@ operator:
   # labelSelector sets a selector for Operator's Custom Resources, useful when the operator is set to watch all namespaces
   labelSelector: ""
 
+  # useClusterRBAC, if set to true, will deploy cluster-scoped role and role bindings for the operator's service account.
+  # Set this to true, when configuring the operator to watch all namespaces in the cluster.
+  useClusterRBAC: false
+
   # licenseSecretName specifies a name for the secret with license key. For paid plan features to be available,
   # a secret with this name containing valid information must be present in the same namespace as Carthago Operator
   # is deployed in.
