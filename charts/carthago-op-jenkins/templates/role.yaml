@@ -4,7 +4,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: {{ .Values.operator.useClusterRBAC | ternary "ClusterRole" "Role" }} 
 metadata:
   creationTimestamp: null
-  name: {{ include "carthago-op-jenkins.fullname" . }}-op-role
+  name: {{ include "carthago-op-jenkins.rolename" . }}
 rules:
   - apiGroups:
       - apps
@@ -149,7 +149,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   creationTimestamp: null
-  name: {{ include "carthago-op-jenkins.fullname" . }}-op-role
+  name: {{ include "carthago-op-jenkins.rolename" $ }}
   namespace: {{ . }}
 rules:
   - apiGroups:

@@ -44,7 +44,7 @@ operator:
   # For more details see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity
   affinity: {}
 
-  # watchedNamespaces specifies namespaces that will be watched by the operator, empty string sets the operator to watch all namespaces
+  # watchedNamespaces specifies namespaces that will be watched by the operator, empty array ([]) sets the operator to watch all namespaces
   watchedNamespaces:
     - jenkins
 

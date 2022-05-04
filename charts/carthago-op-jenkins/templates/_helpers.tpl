@@ -43,3 +43,11 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
+
+{{- define "carthago-op-jenkins.rolename" -}}
+{{ include "carthago-op-jenkins.fullname" . }}-op-role
+{{- end -}}
+
+{{- define "carthago-op-jenkins.rolebindingname" -}}
+{{ include "carthago-op-jenkins.fullname" . }}-op-rolebinding
+{{- end -}}

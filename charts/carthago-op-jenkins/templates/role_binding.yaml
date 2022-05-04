@@ -2,11 +2,11 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: {{ .Values.operator.useClusterRBAC | ternary "ClusterRoleBinding" "RoleBinding" }} 
 metadata:
-  name: {{ include "carthago-op-jenkins.fullname" . }}-op-rolebinding
+  name: {{ include "carthago-op-jenkins.rolebindingname" . }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: {{ .Values.operator.useClusterRBAC | ternary "ClusterRole" "Role" }} 
-  name: {{ include "carthago-op-jenkins.fullname" . }}-op-role
+  name: {{ include "carthago-op-jenkins.rolename" . }}
 subjects:
   - kind: ServiceAccount
     name: service-account
@@ -19,12 +19,12 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ include "carthago-op-jenkins.fullname" . }}-op-rolebinding
+  name: {{ include "carthago-op-jenkins.rolebindingname" $ }}
   namespace: {{ . }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: {{ include "carthago-op-jenkins.fullname" . }}-op-role
+  name: {{ include "carthago-op-jenkins.rolename" $ }}
 subjects:
   - kind: ServiceAccount
     name: service-account
