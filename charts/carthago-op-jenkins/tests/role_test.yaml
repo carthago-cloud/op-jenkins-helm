@@ -16,7 +16,7 @@ tests:
           value: null
       - equal:
           path: metadata.name
-          value: manager-role
+          value: RELEASE-NAME-carthago-op-jenkins-op-role
   - it: by default it should create a role in jenkins ns
     documentIndex: 1
     asserts:
@@ -27,7 +27,7 @@ tests:
           value: jenkins
       - equal:
           path: metadata.name
-          value: manager-role
+          value: RELEASE-NAME-carthago-op-jenkins-op-role
   - it: creates role in one ns when op and jenkins is depolyed to the same ns
     set:
       operator.watchedNamespaces: [default]
@@ -37,9 +37,32 @@ tests:
       - equal:
           path: metadata.namespace
           value: null
+      - equal:
+          path: kind
+          value: Role
   - it: creates roles in all watched namespaces and the operator one
     set:
       operator.watchedNamespaces: [one, two]
     asserts:
       - hasDocuments:
           count: 3
+  - it: creates one ClusterRole when useClusterRBAC is set to true and multiple ns specified
+    set:
+      operator.watchedNamespaces: [one, two]
+      operator.useClusterRBAC: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: kind
+          value: ClusterRole
+  - it: creates one ClusterRole when useClusterRBAC is set to true and watching all ns
+    set:
+      operator.watchedNamespaces: []
+      operator.useClusterRBAC: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: kind
+          value: ClusterRole

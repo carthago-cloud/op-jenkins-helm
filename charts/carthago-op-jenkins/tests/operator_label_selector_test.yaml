@@ -1,0 +1,23 @@
+suite: Operator label selector propagation to LABEL_SELECTOR env
+templates:
+  - operator.yaml
+values:
+  - values/operator/default.yaml
+tests:
+  - it: should propagate empty string LABEL_SELECTOR env if not set
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: LABEL_SELECTOR
+            value: ""
+  - it: should propagate label selector to env correctly
+    set:
+      operator.labelSelector: "label1=test,label2"
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: LABEL_SELECTOR
+            value: "label1=test,label2"
+

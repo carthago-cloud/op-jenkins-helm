@@ -1,10 +1,10 @@
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: {{ .Values.operator.useClusterRBAC | ternary "ClusterRole" "Role" }} 
 metadata:
   creationTimestamp: null
-  name: manager-role
+  name: {{ include "carthago-op-jenkins.rolename" . }}
 rules:
   - apiGroups:
       - apps
@@ -141,6 +141,7 @@ rules:
       - watch
 
 
+{{- if not .Values.operator.useClusterRBAC }}
 {{- range .Values.operator.watchedNamespaces }}
 {{- if ne . $.Release.Namespace }}
 ---
@@ -148,7 +149,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   creationTimestamp: null
-  name: manager-role
+  name: {{ include "carthago-op-jenkins.rolename" $ }}
   namespace: {{ . }}
 rules:
   - apiGroups:
@@ -284,5 +285,6 @@ rules:
       - list
       - update
       - watch
+{{- end }}
 {{- end }}
 {{- end }}
