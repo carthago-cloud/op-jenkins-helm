@@ -96,6 +96,7 @@ spec:
     {{- with .Values.jenkins.podSpec.nodeSelector }}
     nodeSelector: {{ toYaml . | nindent 6 }}
     {{- end }}
+  #todo: looks like there's issue with no space
     {{- with .Values.jenkins.podSpec.imagePullSecrets}}
     imagePullSecrets: {{ toYaml . | nindent 6 }}
     {{- end }}
