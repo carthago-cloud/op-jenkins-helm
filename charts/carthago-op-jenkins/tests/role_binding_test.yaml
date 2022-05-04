@@ -16,7 +16,7 @@ tests:
           value: null
       - equal:
           path: roleRef.name
-          value: manager-role
+          value: RELEASE-NAME-carthago-op-jenkins-op-role
   - it: by default it should create a role binding in jenkins ns
     documentIndex: 1
     asserts:
@@ -27,7 +27,7 @@ tests:
           value: jenkins
       - equal:
           path: roleRef.name
-          value: manager-role
+          value: RELEASE-NAME-carthago-op-jenkins-op-role
   - it: creates role in one ns when op and jenkins is depolyed to the same ns
     set:
       operator.watchedNamespaces: [default]
@@ -58,7 +58,7 @@ tests:
           value: ClusterRoleBinding
   - it: creates one ClusterRoleBinding when useClusterRBAC is set to true and watching all ns
     set:
-      operator.watchedNamespaces: ""
+      operator.watchedNamespaces: []
       operator.useClusterRBAC: true
     asserts:
       - hasDocuments:
