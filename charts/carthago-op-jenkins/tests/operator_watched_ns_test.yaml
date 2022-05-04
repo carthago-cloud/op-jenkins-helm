@@ -29,3 +29,12 @@ tests:
           content:
             name: WATCH_NAMESPACE
             value: one,two
+  - it: should propagate empty string correctly to WATCH_NAMESPACE if it's present in values.yaml
+    set:
+      operator.watchedNamespaces: ""
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: WATCH_NAMESPACE
+            value: ""

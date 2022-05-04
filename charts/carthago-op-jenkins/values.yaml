@@ -9,7 +9,7 @@ operator:
   replicaCount: 1
 
   # image is the name (and tag) of the Carthago Operator for Jenkins image
-  image: carthago.azurecr.io/carthago-op-jenkins:0.14.4
+  image: carthago.azurecr.io/carthago-op-jenkins:0.15.0
 
   # imagePullPolicy defines policy for pulling images
   imagePullPolicy: IfNotPresent
@@ -44,9 +44,12 @@ operator:
   # For more details see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity
   affinity: {}
 
-  # watchedNamespaces specifies namespaces that will be watched by the operator
+  # watchedNamespaces specifies namespaces that will be watched by the operator, empty string sets the operator to watch all namespaces
   watchedNamespaces:
     - jenkins
+
+  # labelSelector sets a selector for Operator's Custom Resources, useful when the operator is set to watch all namespaces
+  labelSelector: ""
 
   # licenseSecretName specifies a name for the secret with license key. For paid plan features to be available,
   # a secret with this name containing valid information must be present in the same namespace as Carthago Operator

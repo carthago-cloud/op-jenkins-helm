@@ -36,7 +36,9 @@ spec:
           {{- end}}
           env:
             - name: WATCH_NAMESPACE
-              value: {{ join "," .Values.operator.watchedNamespaces }}
+              value: {{ join "," .Values.operator.watchedNamespaces | quote }}
+            - name: LABEL_SELECTOR
+              value: {{ .Values.operator.labelSelector | quote }}
             - name: OPERATOR_NAME
               value: "carthago-op-jenkins"
           resources:
