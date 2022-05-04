@@ -20,6 +20,12 @@ spec:
       - name: {{ .name }}
         image: {{ .image }}
         imagePullPolicy: {{ .imagePullPolicy }}
+        {{- with .command }}
+        command: {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .args }}
+        args: {{- toYaml . | nindent 8 }}
+        {{- end }}
         {{- with .livenessProbe }}
         livenessProbe: {{ toYaml . | nindent 8 }}
         {{- end }}
