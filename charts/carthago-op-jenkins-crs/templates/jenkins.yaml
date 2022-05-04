@@ -63,6 +63,7 @@ spec:
         volumeMounts: {{- toYaml . | nindent 8 }}
         {{- end }}
     {{- if .Values.jenkins.podSpec.sidecars }}
+    sidecars:
       {{- range .Values.jenkins.podSpec.sidecars }}
       - name: {{ .name }}
         image: {{ .image }}
