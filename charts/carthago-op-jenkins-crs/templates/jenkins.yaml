@@ -14,9 +14,9 @@ spec:
   podLabels: {{ toYaml . | nindent 6 }}
   {{- end }}
   podSpec:
-  {{- if .Values.jenkins.podSpec.initContainers }}
+    {{- if .Values.jenkins.podSpec.initContainers }}
     initContainers:
-    {{- range .Values.jenkins.podSpec.initContainers }}
+      {{- range .Values.jenkins.podSpec.initContainers }}
       - name: {{ .name }}
         image: {{ .image }}
         imagePullPolicy: {{ .imagePullPolicy }}

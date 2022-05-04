@@ -84,7 +84,7 @@ tests:
                 readOnly: true
                 subPath: backup.sh
       - contains:
-          path: spec.podSpec.containers
+          path: spec.podSpec.sidecars
           content:
             name: sidecar-container-name
             image: busybox:1.28
