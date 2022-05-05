@@ -2,15 +2,15 @@ apiVersion: v1
 entries:
   carthago-op-jenkins:
   - apiVersion: v2
-    appVersion: 0.14.4
-    created: "2022-05-04T20:49:42.480434544Z"
+    appVersion: 0.15.2
+    created: "2022-05-05T15:20:52.105396194Z"
     description: Carthago Operator for Jenkins
-    digest: 3c2f54475bb0fa1248b9676163475e506cbfaf98c9a4ec915a351002dc699c97
+    digest: 4e34a0693395739ca88b09d44cf056710a11dfd28dac8eee160e10649a01fac6
     icon: https://raw.githubusercontent.com/carthago-cloud/carthago-op-jenkins-helm/master/assets/jenkins-operator-icon.png
     name: carthago-op-jenkins
     urls:
-    - https://github.com/carthago-cloud/op-jenkins-helm/releases/download/carthago-op-jenkins-0.4.0/carthago-op-jenkins-0.4.0.tgz
-    version: 0.4.0
+    - https://github.com/carthago-cloud/op-jenkins-helm/releases/download/carthago-op-jenkins-0.4.1/carthago-op-jenkins-0.4.1.tgz
+    version: 0.4.1
   - apiVersion: v2
     appVersion: 0.14.4
     created: "2022-04-27T13:01:14.436890245Z"
@@ -113,15 +113,15 @@ entries:
     version: 0.1.0
   carthago-op-jenkins-crs:
   - apiVersion: v2
-    appVersion: 0.14.4
-    created: "2022-05-04T20:49:42.659154051Z"
+    appVersion: 0.15.2
+    created: "2022-05-05T15:20:52.246121923Z"
     description: Custom Resources for Carthago Operator for Jenkins
-    digest: bddf0343d09190e49ddce3282d769ae54debda24191febaa0145a55bb707d22d
+    digest: 0bc8c7c61095793a55a1c636a171cb4974de08478f298c40a4b52ba82107a2ea
     icon: https://raw.githubusercontent.com/carthago-cloud/carthago-op-jenkins-helm/master/assets/jenkins-operator-icon.png
     name: carthago-op-jenkins-crs
     urls:
-    - https://github.com/carthago-cloud/op-jenkins-helm/releases/download/carthago-op-jenkins-crs-0.4.0/carthago-op-jenkins-crs-0.4.0.tgz
-    version: 0.4.0
+    - https://github.com/carthago-cloud/op-jenkins-helm/releases/download/carthago-op-jenkins-crs-0.4.1/carthago-op-jenkins-crs-0.4.1.tgz
+    version: 0.4.1
   - apiVersion: v2
     appVersion: 0.14.4
     created: "2022-04-27T13:01:14.626600584Z"
@@ -222,4 +222,4 @@ entries:
     urls:
     - https://github.com/carthago-cloud/op-jenkins-helm/releases/download/carthago-op-jenkins-crs-0.1.0/carthago-op-jenkins-crs-0.1.0.tgz
     version: 0.1.0
-generated: "2022-05-04T20:49:42.659233552Z"
+generated: "2022-05-05T15:20:52.246220125Z"
