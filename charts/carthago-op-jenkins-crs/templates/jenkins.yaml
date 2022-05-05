@@ -72,16 +72,15 @@ spec:
         volumeMounts: {{- toYaml . | nindent 8 }}
         {{- end }}
     {{- if .Values.jenkins.podSpec.sidecars }}
-    sidecars:
       {{- range .Values.jenkins.podSpec.sidecars }}
       - name: {{ .name }}
         image: {{ .image }}
         imagePullPolicy: {{ .imagePullPolicy }}
         {{- with .command }}
-        command: {{ toYaml . | nindent 10 }}
+        command: {{ toYaml . | nindent 8 }}
         {{- end }}
         {{- with .args }}
-        args: {{- toYaml . | nindent 10}}
+        args: {{- toYaml . | nindent 8 }}
         {{- end }}
         {{- with .livenessProbe }}
         livenessProbe: {{ toYaml . | nindent 10 }}
