@@ -14,11 +14,14 @@ jenkins:
       - name: init-container-name
         image: busybox:1.28
         imagePullPolicy: IfNotPresent
+        command: [ 'sh', '-c', 'echo The app is running! && sleep 3600' ]
+        args: [ 'sh', '-c', 'echo The app is running! && sleep 3600' ]
     sidecars:
     - name: sidecar-container-name
       image: busybox:1.28
       imagePullPolicy: IfNotPresent
       command: ['sh', '-c', 'echo The app is running! && sleep 3600']
+      args: ['sh', '-c', 'echo The app is running! && sleep 3600']
       livenessProbe:
         failureThreshold: 12
         httpGet:
@@ -54,6 +57,7 @@ jenkins:
       image: jenkins/jenkins:2.302.2-lts-alpine
       imagePullPolicy: IfNotPresent
       command: ["-bash", "-sh", "/scripts/init.sh"]
+      args: ["-bash", "-sh", "/scripts/init.sh"]
       livenessProbe:
         failureThreshold: 12
         httpGet:

@@ -14,12 +14,18 @@ spec:
   podLabels: {{ toYaml . | nindent 6 }}
   {{- end }}
   podSpec:
-  {{- if .Values.jenkins.podSpec.initContainers }}
+    {{- if .Values.jenkins.podSpec.initContainers }}
     initContainers:
-    {{- range .Values.jenkins.podSpec.initContainers }}
+      {{- range .Values.jenkins.podSpec.initContainers }}
       - name: {{ .name }}
         image: {{ .image }}
         imagePullPolicy: {{ .imagePullPolicy }}
+        {{- with .command }}
+        command: {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .args }}
+        args: {{- toYaml . | nindent 8 }}
+        {{- end }}
         {{- with .livenessProbe }}
         livenessProbe: {{ toYaml . | nindent 8 }}
         {{- end }}
@@ -43,6 +49,9 @@ spec:
         imagePullPolicy: {{ .Values.jenkins.podSpec.jenkinsController.imagePullPolicy }}
         {{- with .Values.jenkins.podSpec.jenkinsController.command }}
         command: {{ toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.jenkins.podSpec.jenkinsController.args }}
+        args: {{- toYaml . | nindent 8 }}
         {{- end }}
         {{- with .Values.jenkins.podSpec.jenkinsController.livenessProbe }}
         livenessProbe: {{ toYaml . | nindent 10 }}
@@ -68,7 +77,10 @@ spec:
         image: {{ .image }}
         imagePullPolicy: {{ .imagePullPolicy }}
         {{- with .command }}
-        command: {{ toYaml . | nindent 10 }}
+        command: {{ toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .args }}
+        args: {{- toYaml . | nindent 8 }}
         {{- end }}
         {{- with .livenessProbe }}
         livenessProbe: {{ toYaml . | nindent 10 }}
@@ -96,7 +108,7 @@ spec:
     {{- with .Values.jenkins.podSpec.nodeSelector }}
     nodeSelector: {{ toYaml . | nindent 6 }}
     {{- end }}
-    {{- with .Values.jenkins.podSpec.imagePullSecrets}}
+    {{- with .Values.jenkins.podSpec.imagePullSecrets }}
     imagePullSecrets: {{ toYaml . | nindent 6 }}
     {{- end }}
     {{- with .Values.jenkins.podSpec.hostAliases }}
