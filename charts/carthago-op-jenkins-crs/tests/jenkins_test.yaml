@@ -169,11 +169,13 @@ tests:
       - equal:
           path: spec.homePVC
           value:
+            name: "example-jenkins-home-claim"
             accessMode: "ReadWriteOnce"
             resourceStorage: "20Gi"
       - equal:
           path: spec.pluginsCache
           value:
+            name: "example-plugins-cache-claim"
             accessMode: "ReadWriteOnce"
             resourceStorage: "1Gi"
       - contains:
