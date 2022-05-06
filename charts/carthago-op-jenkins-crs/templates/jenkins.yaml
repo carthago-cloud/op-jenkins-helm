@@ -118,7 +118,7 @@ spec:
   pluginsCache: {{ toYaml . | nindent 4 }}
   {{- end }}
   {{- with .Values.jenkins.homePVC }}
-  homePVC: {{ toYaml . | nindent 4 }}
+  pvcSettings: {{ toYaml . | nindent 4 }}
   {{- end }}
   {{- with .Values.jenkins.roles }}
   roles: {{ toYaml . | nindent 4 }}

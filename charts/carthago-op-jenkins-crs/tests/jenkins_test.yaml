@@ -167,7 +167,7 @@ tests:
             kind: "Role"
             name: role
       - equal:
-          path: spec.homePVC
+          path: spec.pvcSettings
           value:
             name: "example-jenkins-home-claim"
             accessMode: "ReadWriteOnce"
