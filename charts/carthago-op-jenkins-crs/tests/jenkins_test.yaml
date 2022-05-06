@@ -171,13 +171,15 @@ tests:
             kind: "Role"
             name: role
       - equal:
-          path: spec.homePVC
+          path: spec.pvcSettings
           value:
+            name: "example-jenkins-home-claim"
             accessMode: "ReadWriteOnce"
             resourceStorage: "20Gi"
       - equal:
           path: spec.pluginsCache
           value:
+            name: "example-plugins-cache-claim"
             accessMode: "ReadWriteOnce"
             resourceStorage: "1Gi"
       - contains:

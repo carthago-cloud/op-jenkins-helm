@@ -54,8 +54,10 @@ jenkins:
     priorityClassName: ""
     tolerations: []
 
-  # homePVC allows setting PersistentVolumeClaim properties for Jenkins home
-  homePVC: {}
+  # pvcSettings allows setting PersistentVolumeClaim properties for Jenkins home
+  pvcSettings: {}
+  # name of Jenkins Home PVC
+  # name: ""
 
   # accessMode specifies the way Jenkins home Volume can be mounted
   # accessMode: ""
@@ -67,9 +69,11 @@ jenkins:
   # storageClassName: ""
   # storageClassName: ""
 
-  # pluginsCache allows setting plugins cache specific pvc properties
+  # pluginsCache allows setting PersistentVolumeClaim properties for plugins cache
   # pluginsCache is not available in the free plan and requires a valid license
   pluginsCache: {}
+  # name of plugins cache PVC
+  # name: ""
 
   # accessMode specifies the way the plugins cache can be mounted
   # accessMode: ""
