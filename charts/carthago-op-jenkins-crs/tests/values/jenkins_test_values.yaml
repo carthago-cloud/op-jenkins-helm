@@ -111,7 +111,7 @@ jenkins:
         operator: "Equal"
         value: "value1"
         effect: "NoSchedule"
-  homePVC:
+  pvcSettings:
     name: "example-jenkins-home-claim"
     accessMode: "ReadWriteOnce"
     resourceStorage: "20Gi"
