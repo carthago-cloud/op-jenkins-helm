@@ -7,8 +7,11 @@ jenkins:
     labelTestKey: labelTestValue
   annotations:
     annotationsTestKey: annotationsTestValue
-  podLabels:
-    podLabelTestKey: podLabelTestValue
+  podMetadata:
+    labels:
+      labelTestKey: labelTestValue
+    annotations:
+      annotationTestKey: annotationTestValue
   podSpec:
     initContainers:
       - name: init-container-name
