@@ -1,10 +1,9 @@
-
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.4.1
+    controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
   name: jenkinsconfigurationascodes.carthago.cloud
 spec:
@@ -16,95 +15,95 @@ spec:
     singular: jenkinsconfigurationascode
   scope: Namespaced
   versions:
-    - name: v1beta1
-      schema:
-        openAPIV3Schema:
-          description: JenkinsConfigurationAsCode is the Schema for the jenkinsconfigurationascodes
-            API
-          properties:
-            apiVersion:
-              description: 'APIVersion defines the versioned schema of this representation
+  - name: v1beta1
+    schema:
+      openAPIV3Schema:
+        description: JenkinsConfigurationAsCode is the Schema for the jenkinsconfigurationascodes
+          API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
               of an object. Servers should convert recognized schemas to the latest
               internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
-              type: string
-            kind:
-              description: 'Kind is a string value representing the REST resource this
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
               object represents. Servers may infer this from the endpoint the client
               submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-              type: string
-            metadata:
-              type: object
-            spec:
-              description: JenkinsConfigurationAsCodeSpec defines the desired state
-                of JenkinsConfigurationAsCode. It allows to write CASC to modify the
-                Jenkins.
-              properties:
-                data:
-                  description: Data is inline configuration as code script
-                  type: string
-                secretRef:
-                  description: SecretRef is secret reference which allows to inject
-                    the secrets into CASC code
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: JenkinsConfigurationAsCodeSpec defines the desired state
+              of JenkinsConfigurationAsCode. It allows to write CASC to modify the
+              Jenkins.
+            properties:
+              data:
+                description: Data is inline configuration as code script
+                type: string
+              secretRef:
+                description: SecretRef is secret reference which allows to inject
+                  the secrets into CASC code
+                properties:
+                  name:
+                    description: Name is unique within a namespace to reference a
+                      secret resource.
+                    type: string
+                  namespace:
+                    description: Namespace defines the space within which the secret
+                      name must be unique.
+                    type: string
+                type: object
+            required:
+            - data
+            type: object
+          status:
+            description: JenkinsConfigurationAsCodeStatus defines the observed state
+              of JenkinsConfigurationAsCode
+            properties:
+              conditions:
+                description: Conditions contains JenkinsConfigurationAsCode statuses
+                items:
                   properties:
-                    name:
-                      description: Name is unique within a namespace to reference a
-                        secret resource.
+                    lastProbeTime:
+                      description: Last time we probed the condition.
+                      format: date-time
                       type: string
-                    namespace:
-                      description: Namespace defines the space within which the secret
-                        name must be unique.
+                    lastTransitionTime:
+                      description: Last time the condition transitioned from one status
+                        to another.
+                      format: date-time
                       type: string
-                  type: object
-              required:
-                - data
-              type: object
-            status:
-              description: JenkinsConfigurationAsCodeStatus defines the observed state
-                of JenkinsConfigurationAsCode
-              properties:
-                conditions:
-                  description: Conditions contains JenkinsConfigurationAsCode statuses
-                  items:
-                    properties:
-                      lastProbeTime:
-                        description: Last time we probed the condition.
-                        format: date-time
-                        type: string
-                      lastTransitionTime:
-                        description: Last time the condition transitioned from one status
-                          to another.
-                        format: date-time
-                        type: string
-                      message:
-                        description: Human-readable message indicating details about
-                          last transition.
-                        type: string
-                      reason:
-                        description: Unique, one-word, CamelCase reason for the condition's
-                          last transition.
-                        type: string
-                      status:
-                        description: 'Status is the status of the condition. Can be
+                    message:
+                      description: Human-readable message indicating details about
+                        last transition.
+                      type: string
+                    reason:
+                      description: Unique, one-word, CamelCase reason for the condition's
+                        last transition.
+                      type: string
+                    status:
+                      description: 'Status is the status of the condition. Can be
                         True, False, Unknown. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions'
-                        type: string
-                      type:
-                        description: 'Type is the type of the condition. More info:
+                      type: string
+                    type:
+                      description: 'Type is the type of the condition. More info:
                         https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions'
-                        type: string
-                    required:
-                      - status
-                      - type
-                    type: object
-                  type: array
-                hash:
-                  description: Hash contains hash computed when running this CASC code
-                  type: string
-              type: object
-          type: object
-      served: true
-      storage: true
-      subresources:
-        status: {}
+                      type: string
+                  required:
+                  - status
+                  - type
+                  type: object
+                type: array
+              hash:
+                description: Hash contains hash computed when running this CASC code
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
 status:
   acceptedNames:
     kind: ""
