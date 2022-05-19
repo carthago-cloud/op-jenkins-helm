@@ -112,6 +112,15 @@ spec:
                       required by the claim
                     type: string
                 type: object
+              podLabels:
+                additionalProperties:
+                  type: string
+                description: 'PodLabels allows adding custom labels to Jenkins Controller
+                  Pod. Deprecated as of 0.16. Map of string keys and values that can
+                  be used to organize and categorize (scope and select) objects. May
+                  match selectors of replication controllers and services. More info:
+                  http://kubernetes.io/docs/user-guide/labels'
+                type: object
               podMetadata:
                 description: PodMetadata allows specifying custom labels and annotations
                   for Jenkins Controller Pod
