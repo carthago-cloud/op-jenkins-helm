@@ -10,8 +10,8 @@ metadata:
   annotations: {{ toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- with .Values.jenkins.podLabels }}
-  podLabels: {{ toYaml . | nindent 6 }}
+  {{- with .Values.jenkins.podMetadata }}
+  podMetadata: {{ toYaml . | nindent 6 }}
   {{- end }}
   podSpec:
     {{- if .Values.jenkins.podSpec.initContainers }}

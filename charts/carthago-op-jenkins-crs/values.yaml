@@ -19,8 +19,10 @@ jenkins:
   # annotations are injected into metadata annotations field
   annotations: {}
 
-  # podLabels are injected into Jenkins Controller Pod's metadata labels field
-  podLabels: {}
+  # labels and annotations propagated to Jenkins Controller pod
+  podMetadata:
+    labels: {}
+    annotations: {}
 
   # podSpec
   podSpec:

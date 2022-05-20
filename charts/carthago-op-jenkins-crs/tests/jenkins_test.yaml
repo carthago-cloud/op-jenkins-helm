@@ -29,9 +29,13 @@ tests:
       - values/jenkins_test_values.yaml
     asserts:
       - equal:
-          path: spec.podLabels
+          path: spec.podMetadata.labels
           value:
-            podLabelTestKey: podLabelTestValue
+            labelTestKey: labelTestValue
+      - equal:
+          path: spec.podMetadata.annotations
+          value:
+            annotationTestKey: annotationTestValue
       - contains:
           path: spec.podSpec.initContainers
           content:
