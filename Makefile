@@ -37,7 +37,7 @@ bump-version: sembump ## Bump the version in the version file. Set BUMP to [ pat
 	echo $(NEW_VERSION) > VERSION.txt
 	@echo "Updating version from $(VERSION) to $(NEW_VERSION) in README.md"
 	perl -i -pe 's/$(VERSION)/$(NEW_VERSION)/g' README.md
-	git log  --pretty=format:' * %s' $(VERSION)...HEAD > CHANGELOG.txt
+	git log  --pretty=format:' * %s' carthago-op-jenkins-$(VERSION)...HEAD > CHANGELOG.txt
 
 .PHONY: change-chart-version
 change-chart-version: bump-version
