@@ -41,16 +41,31 @@ spec:
                 description: 'Matrix is matrix-based authorization configuration NOTE:
                   It requires additional plugin'
                 properties:
+                  groups:
+                    description: Groups is the list of Jenkins user groups and their
+                      permissions
+                    items:
+                      properties:
+                        name:
+                          description: Name of the group.
+                          type: string
+                        permissions:
+                          description: Permissions assigned to the group.
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
                   users:
-                    description: Users is list of the users with permissions
+                    description: Users is the list of Jenkins users and their permissions
                     items:
                       description: User contains name and permissions
                       properties:
                         name:
-                          description: Name is a name of a user
+                          description: Name of the user.
                           type: string
                         permissions:
-                          description: Permissions is list of permissions
+                          description: Permissions assigned to the group.
                           items:
                             type: string
                           type: array
