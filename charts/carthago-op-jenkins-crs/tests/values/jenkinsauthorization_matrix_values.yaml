@@ -11,3 +11,6 @@ jenkinsAuthorization:
       - name: "user-example"
         permissions:
           - Overall/Read
+      - name: "group-example"
+        permissions:
+          - Overall/Administer
