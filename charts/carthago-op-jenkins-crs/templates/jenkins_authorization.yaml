@@ -24,6 +24,14 @@ spec:
           - {{ . }}
         {{- end }}
     {{- end }}
+    groups:
+    {{- range $jenkinsAuthorization.matrix.groups }}
+      - name: {{ .name }}
+        permissions:
+        {{- range .permissions }}
+          - {{ . }}
+        {{- end }}
+    {{- end }}
   {{- else if eq $jenkinsAuthorization.type "roleBased" }}
   roleBased:
     roles:

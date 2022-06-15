@@ -36,6 +36,7 @@ tests:
             name: user-example
             permissions:
               - Overall/Read
+      - contains:
           path: spec.matrix.groups
           content:
             name: group-example
