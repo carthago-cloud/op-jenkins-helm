@@ -36,6 +36,12 @@ tests:
             name: user-example
             permissions:
               - Overall/Read
+      - contains:
+          path: spec.matrix.groups
+          content:
+            name: group-example
+            permissions:
+              - Overall/Administer
   - it: should propagate all the declared roleBased spec fields
     values:
       - values/jenkinsauthorization_rolebased_values.yaml

@@ -603,6 +603,10 @@ jenkinsAuthorization:
       - name: "user-example"
         permissions:
           - Overall/Read
+    groups:
+      - name: "group-example"
+        permissions:
+          - Overall/Read
 
   # Role-Based Authorization Strategy
   roleBased:
